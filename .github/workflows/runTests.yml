@@ -10,7 +10,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Build and run Web API + getting process ID for shutting down later
-        run: cd api && dotnet run && sleep 15 & echo "API_PID=$!" >> $GITHUB_ENV
+        run: cd api && dotnet run & echo "API_PID=$!" >> $GITHUB_ENV
         env:
           pgconn: ${{secrets.PGCONN}}
 
