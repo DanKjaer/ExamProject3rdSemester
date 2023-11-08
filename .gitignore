@@ -1,6 +1,3 @@
-﻿*/obj/
-*/bin/
-*/.idea/
-/api/bin/
-/api/.idea/
-/api/obj/
+﻿.idea
+bin
+obj
