@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "integration_tests", "integration_tests\integration_tests.csproj", "{8373773E-451E-4B50-92CB-5BFF45B317D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "infrastucture", "infrastucture\infrastucture.csproj", "{DA72C83A-646D-4FD7-A760-596649EEAA83}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "service", "service\service.csproj", "{34E039D1-41B0-4DD6-BF54-DAFACEA2B135}"
 EndProject
 Global
@@ -36,5 +34,9 @@ Global
 		{34E039D1-41B0-4DD6-BF54-DAFACEA2B135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E039D1-41B0-4DD6-BF54-DAFACEA2B135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E039D1-41B0-4DD6-BF54-DAFACEA2B135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E2ED6EE-D3AC-4682-915C-D70358C45C3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2ED6EE-D3AC-4682-915C-D70358C45C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2ED6EE-D3AC-4682-915C-D70358C45C3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2ED6EE-D3AC-4682-915C-D70358C45C3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
