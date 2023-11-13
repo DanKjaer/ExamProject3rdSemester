@@ -7,9 +7,13 @@
         <ion-buttons>
           <ion-menu-button></ion-menu-button>
           <ion-button slot="icon-only" name="home"><img src="../assets/icon/møøhnika.png" height="60px" width="60px"></ion-button>
-          <ion-button></ion-button>
+          <ion-button class="search" (click)="toggleSearchBar()">
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+          <ion-searchbar *ngIf="showSearchBar" slot="end" style="width: 500px" show-clear-button="focus" value="" dir="ltr">
+          </ion-searchbar>
         </ion-buttons>
-        <ion-searchbar slot="end" style="width: 500px"></ion-searchbar>
+
       </ion-toolbar>
     </ion-header>
   </div>

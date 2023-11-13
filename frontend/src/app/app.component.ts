@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  showSearchBar = false;
   constructor() {}
+
+  toggleSearchBar(){
+    this.showSearchBar = !this.showSearchBar;
+  }
 }
