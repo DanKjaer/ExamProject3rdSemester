@@ -1,0 +1,17 @@
+.center-buttons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -50px;
+}
+
+.home-button {
+  --background-hover: transparent;
+  --background-focused: transparent;
+  --background-activated: transparent;
+  --ripple-color: transparent;
+}
+
+ion-toolbar {
+  position: relative;
+}

@@ -1,19 +1,26 @@
 <ion-app>
-  <div id="main">
+  <!--<div id="main">
     <ion-header>
       <ion-toolbar>
-
-
         <ion-buttons>
-          <ion-menu-button></ion-menu-button>
-          <ion-button slot="icon-only" name="home"><img src="../assets/icon/møøhnika.png" height="60px" width="60px"></ion-button>
-          <ion-button></ion-button>
+            <ion-menu-button slot="start"></ion-menu-button>
+          <ion-col class="col-mid" size="4" style="text-align: center">
+            <ion-title style="text-align: center">
+              <ion-button class="home-button" href="">
+                <img src="../assets/icon/møøhnika.png" width="100px" height="100px">
+              </ion-button>
+          </ion-title>
+          </ion-col>
+            <ion-button class="search">
+              <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+            <ion-searchbar [debounce]="1000" style="max-width: 300px"></ion-searchbar>
         </ion-buttons>
-        <ion-searchbar slot="end" style="width: 500px"></ion-searchbar>
       </ion-toolbar>
     </ion-header>
-  </div>
+  </div>-->
   <ion-menu contentId="main">
-
   </ion-menu>
+  <app-custom-toolbar></app-custom-toolbar>
+
 </ion-app>
