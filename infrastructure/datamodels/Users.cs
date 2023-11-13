@@ -4,9 +4,9 @@ public class Users
 {
     public int UserId { get; set; }
     
-    public string UserEmail { get; set; }
+    public required string UserEmail { get; set; }
     
-    public string UserName { get; set; }
+    public required string UserName { get; set; }
     
     public int PhoneNumber { get; set; }
     
