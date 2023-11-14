@@ -1,26 +1,8 @@
 <ion-app>
   <app-custom-toolbar></app-custom-toolbar>
-  <ion-content>
-  <div id="main">
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons>
-          <ion-menu-button></ion-menu-button>
-          <ion-col size="4" offset="4" style="text-align: center">
-            <ion-title style="text-align: center">
-              <ion-button class="home-button" href="" style="padding: 0; margin: 0;">
-              <img src="../assets/icon/møøhnika.png" height="60px" width="60px">
-              </ion-button>
-            </ion-title>
-          </ion-col>
-          <ion-button class="search" (click)="toggleSearchBar()">
-            <ion-icon slot="icon-only" name="search"></ion-icon>
-          </ion-button>
-          <ion-searchbar *ngIf="showSearchBar" slot="end" style="width: 500px" show-clear-button="focus" value="" dir="ltr">
-          </ion-searchbar>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-  </div>
-  </ion-content>
+
+  <ion-menu contentId="main">
+
+  </ion-menu>
+
 </ion-app>
