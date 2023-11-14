@@ -1,8 +1,8 @@
-.logo {
-  display: inline-block;
-}
-
-.titlelogo div{
-  display: inline-block;
-  margin-bottom: 10px;
+.home-button {
+  --background-hover: transparent;
+  --background-activated: transparent;
+  --background-focused: transparent;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
 }
