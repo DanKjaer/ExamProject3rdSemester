@@ -57,13 +57,13 @@ RETURNING AnimalSpecies.SpeciesID as {nameof(AnimalSpecies.SpeciesID)},
     public AnimalSpecies GetSpeciesById(int speciesID)
     {
         var sql = @$"
-SELECT 
-    speciesID as {nameof(AnimalSpecies.SpeciesID)},
-    speciesName as {nameof(AnimalSpecies.SpeciesName)},
-    speciesDescription as {nameof(AnimalSpecies.SpeciesDescription)},
-    speciesPicture as {nameof(AnimalSpecies.SpeciesPicture)} 
-FROM AnimalDB.AnimalSpecies WHERE speciesID = @speciesID;
-";
+            SELECT 
+                SpeciesID,
+                SpeciesName,
+                SpeciesDescription,
+                SpeciesPicture
+            FROM AnimalDB.AnimalSpecies WHERE speciesID = @speciesID;
+            ";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.QueryFirst<AnimalSpecies>(sql, new {speciesID});
