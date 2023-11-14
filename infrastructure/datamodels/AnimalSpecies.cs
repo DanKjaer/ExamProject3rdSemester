@@ -2,7 +2,7 @@
 
 public class AnimalSpecies
 {
-    public int SpeciesID { get; set; }
+    public int? SpeciesID { get; set; }
     
     public required string SpeciesName { get; set; }
     

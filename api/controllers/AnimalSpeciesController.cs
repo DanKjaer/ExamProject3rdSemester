@@ -1,5 +1,6 @@
 ﻿using infrastructure.datamodels;
 using Microsoft.AspNetCore.Mvc;
+using service.Services;
 
 namespace api.Controllers;
 
@@ -7,49 +8,47 @@ namespace api.Controllers;
 public class AnimalSpeciesController
 {
 
-    //private readonly AnimalSpeciesService _animalSpeciesService;
+    private readonly AnimalSpeciesService _animalSpeciesService;
     
-    public AnimalSpeciesController()
+    public AnimalSpeciesController(AnimalSpeciesService animalSpeciesService)
     {
-        // _animalSpeciesService = animalSpeciesService;
+        _animalSpeciesService = animalSpeciesService;
     }
 
     [HttpGet]
     [Route("/api/animalspeciesfeed")]
     public IEnumerable<AnimalSpeciesFeed> GetAnimalSpeciesFeed()
     {
-        throw new NotImplementedException();
+        return _animalSpeciesService.GetSpeciesForFeed();
     }
 
     [HttpGet]
     [Route("/api/animalspecies/{id}")]
     public AnimalSpecies GetAnimalSpecies(int id)
     {
-        throw new NotImplementedException();
+        return _animalSpeciesService.GetSpeciesById(id);
     }
     
     [HttpPost]
     [Route("/api/animalspecies")]
     public AnimalSpecies CreateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
     {
-        throw new NotImplementedException();
+        return _animalSpeciesService.CreateSpecies(animalSpecies);
     }
 
     [HttpPut]
-    [Route("/api/animalspecies/{id}")]
+    [Route("/api/animalspecies")]
     public AnimalSpecies UpdateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
     {
-        throw new NotImplementedException();
+        return _animalSpeciesService.UpdateSpecies(animalSpecies);
     }
 
     [HttpDelete]
     [Route("/api/animalspecies/{id}")]
     public object DeleteAnimalSpecies(int id)
     {
-        throw new NotImplementedException();
-        /*
-         * if (service.DeleteAnimal) return new {message = "good"
-         * else return new {message = "bad"
-         */
+        if (_animalSpeciesService.DeleteSpecies(id)) return new { message = "Animal species successfully deleted from system" };
+        
+        return new { message = "Failed deleting the animal species from the system" };
     }
 }

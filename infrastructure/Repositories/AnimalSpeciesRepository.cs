@@ -73,12 +73,12 @@ FROM AnimalDB.AnimalSpecies WHERE speciesID = @speciesID;
     public IEnumerable<AnimalSpeciesFeed> GetSpeciesForFeed()
     {
         string sql = @$"
-SELECT                                                               
-    speciesID as {{nameof(AnimalSpecies.SpeciesID)}},                  
-    speciesName as {{nameof(AnimalSpecies.SpeciesName)}},              
-    speciesPicture as {{nameof(AnimalSpecies.SpeciesPicture)}}
-FROM AnimalDB.AnimalSpecies;              
-";
+            SELECT                                                               
+                SpeciesID,                  
+                SpeciesName,              
+                SpeciesPicture
+            FROM AnimalDB.AnimalSpecies;              
+            ";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Query<AnimalSpeciesFeed>(sql);

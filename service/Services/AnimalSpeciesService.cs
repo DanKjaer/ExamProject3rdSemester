@@ -30,13 +30,9 @@ public class AnimalSpeciesService
         );
     }
 
-    public void DeleteSpecies(int speciesID)
+    public bool DeleteSpecies(int speciesID)
     {
-        var result = _animalSpeciesRepository.DeleteSpecies(speciesID);
-            if (!result)
-            {
-                throw new Exception("Could not delete AnimalSpecies");
-            }
+        return _animalSpeciesRepository.DeleteSpecies(speciesID);
     }
 
     public AnimalSpecies GetSpeciesById(int speciesID)
