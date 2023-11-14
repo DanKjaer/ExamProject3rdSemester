@@ -2,7 +2,7 @@ namespace infrastructure.datamodels;
 
 public class PasswordHash
 {
-    public int UserId { get; set; }
+    public int UserID { get; set; }
     
     public required string PasswordHashed { get; set; }
     

@@ -2,7 +2,7 @@ namespace infrastructure.datamodels;
 
 public class Users
 {
-    public int UserId { get; set; }
+    public int UserID { get; set; }
     
     public required string UserEmail { get; set; }
     
