@@ -7,17 +7,16 @@
 
   </ion-title>
 
-  <ion-buttons slot="end">
-
-    <ion-button>
+  <ion-buttons slot="end" >
+    <ion-button *ngIf="!isSearch" (click)="toggleSearch()" [@transformSearch]="'*'">
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
-    <ion-searchbar style="max-width: 300px; text-align: left" ></ion-searchbar>
+    <ion-searchbar animated="true" style="max-width: 300px; text-align: left" *ngIf="isSearch" (focusout)="toggleSearch()" [@transformSearch]="'*'"></ion-searchbar>
   </ion-buttons>
 
 </ion-toolbar>
 <ion-buttons class="center-buttons">
-  <ion-button class="home-button">
+  <ion-button class="home-button" href="">
     <img src="../assets/icon/møøhnika.png" height="100px" width="100px">
   </ion-button>
 </ion-buttons>
