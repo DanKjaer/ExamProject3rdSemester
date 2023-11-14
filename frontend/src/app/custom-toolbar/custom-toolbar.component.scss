@@ -1,0 +1,19 @@
+.center-buttons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scale(var(--scaleValue, 1));
+  margin-top: -50px;
+  transition: all 0.3s ease-in-out;
+}
+
+.home-button {
+  --background-hover: transparent;
+  --background-focused: transparent;
+  --background-activated: transparent;
+  --ripple-color: transparent;
+}
+
+ion-toolbar {
+  position: relative;
+  box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
