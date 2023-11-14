@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
+import {IonSearchbar} from "@ionic/angular";
 
 @Component({
   selector: 'app-custom-toolbar',
@@ -19,6 +20,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
   ]
 })
 export class CustomToolbarComponent  implements OnInit {
+  @ViewChild('searchbar', {static: false}) searchbar!: IonSearchbar;
   isSearch: boolean = false;
   constructor() { }
 
@@ -26,5 +28,13 @@ export class CustomToolbarComponent  implements OnInit {
 
   toggleSearch() {
     this.isSearch = !this.isSearch;
+
+    if (this.isSearch) {
+      setTimeout(() => {
+        this.searchbar.setFocus();
+      }, 100)
+    }
   }
+
+  protected readonly focus = focus;
 }

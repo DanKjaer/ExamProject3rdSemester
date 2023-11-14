@@ -11,7 +11,7 @@
     <ion-button *ngIf="!isSearch" (click)="toggleSearch()" [@transformSearch]="'*'">
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
-    <ion-searchbar animated="true" style="max-width: 300px; text-align: left" *ngIf="isSearch" (focusout)="toggleSearch()" [@transformSearch]="'*'"></ion-searchbar>
+    <ion-searchbar #searchbar style="max-width: 300px; text-align: left" *ngIf="isSearch" (focusout)="toggleSearch()" [@transformSearch]="'*'"></ion-searchbar>
   </ion-buttons>
 
 </ion-toolbar>
