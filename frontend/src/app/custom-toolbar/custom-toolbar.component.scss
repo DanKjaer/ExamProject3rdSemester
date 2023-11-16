@@ -11,9 +11,32 @@
   --background-focused: transparent;
   --background-activated: transparent;
   --ripple-color: transparent;
+  transition: 500ms ease-in-out;
 }
+
+.home-button:hover {
+  scale: 1.1;
+}
+
 
 ion-toolbar {
   position: relative;
   box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.burger-buttons {
+  margin: 15px;
+  text-align: center;
+}
+ion-button {
+  width: 200px;
+}
+
+ion-menu::part(backdrop) {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+ion-searchbar {
+  max-width: 300px;
+  text-align: left;
 }
