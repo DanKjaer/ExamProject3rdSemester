@@ -46,15 +46,38 @@ public class AnimalController
     [Route("/api/animal/{id}")]
     public object DeleteAnimal(int id)
     {
-        if (_animalService.DeleteAnimal(id)) return new { message = "Animal species successfully deleted from system" };
+        if (_animalService.DeleteAnimal(id)) return new { message = "Animal successfully deleted from system" };
         
-        return new { message = "Failed deleting the animal species from the system" };
+        return new { message = "Failed deleting the animal from the system" };
     }
 
     [HttpPost]
-    [Route("/api/animalnotes/{id}")]
-    public AnimalNote CreateAnimalNote(int id, [FromBody] AnimalNote animalNote)
+    [Route("/api/animalnote/")]
+    public AnimalNote CreateAnimalNote([FromBody] AnimalNote animalNote)
     {
-        return _animalService.CreateAnimalNote(id, animalNote);
+        return _animalService.CreateAnimalNote(animalNote);
+    }
+
+    [HttpDelete]
+    [Route("/api/animalnote/{id}")]
+    public object DeleteAnimalNote(int id)
+    {
+        if (_animalService.DeleteAnimalNote(id)) return new { message = "Animal note successfully deleted from system" };
+        
+        return new { message = "Failed deleting the animal note from the system" };
+    }
+
+    [HttpGet]
+    [Route("/api/animalnote/{id}")]
+    public IEnumerable<AnimalNote> GetAnimalNotes(int id)
+    {
+        return _animalService.GetAnimalNotes(id);
+    }
+
+    [HttpPut]
+    [Route("/api/animalnote")]
+    public AnimalNote UpdateAnimalNote([FromBody] AnimalNote animalNote)
+    {
+        return _animalService.UpdateAnimalNote(animalNote);
     }
 }

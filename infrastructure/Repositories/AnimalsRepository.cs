@@ -83,7 +83,7 @@ public class AnimalsRepository
             ";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<AnimalNote>(sql, new { AnimalID = animalNote.AnimalID, animalNote.NoteDate, animalNote.NoteText});
+            return conn.QueryFirst<AnimalNote>(sql, new { animalNote.AnimalID, NoteDate = DateTimeOffset.UtcNow, animalNote.NoteText});
         }
     }
     
@@ -93,6 +93,32 @@ public class AnimalsRepository
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Execute(sql, new { noteID }) == 1;
+        }
+    }
+
+    public IEnumerable<AnimalNote> GetAnimalNotes(int id)
+    {
+        string sql = @$"
+            SELECT *
+            FROM animaldb.animalnote
+            WHERE animalID = @id
+            ";
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Query<AnimalNote>(sql, new {id});
+        }
+    }
+
+    public AnimalNote UpdateAnimalNote(AnimalNote animalNote)
+    {
+        var sql = $@"
+            UPDATE animaldb.animalnote SET notedate = @NoteDate , notetext = @NoteText
+            WHERE noteid = @NoteID 
+            RETURNING *;
+            ";
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.QueryFirst<AnimalNote>(sql, new { NoteDate = DateTimeOffset.UtcNow, animalNote.NoteText, animalNote.NoteID});
         }
     }
 }

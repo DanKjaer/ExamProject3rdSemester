@@ -37,8 +37,23 @@ public class AnimalService
         return _animalsRepository.GetAnimalsForFeed();
     }
 
-    public AnimalNote CreateAnimalNote(int id, AnimalNote animalNote)
+    public AnimalNote CreateAnimalNote(AnimalNote animalNote)
     {
-        return _animalsRepository.CreateAnimalNote(id, animalNote);
+        return _animalsRepository.CreateNote(animalNote);
+    }
+
+    public Boolean DeleteAnimalNote(int id)
+    {
+        return _animalsRepository.DeleteNote(id);
+    }
+
+    public IEnumerable<AnimalNote> GetAnimalNotes(int id)
+    {
+        return _animalsRepository.GetAnimalNotes(id);
+    }
+
+    public AnimalNote UpdateAnimalNote(AnimalNote animalNote)
+    {
+        return _animalsRepository.UpdateAnimalNote(animalNote);
     }
 }
