@@ -1,38 +1,39 @@
 ﻿using infrastructure.datamodels;
+using infrastructure.Repositories;
 
 namespace service.Services;
 
 public class AnimalService
 {
-    private readonly AnimalRepository _animalRepository;
+    private readonly AnimalsRepository _animalsRepository;
 
-    public AnimalService(AnimalRepository animalRepository)
+    public AnimalService(AnimalsRepository animalsRepository)
     {
-        _animalRepository = animalRepository;
+        _animalsRepository = animalsRepository;
     }
 
     public Animals CreateAnimal(Animals animalModel)
     {
-        return _animalRepository.CreateAnimal(animalModel);
+        return _animalsRepository.CreateAnimals(animalModel);
     }
 
     public Animals UpdateAnimal(Animals animalModel)
     {
-        return _animalRepository.UpdateAnimal(animalModel);
+        return _animalsRepository.UpdateAnimals(animalModel);
     }
 
     public bool DeleteAnimal(int animalId)
     {
-        return _animalRepository.DeleteAnimal(animalId);
+        return _animalsRepository.DeleteAnimals(animalId);
     }
 
     public Animals GetAnimalById(int animalId)
     {
-        return _animalRepository.GetAnimalById(animalId);
+        return _animalsRepository.GetAnimalById(animalId);
     }
 
     public IEnumerable<AnimalFeed> GetAnimalsForFeed()
     {
-        return _animalRepository.GetAnimalForFeed();
+        return _animalsRepository.GetAnimalsForFeed();
     }
 }

@@ -4,13 +4,13 @@ namespace infrastructure.datamodels;
 
 public class Users
 {
-    public int UserID { get; set; }
+    public int? UserID { get; set; }
     
     public required EmailAddressAttribute UserEmail { get; set; }
     
     public required string UserName { get; set; }
     
-    public PhoneAttribute PhoneNumber { get; set; }
+    public required PhoneAttribute PhoneNumber { get; set; }
     
     public int UserType { get; set; }
     

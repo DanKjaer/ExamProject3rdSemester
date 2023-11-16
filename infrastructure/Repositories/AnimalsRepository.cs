@@ -18,28 +18,26 @@ public class AnimalsRepository
     public Animals CreateAnimals(Animals animals)
     {
         var sql = $@"
-INSERT INTO AnimalDB.Animals (animalName, animalBirthday, animalGender, animalDead, animalPicture, animalWeight)
-VALUES (@animalName, @animalBirthday, @animalGender, @animalDead, @animalPicture, @animalWeight)
-RETURNING Animals.AnimalID,
-    animalName, animalBirthday, animalGender, animalDead, animalPicture, animalWeight;
-";
+            INSERT INTO AnimalDB.Animals (SpeciesID, AnimalName, AnimalBirthday, AnimalGender, AnimalDead, AnimalPicture, AnimalWeight)
+            VALUES (@SpeciesID, @AnimalName, @AnimalBirthday, @AnimalGender, @AnimalDead, @AnimalPicture, @AnimalWeight)
+            RETURNING *;
+            ";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Animals>(sql, new { animals.AnimalName, animals.AnimalBirthday, animals.AnimalGender, animals.AnimalDead, animals.AnimalPicture, animals.AnimalWeight });
+            return conn.QueryFirst<Animals>(sql, new { SpeciesID = animals.SpeciesID, animals.AnimalName, animals.AnimalBirthday, animals.AnimalGender, animals.AnimalDead, animals.AnimalPicture, animals.AnimalWeight });
         }
     }
     
     public Animals UpdateAnimals(Animals animals)
     {
         var sql = $@"
-UPDATE AnimalDB.Animals SET animalName = @animalName, animalBirthday = @animalBirthday, animalGender = @animalGender, animalDead = @animalDead, animalPicture = @animalPicture, animalWeight = @animalWeight
-WHERE animalID = @animalID 
-RETURNING Animals.AnimalID,
-    animalName, animalBirthday, animalGender, animalDead, animalPicture, animalWeight;
-";
+            UPDATE AnimalDB.Animals SET SpeciesID = @SpeciesID, animalName = @animalName, animalBirthday = @animalBirthday, animalGender = @animalGender, animalDead = @animalDead, animalPicture = @animalPicture, animalWeight = @animalWeight
+            WHERE AnimalID = @AnimalID 
+            RETURNING *;
+            ";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Animals>(sql, new {animals.AnimalName, animals.AnimalBirthday, animals.AnimalGender, animals.AnimalDead, animals.AnimalPicture, animals.AnimalWeight});
+            return conn.QueryFirst<Animals>(sql, new { SpeciesID = animals.SpeciesID, animals.AnimalName, animals.AnimalBirthday, animals.AnimalGender, animals.AnimalDead, animals.AnimalPicture, animals.AnimalWeight, animals.AnimalID});
         }
     }
     
@@ -55,10 +53,9 @@ RETURNING Animals.AnimalID,
     public Animals GetAnimalById(int animalID)
     {
         var sql = @$"
-SELECT 
-    animalName, animalBirthday, animalGender, animalDead, animalPicture, animalWeight
-FROM AnimalDB.Animals WHERE animalID = @animalID;
-";
+            SELECT *
+            FROM AnimalDB.Animals WHERE animalID = @animalID;
+            ";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.QueryFirst<Animals>(sql, new {animalID});
@@ -68,8 +65,7 @@ FROM AnimalDB.Animals WHERE animalID = @animalID;
     public IEnumerable<AnimalFeed> GetAnimalsForFeed()
     {
         string sql = @$"
-            SELECT                                                               
-                animalName, animalBirthday, animalGender, animalDead, animalPicture, animalWeight
+            SELECT AnimalID, AnimalName
             FROM AnimalDB.Animals;              
             ";
         using (var conn = _dataSource.OpenConnection())

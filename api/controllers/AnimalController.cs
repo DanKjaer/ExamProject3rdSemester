@@ -30,16 +30,16 @@ public class AnimalController
     
     [HttpPost]
     [Route("/api/animal")]
-    public Animals CreateAnimal([FromBody] Animals animalSpecies)
+    public Animals CreateAnimal([FromBody] Animals animal)
     {
-        return _animalService.CreateAnimal(animalSpecies);
+        return _animalService.CreateAnimal(animal);
     }
 
     [HttpPut]
     [Route("/api/animal")]
-    public Animals UpdateAnimal([FromBody] Animals animalSpecies)
+    public Animals UpdateAnimal([FromBody] Animals animal)
     {
-        return _animalService.UpdateAnimal(animalSpecies);
+        return _animalService.UpdateAnimal(animal);
     }
 
     [HttpDelete]
