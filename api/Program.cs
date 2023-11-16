@@ -11,7 +11,9 @@ builder.Services.AddNpgsqlDataSource(Utilities.ProperlyFormattedConnectionString
 
 // Add services to the container.
 builder.Services.AddSingleton<AnimalSpeciesRepository>();
+builder.Services.AddSingleton<AnimalsRepository>();
 builder.Services.AddSingleton<AnimalSpeciesService>();
+builder.Services.AddSingleton<AnimalService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
