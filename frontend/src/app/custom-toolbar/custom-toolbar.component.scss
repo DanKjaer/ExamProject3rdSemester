@@ -40,3 +40,20 @@ ion-searchbar {
   max-width: 300px;
   text-align: left;
 }
+
+ion-accordion {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  max-width: 200px;
+}
+
+.accordion-header {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.ion-padding {
+  display: inline-block;
+}

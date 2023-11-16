@@ -44,9 +44,15 @@
       <ion-icon slot="end" name="people-circle-outline"></ion-icon>
     </ion-button>
     <br/>
-    <ion-button fill="outline" color="dark">
-      Animal species
-      <ion-icon slot="end" name="paw-outline"></ion-icon>
-    </ion-button>
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item class="accordion-header" slot="header" color="dark" fill="outline">
+          Animal species
+          <ion-icon slot="end" name="paw-outline" color="dark"></ion-icon>
+        </ion-item>
+        <div class="ion-padding" slot="content"><ion-button>test</ion-button></div>
+      </ion-accordion>
+    </ion-accordion-group>
+
   </div>
 </ion-menu>
