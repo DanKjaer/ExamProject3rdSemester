@@ -64,6 +64,7 @@ SELECT
     SpeciesPicture 
 FROM AnimalDB.AnimalSpecies WHERE speciesID = @speciesID;
 ";
+
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.QueryFirst<AnimalSpecies>(sql, new {speciesID});
