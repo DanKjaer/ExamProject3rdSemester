@@ -1,17 +1,16 @@
 <ion-app>
   <ion-content>
     <div class="card-container">
-      <ion-card class="results">
-        <ion-toolbar>
-          <ion-title >Dyrenavn</ion-title>
-        </ion-toolbar>
-        <div class="animal-box-full">
+      <ion-card class="results" *ngFor="let AnimalSpeciesFeed of state.animalSpeciesFeed">
+          <ion-toolbar>
+            <ion-title >{{AnimalSpeciesFeed.SpeciesName}}</ion-title>
+          </ion-toolbar>
+        <!--<div class="animal-box-full">
         <div class="animal-image-container">
-          <img class="animal-image" src="../assets/icon/møøhnika.png">
+          <img class="animal-image" [src]="AnimalSpeciesFeed?.SpeciesPicture || '../assets/icon/møøhnika.png'">
         </div>
-        </div>
+        </div>-->
       </ion-card>
     </div>
-
   </ion-content>
 </ion-app>
