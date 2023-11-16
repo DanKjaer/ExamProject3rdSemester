@@ -36,4 +36,9 @@ public class AnimalService
     {
         return _animalsRepository.GetAnimalsForFeed();
     }
+
+    public AnimalNote CreateAnimalNote(int id, AnimalNote animalNote)
+    {
+        return _animalsRepository.CreateAnimalNote(id, animalNote);
+    }
 }

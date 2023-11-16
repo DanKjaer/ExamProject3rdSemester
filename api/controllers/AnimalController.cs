@@ -50,4 +50,11 @@ public class AnimalController
         
         return new { message = "Failed deleting the animal species from the system" };
     }
+
+    [HttpPost]
+    [Route("/api/animalnotes/{id}")]
+    public AnimalNote CreateAnimalNote(int id, [FromBody] AnimalNote animalNote)
+    {
+        return _animalService.CreateAnimalNote(id, animalNote);
+    }
 }
