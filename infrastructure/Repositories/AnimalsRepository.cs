@@ -74,4 +74,25 @@ public class AnimalsRepository
         }
     }
     
+    public AnimalNote CreateNote(AnimalNote animalNote)
+    {
+        var sql = $@"
+            INSERT INTO AnimalDB.AnimalNote (AnimalID, NoteDate, NoteText)
+            VALUES (@AnimalID, @NoteDate, @NoteText)
+            RETURNING *;
+            ";
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.QueryFirst<AnimalNote>(sql, new { AnimalID = animalNote.AnimalID, animalNote.NoteDate, animalNote.NoteText});
+        }
+    }
+    
+    public bool DeleteNote(int noteID)
+    {
+        var sql = @"DELETE FROM AnimalDB.AnimalNote WHERE noteID = @noteID;";
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.Execute(sql, new { noteID }) == 1;
+        }
+    }
 }
