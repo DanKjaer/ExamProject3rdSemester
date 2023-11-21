@@ -4,6 +4,12 @@
   justify-content: flex-start; /* Left to right */
   align-content: flex-start; /* Top to bottom */
   gap: 15px; /* Adjust the gap between cards as needed */
+  margin-top: 130px;
+  width: 1200px;
+}
+
+.animal-box-name{
+  text-align: center;
 }
 
 .animal-box-full {
@@ -11,7 +17,7 @@
 }
 
 .animal-image-container{
-  float: right;
+  text-align: center;
   padding: 4px 10px 4px 0;
 }
 
