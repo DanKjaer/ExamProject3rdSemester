@@ -24,6 +24,8 @@ export class AnimalBoxComponent  implements OnInit {
     const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('http://localhost:5000/api/animalspeciesfeed'));
     console.log(result);
     this.state.animalSpeciesFeed = result!;
+
+    console.log(this.state.animalSpeciesFeed[0].speciesName)
     }catch(error){
       console.error('Error fetching data:', error)
     }

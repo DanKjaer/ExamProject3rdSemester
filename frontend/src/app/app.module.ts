@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-    declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent],
+    declarations: [CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent],
     imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule],
   exports: [RouterModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
