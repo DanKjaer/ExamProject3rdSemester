@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {AnimalSpeciesFeed} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,7 +14,7 @@ import {State} from "../../state";
 })
 export class AnimalBoxComponent  implements OnInit {
 
-  constructor(public http: HttpClient, public state: State) { }
+  constructor(public http: HttpClient, public state: State, public router: Router) { }
 
   ngOnInit() {
     this.getAnimalSpeciesFeed()
@@ -27,6 +28,10 @@ export class AnimalBoxComponent  implements OnInit {
     }catch(error){
       console.error('Error fetching data:', error)
     }
+  }
+
+  goToSpecies(){
+    this.router.navigate(['/species'])
   }
 
 }
