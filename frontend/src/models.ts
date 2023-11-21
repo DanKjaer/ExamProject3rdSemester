@@ -1,7 +1,7 @@
 export class AnimalSpeciesFeed{
-  SpeciesID?: number;
-  SpeciesName?: string;
-  SpeciesPicture?: string;
+  speciesID?: number;
+  speciesName?: string;
+  speciesPicture?: string;
 }
 
 export class AnimalSpecies{
