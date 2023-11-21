@@ -1,0 +1,29 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Left to right */
+  align-content: flex-start; /* Top to bottom */
+  gap: 15px; /* Adjust the gap between cards as needed */
+}
+
+.animal-box-full {
+  margin: 4px 0 0 4px;
+}
+
+.animal-image-container{
+  float: right;
+  padding: 4px 10px 4px 0;
+}
+
+.animal-image{
+  max-height: 170px;
+  max-width: 170px;
+  border-radius: 3px;
+}
+
+ion-card.results {
+  flex: 0 0 calc(19% - 16px); /* Adjust the width as needed (3 cards per row) */
+  max-width: calc(30% - 16px); /* Adjust the width as needed (3 cards per row) */
+  /* Add any other styling you want for the cards here */
+  margin-bottom: 16px; /* Add margin to create space between rows */
+}

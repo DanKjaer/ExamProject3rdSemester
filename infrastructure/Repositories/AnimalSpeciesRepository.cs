@@ -18,10 +18,10 @@ public class AnimalSpeciesRepository
         var sql = $@"
 INSERT INTO AnimalDB.AnimalSpecies (speciesName, speciesDescription, speciesPicture)
 VALUES (@speciesName, @speciesDescription, @speciesPicture)
-RETURNING AnimalSpecies.SpeciesID as {nameof(AnimalSpecies.SpeciesID)},
-    speciesName as {nameof(AnimalSpecies.SpeciesName)},
-    speciesDescription as {nameof(AnimalSpecies.SpeciesDescription)},
-    speciesPicture as {nameof(AnimalSpecies.SpeciesPicture)};
+RETURNING AnimalSpecies.SpeciesID,
+    SpeciesName,
+    SpeciesDescription,
+    SpeciesPicture;
 ";
         using (var conn = _dataSource.OpenConnection())
         {
@@ -34,10 +34,10 @@ RETURNING AnimalSpecies.SpeciesID as {nameof(AnimalSpecies.SpeciesID)},
         var sql = $@"
 UPDATE AnimalDB.AnimalSpecies SET speciesName = @speciesName, speciesDescription = @speciesDescription, speciesPicture = @speciesPicture
 WHERE speciesID = @speciesID
-RETURNING AnimalSpecies.SpeciesID as {nameof(AnimalSpecies.SpeciesID)},
-    speciesName as {nameof(AnimalSpecies.SpeciesName)},
-    speciesDescription as {nameof(AnimalSpecies.SpeciesDescription)},
-    speciesPicture as {nameof(AnimalSpecies.SpeciesPicture)};
+RETURNING AnimalSpecies.SpeciesID,
+    SpeciesName,
+    SpeciesDescription,
+    SpeciesPicture;
 ";
         using (var conn = _dataSource.OpenConnection())
         {
@@ -58,12 +58,13 @@ RETURNING AnimalSpecies.SpeciesID as {nameof(AnimalSpecies.SpeciesID)},
     {
         var sql = @$"
 SELECT 
-    speciesID as {nameof(AnimalSpecies.SpeciesID)},
-    speciesName as {nameof(AnimalSpecies.SpeciesName)},
-    speciesDescription as {nameof(AnimalSpecies.SpeciesDescription)},
-    speciesPicture as {nameof(AnimalSpecies.SpeciesPicture)} 
+    SpeciesID,
+    SpeciesName,
+    SpeciesDescription,
+    SpeciesPicture 
 FROM AnimalDB.AnimalSpecies WHERE speciesID = @speciesID;
 ";
+
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.QueryFirst<AnimalSpecies>(sql, new {speciesID});
