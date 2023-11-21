@@ -67,6 +67,46 @@ public class UserRepository
             return conn.Query<UserType>(sqlGetUserTypes);
         }
     }*/
-    
-    
+
+
+    public void CreatePassword(string hash, string salt, int? userId)
+    {
+        var sql = "INSERT INTO animaldb.password " +
+                  "(userid, passwordhashed,passwordsalt) " +
+                  "VALUES (@userId, @hash, @salt)";
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Query(sql, new {userId, hash, salt});
+        }
+    }
+
+    public Users CreateUser(Users user)
+    {
+        var sql = "INSERT INTO animaldb.users" +
+                  "(UserName, UserEmail, PhoneNumber, Usertype)" +
+                  "VALUES (@UserName, @UserEmail, @PhoneNumber, @UserType) " +
+                  "RETURNING *;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.QueryFirst<Users>(sql, new {user.UserName, user.UserEmail, user.PhoneNumber, user.UserType});
+        }
+    }
+
+    public void UpdatePassword(string hash, string salt, int? userId)
+    {
+        var sql = "UPDATE animaldb.password " +
+                  "SET passwordhashed=@hash, salt=@salt " +
+                  "WHERE userid=@userId;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Query(sql, new {hash, salt, userId});
+        }
+    }
+
+    public Users UpdateUser(Users user)
+    {
+        throw new NotImplementedException();
+    }
 }

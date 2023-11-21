@@ -27,6 +27,18 @@ public class UserController
     {
         return _userService.GetUserById(id);
     }
-    
-    
+
+    [HttpPost]
+    [Route("/api/users")]
+    public Users CreateUser([FromBody] Users user, [FromQuery]string password)
+    {
+        return _userService.CreateUser(user, password);
+    }
+
+    [HttpPut]
+    [Route("/api/users")]
+    public Users UpdateUser([FromBody] Users user, [FromQuery]string? password)
+    {
+        return _userService.UpdateUser(user, password);
+    }
 }

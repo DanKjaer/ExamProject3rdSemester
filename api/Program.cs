@@ -1,5 +1,6 @@
 using infrastructure;
 using infrastructure.Repositories;
+using service.PasswordHashing;
 using service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddSingleton<UserRepository>();
 builder.Services.AddSingleton<AnimalSpeciesService>();
 builder.Services.AddSingleton<AnimalService>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<HashingArgon2id>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
