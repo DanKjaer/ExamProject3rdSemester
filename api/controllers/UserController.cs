@@ -18,7 +18,7 @@ public class UserController
     [Route("/api/users")]
     public IEnumerable<Users> GetUsers()
     {
-        return _userService.GetUsersForFeed();
+        return _userService.GetUsers();
     }
 
     [HttpGet]

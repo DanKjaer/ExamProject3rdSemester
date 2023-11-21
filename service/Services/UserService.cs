@@ -17,8 +17,8 @@ public class UserService
         return _userRepository.GetUserById(userId);
     }
 
-    public IEnumerable<Users> GetUsersForFeed()
+    public IEnumerable<Users> GetUsers()
     {
-        return _userRepository.GetUsersForFeed();
+        return _userRepository.GetUsers();
     }
 }

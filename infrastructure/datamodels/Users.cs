@@ -12,7 +12,7 @@ public class Users
     
     public required PhoneAttribute PhoneNumber { get; set; }
     
-    public required UserType UserType { get; set; }
+    public required int UserType { get; set; }
     
     public bool Disabled { get; set; }
     
