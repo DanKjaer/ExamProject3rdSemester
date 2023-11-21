@@ -1,7 +1,7 @@
 <ion-app>
   <ion-content>
       <div class="card-container">
-      <ion-card class="results" *ngFor="let AnimalSpeciesFeed of state.animalSpeciesFeed" (click)="goToSpecies()">
+      <ion-card class="results" *ngFor="let AnimalSpeciesFeed of state.animalSpeciesFeed" (click)="goToSpecies(AnimalSpeciesFeed.speciesID)">
         <ion-toolbar>
           <ion-title class="animal-box-name">{{AnimalSpeciesFeed.speciesName}}</ion-title>
         </ion-toolbar>

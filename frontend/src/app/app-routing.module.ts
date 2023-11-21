@@ -9,9 +9,13 @@ const routes: Routes = [
     component: AnimalBoxComponent
   },
   {
-    path: 'species',
+    path: 'species/:id',
     component: SpeciesComponent
-  }
+  },
+/*  {
+    path: 'Employee',
+    component: EmployeeComponent
+  }*/
 ];
 
 @NgModule({

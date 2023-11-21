@@ -30,8 +30,9 @@ export class AnimalBoxComponent  implements OnInit {
     }
   }
 
-  goToSpecies(){
-    this.router.navigate(['/species'])
+  goToSpecies(animalNumber: number){
+    this.router.navigate(['/species/' + animalNumber])
   }
 
+  protected readonly AnimalSpeciesFeed = AnimalSpeciesFeed;
 }
