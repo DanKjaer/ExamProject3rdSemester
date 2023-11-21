@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
+  //standalone: true,
   templateUrl: 'app.component.html',
   imports: [RouterModule, IonicModule],
   styleUrls: ['app.component.scss'],
