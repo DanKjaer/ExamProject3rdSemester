@@ -15,10 +15,10 @@ public class AnimalController
     }
 
     [HttpGet]
-    [Route("/api/animalfeed")]
-    public IEnumerable<AnimalFeed> GetAnimalFeed()
+    [Route("/api/animalfeed/{id}")]
+    public IEnumerable<AnimalFeed> GetAnimalFeed(int id)
     {
-        return _animalService.GetAnimalsForFeed();
+        return _animalService.GetAnimalsForFeed(id);
     }
 
     [HttpGet]
