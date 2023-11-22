@@ -62,15 +62,15 @@ public class AnimalsRepository
         }
     }
     
-    public IEnumerable<AnimalFeed> GetAnimalsForFeed()
+    public IEnumerable<AnimalFeed> GetAnimalsForFeed(int SpeciesID)
     {
         string sql = @$"
             SELECT AnimalID, AnimalName
-            FROM AnimalDB.Animals;              
-            ";
+            FROM AnimalDB.Animals 
+            WHERE SpeciesID=@SpeciesID;";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<AnimalFeed>(sql);
+            return conn.Query<AnimalFeed>(sql, new { SpeciesID });
         }
     }
     

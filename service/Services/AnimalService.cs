@@ -32,9 +32,9 @@ public class AnimalService
         return _animalsRepository.GetAnimalById(animalId);
     }
 
-    public IEnumerable<AnimalFeed> GetAnimalsForFeed()
+    public IEnumerable<AnimalFeed> GetAnimalsForFeed(int id)
     {
-        return _animalsRepository.GetAnimalsForFeed();
+        return _animalsRepository.GetAnimalsForFeed(id);
     }
 
     public AnimalNote CreateAnimalNote(AnimalNote animalNote)
