@@ -16,5 +16,5 @@ public class Users
     
     public bool Disabled { get; set; }
     
-    public DateOnly DisabledDate { get; set; }
+    public DateTime? ToBeDisabledDate { get; set; }
 }

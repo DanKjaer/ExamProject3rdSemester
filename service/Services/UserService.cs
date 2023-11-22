@@ -45,6 +45,16 @@ public class UserService
             _userRepository.UpdatePassword(hash, salt, user.UserID);
         }
 
+        if (user.Disabled == true)
+        {
+            _userRepository.DisableUser(user);
+        }
+
+        if (user.ToBeDisabledDate(user))
+        {
+            _userRepository.SetToBeDisabledDate(user);
+        }
+        
         return _userRepository.UpdateUser(user);
     }
 }
