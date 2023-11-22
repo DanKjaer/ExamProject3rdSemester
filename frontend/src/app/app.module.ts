@@ -12,9 +12,11 @@ import {ProfilePictureComponent} from "./profile-picture/profile-picture.compone
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {SpeciesComponent} from "./species/species.component";
+import {AnimalPictureComponent} from "./animal-picture/animal-picture.component";
+import {AnimalNamesComponent} from "./animal-names/animal-names.component";
 
 @NgModule({
-    declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent, SpeciesComponent],
+  declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent, SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent],
     imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule],
     exports: [RouterModule, AnimalBoxComponent],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

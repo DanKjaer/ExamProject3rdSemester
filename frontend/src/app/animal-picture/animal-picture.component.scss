@@ -1,0 +1,7 @@
+ion-card.animal-profile-flex {
+  flex: 0 0 calc(10% - 16px); /* Adjust the width as needed (3 cards per row) */
+  max-width: calc(20% - 16px); /* Adjust the width as needed (3 cards per row) */
+  /* Add any other styling you want for the cards here */
+  margin-bottom: 16px; /* Add margin to create space between rows */
+  margin-top: 500px;
+}
