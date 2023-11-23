@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using Dapper;
 using infrastructure.datamodels;
 using Npgsql;
@@ -7,7 +8,7 @@ namespace infrastructure.Repositories;
 public class UserRepository
 {
     private NpgsqlDataSource _dataSource;
-
+    /*private DateTime DisabledDate;*/
     public UserRepository(NpgsqlDataSource dataSource)
     {
         _dataSource = dataSource;
@@ -50,11 +51,11 @@ public class UserRepository
     {
         var sql = 
             "SELECT * FROM animaldb.users " +
-            "WHERE userID = @id";
+            "WHERE userID=@UserID";
         
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Users>(sql);
+            return conn.QueryFirst<Users>(sql, new {UserID = id});
         }
     }
 
@@ -83,13 +84,13 @@ public class UserRepository
     public Users CreateUser(Users user)
     {
         var sql = "INSERT INTO animaldb.users" +
-                  "(UserName, UserEmail, PhoneNumber, Usertype, DisabledDate)" +
-                  "VALUES (@UserName, @UserEmail, @PhoneNumber, @UserType, @DisabledDate) " +
+                  "(UserName, UserEmail, PhoneNumber, Usertype, ToBeDisabledDate)" +
+                  "VALUES (@UserName, @UserEmail, @PhoneNumber, @UserType, @ToBeDisabledDate) " +
                   "RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Users>(sql, new {user.UserName, user.UserEmail, user.PhoneNumber, user.UserType, user.DisabledDate,});
+            return conn.QueryFirst<Users>(sql, new {user.UserName, user.UserEmail, user.PhoneNumber, user.UserType, user.ToBeDisabledDate,});
         }
     }
 
@@ -127,12 +128,42 @@ public class UserRepository
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sql, new)
+            conn.Query(sql, new { user.ToBeDisabledDate, user.UserID });
         }
     }
 
-    public void DisableUser(Users user)
+    public void SetDisableUser(Users user)
     {
-        throw new NotImplementedException();
+        var sql = "UPDATE animaldb.users " +
+                  "SET Disabled=@Disabled, DisabledDate=@DisabledDate " +
+                  "WHERE UserID=@UserID;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Query(sql, new { user.Disabled, DisabledDate = DateTime.Now, user.UserID });
+        }
+    }
+
+    public void CheckUsersToBeDeleted()
+    {
+        var sql = "DELETE FROM animaldb.users " +
+                  "WHERE DisabledDate < CURRENT_DATE - INTERVAL '1 month';";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Query(sql);
+        }
+    }
+
+    public void CheckUsersToBeDisabled()
+    {
+        var sql = "UPDATE animaldb.users " +
+                  "SET Disabled=@Disabled " +
+                  "WHERE ToBeDisabledDate <= CURRENT_DATE;";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            conn.Query(sql, true);
+        }
     }
 }
