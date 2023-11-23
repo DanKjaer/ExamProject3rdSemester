@@ -5,7 +5,7 @@ export class AnimalSpeciesFeed{
 }
 
 export class AnimalSpecies{
-  speciesID?: number;
+  speciesID!: number;
   speciesName?: string;
   speciesDescription?: string;
   speciesPicture?: string;
@@ -19,4 +19,10 @@ export class Animals{
   animalDead?: boolean;
   animalPicture?: string;
   animalWeight?: number;
+}
+
+export class AnimalFeed{
+  animalID!: number;
+  speciesID!: number;
+  animalName?: string;
 }

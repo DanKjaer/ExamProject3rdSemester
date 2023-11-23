@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {AnimalBoxComponent} from "./animal-box/animal-box.component";
 import { SpeciesComponent} from "./species/species.component"
+import {AnimalsComponent} from "./animals/animals.component";
+import {State} from "../state";
 
 const routes: Routes = [
   {
@@ -11,6 +13,10 @@ const routes: Routes = [
   {
     path: 'species/:id',
     component: SpeciesComponent
+  },
+  {
+    path: 'animals/:id',
+    component: AnimalsComponent
   },
 /*  {
     path: 'Employee',

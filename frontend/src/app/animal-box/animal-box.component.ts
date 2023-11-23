@@ -31,6 +31,7 @@ export class AnimalBoxComponent  implements OnInit {
   }
 
   goToSpecies(animalNumber: number){
+    this.state.currentAnimalSpecies.speciesID = animalNumber;
     this.router.navigate(['/species/' + animalNumber])
   }
 
