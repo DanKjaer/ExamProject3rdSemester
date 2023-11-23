@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {AnimalSpecies, AnimalSpeciesFeed} from "../../models";
+import {AnimalSpeciesFeed} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
 import {Router} from "@angular/router";
@@ -32,6 +32,8 @@ export class AnimalBoxComponent  implements OnInit {
 
   goToSpecies(animalNumber: number){
     this.state.currentAnimalSpecies.speciesID = animalNumber;
-    this.router.navigate(['/species/' + animalNumber]);
+    this.router.navigate(['/species/' + animalNumber])
   }
+
+  protected readonly AnimalSpeciesFeed = AnimalSpeciesFeed;
 }
