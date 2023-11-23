@@ -1,16 +1,17 @@
 <ion-app>
-  <ion-content>
-    <div class="card-container">
-      <ion-card class="animal-names">
+  <div class="container">
+    <ion-card class="animal-names">
+      <ion-content>
         <ion-list class="animal-names-list">
-          <ion-item *ngFor="let AnimalFeed of state.animalFeed" (click)="goToAnimal(AnimalFeed.animalID)">
+          <ion-item button="true" class="animal-name" *ngFor="let AnimalFeed of state.animalFeed"
+                    (click)="goToAnimal(AnimalFeed.animalID)">
             <ion-label>
               {{AnimalFeed.animalName}}
             </ion-label>
           </ion-item>
         </ion-list>
-      </ion-card>
-    </div>
-  </ion-content>
+      </ion-content>
+    </ion-card>
+  </div>
 </ion-app>
 
