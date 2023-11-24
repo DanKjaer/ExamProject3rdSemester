@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {state} from "@angular/animations";
 
 @Component({
   selector: 'app-animals',
@@ -11,4 +12,5 @@ export class AnimalsComponent  implements OnInit {
 
   ngOnInit() {}
 
+  protected readonly state = state;
 }

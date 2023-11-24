@@ -5,7 +5,7 @@
   align-content: flex-start; /* Top to bottom */
   gap: 15px; /* Adjust the gap between cards as needed */
   margin-top: 130px;
-  width: 1200px;
+  width: 100%;
   overflow-x: scroll;
 }
 
@@ -14,12 +14,11 @@
 }
 
 .animal-box-full {
-  margin: 4px 0 0 4px;
+  margin: 4px 4px 0px 4px;
 }
 
 .animal-image-container{
-  text-align: center;
-  padding: 4px 10px 4px 0;
+  padding: 4px;
 }
 
 .animal-image{
