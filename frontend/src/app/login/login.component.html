@@ -1,17 +1,21 @@
 <ion-app>
-  <ion-content>
-  <ion-card>
-    <!--Username field-->
+  <div style="height: 100%; display: flex; align-items: center; justify-content: center;">
+  <ion-card class="login-card">
+    <!--Username-->
     <ion-item>
       <ion-label position="floating">Username</ion-label>
       <ion-input type="username"></ion-input>
     </ion-item>
 
-    <!--Password field-->
+    <!--Password-->
     <ion-item>
       <ion-label position="floating">Password</ion-label>
       <ion-input type="password"></ion-input>
     </ion-item>
-  </ion-card>
-  </ion-content>
+      <div style=" display: flex; align-items: center; justify-content: center;">
+        <ion-button>login</ion-button>
+        <ion-button fill="clear">Reset password</ion-button>
+      </div>
+    </ion-card>
+  </div>
 </ion-app>
