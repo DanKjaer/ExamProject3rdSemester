@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {state} from "@angular/animations";
 import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
@@ -14,6 +13,8 @@ import {Animals, AnimalSpecies} from "../../models";
 export class AnimalsComponent  implements OnInit {
 
   animalId?: string | null;
+  animalBirthday?: Date;
+  animalAge?: number;
   constructor(public http: HttpClient, public state: State, public route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -21,6 +22,7 @@ export class AnimalsComponent  implements OnInit {
       this.animalId = params.get('id')
     })
     this.getAnimal();
+    this.calculateAge()
   }
 
   async getAnimal() {
@@ -28,11 +30,22 @@ export class AnimalsComponent  implements OnInit {
     console.log(result)
     this.state.currentAnimal = result;
     this.getSpeciesName(this.state.currentAnimal.speciesID);
+    this.animalBirthday = result.animalBirthday;
   }
 
   async getSpeciesName(speciesId: number | undefined) {
     const result = await firstValueFrom(this.http.get<AnimalSpecies>('http://localhost:5000/api/animalspecies/' + speciesId));
     this.state.currentAnimalSpecies = result;
+  }
+
+  calculateAge(): void | null {
+    if (!this.animalBirthday || !(this.animalBirthday instanceof Date)) {
+      return null;
+    }
+
+    let timeDiff = Math.abs(Date.now() - this.animalBirthday?.getTime());
+    let age = Math.floor(timeDiff / (1000*3600*24*365));
+    this.animalAge = age;
   }
 
 }
