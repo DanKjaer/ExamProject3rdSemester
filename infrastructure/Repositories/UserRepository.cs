@@ -146,24 +146,26 @@ public class UserRepository
 
     public void CheckUsersToBeDeleted()
     {
-        var sql = "DELETE FROM animaldb.users " +
+        var sqlDeleteFromPassword = "DELETE FROM animaldb.password WHERE userid IN (SELECT userid FROM animaldb.users WHERE DisabledDate < CURRENT_DATE - INTERVAL '1 month');";
+        var sqlDeleteFromUsers = "DELETE FROM animaldb.users " +
                   "WHERE DisabledDate < CURRENT_DATE - INTERVAL '1 month';";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sql);
+            conn.Query(sqlDeleteFromPassword);
+            conn.Query(sqlDeleteFromUsers);
         }
     }
 
     public void CheckUsersToBeDisabled()
     {
         var sql = "UPDATE animaldb.users " +
-                  "SET Disabled=@Disabled " +
+                  "SET Disabled=@Disabled, DisabledDate=@DisabledDate, ToBeDisabledDate=null " +
                   "WHERE ToBeDisabledDate <= CURRENT_DATE;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sql, true);
+            conn.Query(sql, new {Disabled = true, DisabledDate = DateTime.Now});
         }
     }
 }
