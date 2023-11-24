@@ -1,12 +1,15 @@
 .card-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-start; /* Left to right */
   align-content: flex-start; /* Top to bottom */
   gap: 15px; /* Adjust the gap between cards as needed */
   margin-top: 130px;
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
+}
+
+.results {
+  flex: 0 0 auto;
 }
 
 .animal-box-name{

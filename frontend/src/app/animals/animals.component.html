@@ -1,29 +1,37 @@
 <ion-app>
   <div></div>
-  <ion-card >
+  <ion-card>
     <ion-card-content>
       <ion-list>
         <ion-item>
           <ion-label>
-            Name:
+            Name: {{state.currentAnimal.animalName}}
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
-            Weight:
+            Weight: {{state.currentAnimal.animalWeight}} kg.
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="state.currentAnimal.animalGender else female">
+          <ion-label>
+            Gender: Male
           </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>
-            Gender:
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>
-            Species:
+            Species: {{state.currentAnimalSpecies.speciesName}}
           </ion-label>
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-app>
+
+<ng-template #female>
+  <ion-item>
+    <ion-label>
+      Gender: Female
+    </ion-label>
+  </ion-item>
+</ng-template>
