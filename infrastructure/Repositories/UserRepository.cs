@@ -8,7 +8,6 @@ namespace infrastructure.Repositories;
 public class UserRepository
 {
     private NpgsqlDataSource _dataSource;
-    /*private DateTime DisabledDate;*/
     public UserRepository(NpgsqlDataSource dataSource)
     {
         _dataSource = dataSource;
@@ -17,34 +16,10 @@ public class UserRepository
     public IEnumerable<Users> GetUsers()
     {
         var sqlGetUsers = "SELECT * FROM animaldb.users";
-        //var userTypes = GetUserTypes();
         using (var conn = _dataSource.OpenConnection())
         {
              return conn.Query<Users>(sqlGetUsers);
         }
-
-        /*
-        foreach (var user in result)
-        {
-            if (user.UserType == null)
-            {
-                continue;
-            }
-            if (user.UserType.UserTypeID == 1)
-            {
-                user.UserType = userTypes.ToList()[0];
-            }
-            else if (user.UserType.UserTypeID == 2)
-            {
-                user.UserType = userTypes.ToList()[1];
-            }
-            else
-            {
-                user.UserType = userTypes.ToList()[3];
-            }
-        }
-
-        return result;*/
     }
 
     public Users GetUserById(int id)
@@ -59,17 +34,6 @@ public class UserRepository
         }
     }
 
-    /*public IEnumerable<UserType> GetUserTypes()
-    {
-        var sqlGetUserTypes = "SELECT * FROM animal.usertypes";
-
-        using (var conn = _dataSource.OpenConnection())
-        {
-            return conn.Query<UserType>(sqlGetUserTypes);
-        }
-    }*/
-
-
     public void CreatePassword(string hash, string salt, int? userId)
     {
         var sql = "INSERT INTO animaldb.password " +
@@ -77,7 +41,7 @@ public class UserRepository
                   "VALUES (@userId, @hash, @salt)";
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sql, new {userId, hash, salt});
+            conn.Execute(sql, new {userId, hash, salt});
         }
     }
 
@@ -102,7 +66,7 @@ public class UserRepository
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sql, new {hash, salt, userId});
+            conn.Execute(sql, new {hash, salt, userId});
         }
     }
 
@@ -128,7 +92,7 @@ public class UserRepository
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sql, new { user.ToBeDisabledDate, user.UserID });
+            conn.Execute(sql, new { user.ToBeDisabledDate, user.UserID });
         }
     }
 
@@ -140,7 +104,7 @@ public class UserRepository
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sql, new { user.Disabled, DisabledDate = DateTime.Now, user.UserID });
+            conn.Execute(sql, new { user.Disabled, DisabledDate = DateTime.Now, user.UserID });
         }
     }
 
@@ -152,8 +116,8 @@ public class UserRepository
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sqlDeleteFromPassword);
-            conn.Query(sqlDeleteFromUsers);
+            conn.Execute(sqlDeleteFromPassword);
+            conn.Execute(sqlDeleteFromUsers);
         }
     }
 
@@ -165,7 +129,7 @@ public class UserRepository
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.Query(sql, new {Disabled = true, DisabledDate = DateTime.Now});
+            conn.Execute(sql, new {Disabled = true, DisabledDate = DateTime.Now});
         }
     }
 }
