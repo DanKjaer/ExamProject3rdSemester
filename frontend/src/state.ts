@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {AnimalFeed, Animals, AnimalSpecies, AnimalSpeciesFeed} from "./models";
+import {AnimalFeed, AnimalNote, Animals, AnimalSpecies, AnimalSpeciesFeed} from "./models";
 
 @Injectable({
   providedIn: 'root'
@@ -10,4 +10,5 @@ export class State{
   currentAnimalSpecies: AnimalSpecies = new AnimalSpecies();
   animalFeed: AnimalFeed[] = [];
   currentAnimal: Animals = new Animals();
+  currentAnimalNote: AnimalNote = new AnimalNote();
 }

@@ -1,6 +1,4 @@
-<app-animal-picture></app-animal-picture>
-<div></div>
-<ion-card>
+<ion-card class="info-list">
   <ion-card-content>
     <ion-list>
       <ion-item>
@@ -37,6 +35,18 @@
   </ion-card-content>
 </ion-card>
 
+<app-animal-picture></app-animal-picture>
+
+<ion-card class="note">
+  <ion-card-header>Notes</ion-card-header>
+  <ion-textarea id="text-area" [disabled]="!toggleEditButtons">{{state.currentAnimalNote.noteText}}</ion-textarea>
+  <ion-footer>
+    <ion-buttons style="gap: 10px">
+      <ion-button color="dark" fill="outline" *ngIf="!toggleEditButtons" (click)="toggleEdit()">Edit</ion-button>
+      <ion-button color="dark" fill="outline" *ngIf="toggleEditButtons" (click)="toggleEdit()">Save</ion-button>
+    </ion-buttons>
+  </ion-footer>
+</ion-card>
 <ng-template #female>
   <ion-item>
     <ion-label>

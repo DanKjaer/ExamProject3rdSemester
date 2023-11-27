@@ -27,3 +27,10 @@ export class AnimalFeed{
   speciesID!: number;
   animalName?: string;
 }
+
+export class AnimalNote{
+  noteID?: number;
+  animalsId!: number;
+  noteText!: string;
+  noteDate!: Date;
+}
