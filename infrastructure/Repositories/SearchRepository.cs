@@ -26,7 +26,7 @@ public class SearchRepository
 
     public IEnumerable<AnimalFeed>? SearchAnimals(string searchTerm)
     {
-        string sql = "SELECT SpeciesID, SpeciesName " +
+        string sql = "SELECT AnimalID, AnimalName " +
                      "FROM AnimalDB.Animals " +
                      "WHERE AnimalName ILIKE '%' || @searchTerm || '%';";
         using (var conn = _dataSource.OpenConnection())
