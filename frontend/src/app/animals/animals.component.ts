@@ -22,7 +22,6 @@ export class AnimalsComponent  implements OnInit {
       this.animalId = params.get('id')
     })
     this.getAnimal();
-    this.calculateAge()
   }
 
   async getAnimal() {
@@ -30,7 +29,8 @@ export class AnimalsComponent  implements OnInit {
     console.log(result)
     this.state.currentAnimal = result;
     this.getSpeciesName(this.state.currentAnimal.speciesID);
-    this.animalBirthday = result.animalBirthday;
+    this.animalBirthday = new Date(this.state.currentAnimal.animalBirthday!);
+    this.calculateAge();
   }
 
   async getSpeciesName(speciesId: number | undefined) {
