@@ -2,10 +2,10 @@
   <ion-content>
 
     <app-profile-picture></app-profile-picture>
-    <app-employee-text></app-employee-text>
+    <app-employee-list></app-employee-list>
 
     <ion-button>Slet</ion-button>
-    <ion-button>Rediger</ion-button>
+    <ion-button (click)="updateEmployee()">Rediger</ion-button>
     <ion-button (click)="createEmployee()">Ny bruger</ion-button>
   </ion-content>
 </ion-app>

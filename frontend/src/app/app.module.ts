@@ -18,12 +18,13 @@ import {AnimalInformationComponent} from "./animal-information/animal-informatio
 import {AnimalsComponent} from "./animals/animals.component";
 import {LoginComponent} from "./login/login.component";
 import {EmployeeComponent} from "./employee/employee.component";
-import {EmployeeTextComponent} from "./employee-text/employee-text.component";
 import {EmployeeCreateComponent} from "./employee-create/employee-create.component";
+import {EmployeeListComponent} from "./employee-list/employee-list.component";
 
 @NgModule({
   declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent,
-    SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent, AnimalInformationComponent, AnimalsComponent, LoginComponent, EmployeeComponent, EmployeeTextComponent, EmployeeCreateComponent],
+    SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent, AnimalInformationComponent, AnimalsComponent,
+    LoginComponent, EmployeeComponent, EmployeeCreateComponent, EmployeeListComponent],
     imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule],
     exports: [RouterModule, AnimalBoxComponent],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
