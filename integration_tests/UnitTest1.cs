@@ -23,8 +23,7 @@ public class Tests
         {
             var animalSpecies = new AnimalSpecies
             {
-                SpeciesID = 3,
-                SpeciesName = "name",
+                SpeciesName = "Species " + i,
                 SpeciesDescription = "stop",
                 SpeciesPicture = "cheese.com",
             };

@@ -17,6 +17,7 @@ public static class Helper
         string envVarKeyName = "pgconn";
 
         rawConnectionString = Environment.GetEnvironmentVariable(envVarKeyName)!;
+        Console.WriteLine(rawConnectionString);
         if (rawConnectionString == null)
         {
             throw new Exception("Empty pgconn");
@@ -46,19 +47,11 @@ public static class Helper
     {
         using (var conn = DataSource.OpenConnection())
         {
-            try
-            {
                 conn.Execute(RebuildScript);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("couldn't rebuild database");
-            }
-
         }
     }
-
-    public static string RebuildScript = $@"
+    
+    public static string RebuildScript = @"
 DROP SCHEMA IF EXISTS AnimalDB CASCADE;
 CREATE SCHEMA AnimalDB;
 
@@ -87,6 +80,11 @@ CREATE TABLE AnimalDB.AnimalNote (
     NoteText TEXT
 );
 
+CREATE TABLE AnimalDB.UserTypes (
+    UserTypeID SERIAL PRIMARY KEY,
+    UserTypeName VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE AnimalDB.Users (
     UserID SERIAL PRIMARY KEY,
     UserName VARCHAR(50) NOT NULL,
@@ -98,10 +96,6 @@ CREATE TABLE AnimalDB.Users (
     UserType INTEGER REFERENCES AnimalDB.UserTypes(UserTypeID)
 );
 
-CREATE TABLE AnimalDB.UserTypes (
-    UserTypeID SERIAL PRIMARY KEY,
-    UserTypeName VARCHAR(50) NOT NULL
-);
 
 CREATE TABLE AnimalDB.Password (
     UserID INTEGER REFERENCES AnimalDB.Users(UserID),
@@ -109,23 +103,6 @@ CREATE TABLE AnimalDB.Password (
     PasswordSalt TEXT
 );
 
-INSERT INTO AnimalDB.AnimalSpecies
-VALUES ('Hest', 'Får ordnet hove kl 3 om natten', 'https://videnskab.dk/wp-content/uploads/2016/08/shutterstock-121352503.jpg');
-
-INSERT INTO AnimalDB.AnimalSpecies
-VALUES ('Flodhest', 'Overvåger hesten få ordnet hove kl 3 om natten', 'https://safaritanzania.dk/wp-content/uploads/2015/03/flodhesren.jpeg');
-
-INSERT INTO AnimalDB.Animals
-VALUES (1, 'Bobby', '12:04:2004', true, false, 'https://www.equistroem.dk/wp-content/uploads/2020/03/FC9540C9-B304-4EE3-8960-475DB1E387DD-2048x1070.jpg', '9420kg');
-
-INSERT INTO AnimalDB.Animals
-VALUES (1, 'Ursula', '10:10:2020', false, false, 'https://evidensia.dk/getmedia/cd6f9b67-bee2-4f01-b6aa-228deaf834a1/Overv%c3%a6gt-hos-hest', '320kg');
-
-INSERT INTO AnimalDB.Animals
-VALUES (2, 'Inga', '29:09:2016', false, false, 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTum9aWYyQ_FcT9UvYPmmMq-gxawKM15xdc835F3d1fl_o0I0Qk', '94920kg');
-
-INSERT INTO AnimalDB.Animals
-VALUES (2, 'Finn', '08:02:2017', true, false, 'https://safaritanzania.dk/wp-content/uploads/2015/03/Flodhest11.jpeg', '3200kg');
-";
+INSERT INTO animaldb.animalspecies (SpeciesName) VALUES ('abe')";
 
 }
