@@ -1,7 +1,17 @@
 .info-list {
   max-width: 400px;
+  height: 350px;
 }
 
 .note {
   width: 500px;
+  max-height: 350px;
+}
+
+.text-area {
+ height: 268px;
+}
+
+.content {
+  display: flex;
 }

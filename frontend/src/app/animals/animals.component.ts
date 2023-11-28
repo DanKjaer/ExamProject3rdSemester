@@ -4,7 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
 import {ActivatedRoute} from "@angular/router";
 import {AnimalNote, Animals, AnimalSpecies} from "../../models";
-import {toggle} from "ionicons/icons";
+import {text, toggle} from "ionicons/icons";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-animals',
@@ -13,11 +14,25 @@ import {toggle} from "ionicons/icons";
 })
 export class AnimalsComponent  implements OnInit {
 
+  createAnimalNoteForm = this.fb.group({
+    noteID: ['', Validators.required],
+    animalsId: ['', [Validators.required, Validators.min(0)]],
+    noteText: ['', Validators.required],
+    noteDate: ['', Validators.required]
+  })
+
+  updateAnimalNoteForm = this.fb.group({
+    noteID: [this.state.currentAnimalNote.noteID, Validators.required],
+    animalsId: [this.state.currentAnimalNote.animalsId, Validators.required],
+    noteText: [this.state.currentAnimalNote.noteText, Validators.required],
+    noteDate: [this.state.currentAnimalNote.noteDate, Validators.required]
+  })
+
   animalId?: string | null;
   animalBirthday?: Date;
   animalAge?: number;
   toggleEditButtons: boolean = false;
-  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute) { }
+  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -63,13 +78,22 @@ export class AnimalsComponent  implements OnInit {
 
   saveNote() {
     const textField: HTMLElement | null = document.getElementById('text-area');
+    this.state.currentAnimalNote.noteText = <string>textField?.textContent;
+    if (this.state.currentAnimal.animalID != null) {
+      this.state.currentAnimalNote.animalsId = this.state.currentAnimal.animalID;
+    }
+    this.toggleEdit();
     if (this.state.currentAnimalNote.noteID == null) {
-      const dto = new AnimalNote();
-      this.http.post('https://localhost:5000/api/animalnote/', textField?.textContent)
+      //create
+      let dto = this.createAnimalNoteForm.getRawValue();
+      this.http.post('https://localhost:5000/api/animalnote/', dto);
+      this.getNote(this.state.currentAnimal.animalID);
+    } else {
+      //update
+      let dto = this.updateAnimalNoteForm.getRawValue();
+      this.http.put('https://localhost:5000/api/animalnote/' + this.state.currentAnimal.animalID, dto);
     }
 
-    this.http.put('https://localhost:5000/api/animalnote/', textField?.textContent);
   }
 
-  protected readonly toggle = toggle;
 }
