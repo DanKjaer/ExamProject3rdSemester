@@ -4,6 +4,8 @@ import {AnimalBoxComponent} from "./animal-box/animal-box.component";
 import { SpeciesComponent} from "./species/species.component"
 import {AnimalsComponent} from "./animals/animals.component";
 import {State} from "../state";
+import {LoginComponent} from "./login/login.component";
+
 
 const routes: Routes = [
   {
@@ -17,6 +19,10 @@ const routes: Routes = [
   {
     path: 'animals/:id',
     component: AnimalsComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 /*  {
     path: 'Employee',

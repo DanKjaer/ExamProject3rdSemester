@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {AnimalBoxComponent} from "./animal-box/animal-box.component";
-import {RouterModule} from "@angular/router";
+import {Component} from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -9,11 +8,11 @@ import {RouterModule} from "@angular/router";
 })
 export class AppComponent {
 
+
   showSearchBar = false;
-  constructor() {}
+  constructor(private router: Router) {}
 
-  toggleSearchBar(){
-    this.showSearchBar = !this.showSearchBar;
+  isLoginRoute(): boolean{
+    return this.router.url.includes('/login');
   }
-
 }

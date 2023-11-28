@@ -1,4 +1,10 @@
 <ion-app>
-  <app-custom-toolbar></app-custom-toolbar>
-  <router-outlet></router-outlet>
+  <ng-container *ngIf="isLoginRoute(); else defaultLayout">
+    <app-login></app-login>
+  </ng-container>
+  <ng-template #defaultLayout>
+    <app-custom-toolbar></app-custom-toolbar>
+    <router-outlet></router-outlet>
+  </ng-template>
 </ion-app>
+
