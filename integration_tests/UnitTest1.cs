@@ -1,6 +1,9 @@
 
 using Dapper;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using infrastructure.datamodels;
+using Newtonsoft.Json;
 
 namespace integration_tests;
 
@@ -15,19 +18,17 @@ public class Tests
     }
 
     [Test]
-    public async Task GetAllAnimalSpecies()
+    public async Task GetOneAnimalSpecies()
     {
         Helper.TriggerRebuild();
-        var expected = new List<object>();
-        for (var i = 1; i < 10; i++)
-        {
+  
             var animalSpecies = new AnimalSpecies
             {
-                SpeciesName = "Species " + i,
+                SpeciesName = "Species",
                 SpeciesDescription = "stop",
                 SpeciesPicture = "cheese.com",
             };
-            expected.Add(animalSpecies);
+            
             var sql = $@" 
             INSERT INTO AnimalDB.AnimalSpecies (speciesName, speciesDescription, speciesPicture)
             VALUES (@speciesName, @speciesDescription, @speciesPicture)";
@@ -35,17 +36,34 @@ public class Tests
             {
                 conn.Execute(sql, animalSpecies);
             }
-        }
 
         HttpResponseMessage response;
         try
         {
-            response = await _httpClient.GetAsync("http://localhost:5000/api/books");
+            response = await _httpClient.GetAsync("http://localhost:5000/api/animalspecies/1");
         }
         catch (HttpRequestException e)
         {
             throw new Exception("stupid");
         }
 
+        var content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(content);
+        Console.WriteLine(response);
+        AnimalSpecies species;
+        species = JsonConvert.DeserializeObject<AnimalSpecies>(content);
+
+
+        using (new AssertionScope())
+        {
+            species.SpeciesDescription.Should().BeEquivalentTo(animalSpecies.SpeciesDescription);
+            species.SpeciesName.Should().BeEquivalentTo(animalSpecies.SpeciesName);
+            species.SpeciesPicture.Should().BeEquivalentTo(animalSpecies.SpeciesPicture);
+        }
+
     }
+    
+    
+    
+    
 }

@@ -50,7 +50,7 @@ public static class Helper
                 conn.Execute(RebuildScript);
         }
     }
-    
+
     public static string RebuildScript = @"
 DROP SCHEMA IF EXISTS AnimalDB CASCADE;
 CREATE SCHEMA AnimalDB;
@@ -102,7 +102,5 @@ CREATE TABLE AnimalDB.Password (
     PasswordHashed TEXT,
     PasswordSalt TEXT
 );
-
-INSERT INTO animaldb.animalspecies (SpeciesName) VALUES ('abe')";
-
+";
 }
