@@ -75,9 +75,10 @@ public class AnimalController
     }
 
     [HttpPut]
-    [Route("/api/animalnote")]
-    public AnimalNote UpdateAnimalNote([FromBody] AnimalNote animalNote)
+    [Route("/api/animalnote/{animalId}")]
+    public AnimalNote UpdateAnimalNote([FromBody] AnimalNote animalNote, int animalId)
     {
+        animalNote.AnimalID = animalId;
         return _animalService.UpdateAnimalNote(animalNote);
     }
 }
