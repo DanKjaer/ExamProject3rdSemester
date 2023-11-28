@@ -11,9 +11,56 @@
   --background-focused: transparent;
   --background-activated: transparent;
   --ripple-color: transparent;
+  transition: 500ms ease-in-out;
 }
+
+.home-button:hover {
+  scale: 1.1;
+}
+
 
 ion-toolbar {
   position: relative;
   box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.burger-buttons {
+  margin: 15px;
+  text-align: center;
+  overflow: scroll;
+}
+ion-button {
+  width: 200px;
+}
+
+ion-menu::part(backdrop) {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+ion-searchbar {
+  max-width: 300px;
+  text-align: left;
+}
+
+ion-accordion {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  max-width: 200px;
+}
+
+.accordion-header {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.ion-padding {
+  display: inline-block;
+  overflow: scroll;
+  max-height: 425px;
+}
+
+.accordion-button {
+  max-width: 150px;
 }

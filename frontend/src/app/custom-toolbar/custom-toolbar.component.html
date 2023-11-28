@@ -3,7 +3,7 @@
     <ion-menu-button id="main"></ion-menu-button>
   </ion-buttons>
 
-  <ion-title>
+  <ion-title class="toolbar-title">
 
   </ion-title>
 
@@ -11,12 +11,62 @@
     <ion-button *ngIf="!isSearch" (click)="toggleSearch()" [@transformSearch]="'*'">
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
-    <ion-searchbar animated="true" style="max-width: 300px; text-align: left" *ngIf="isSearch" (focusout)="toggleSearch()" [@transformSearch]="'*'"></ion-searchbar>
+    <ion-searchbar #searchbar *ngIf="isSearch" (focusout)="toggleSearch()" [@transformSearch]="'*'"></ion-searchbar>
   </ion-buttons>
-
 </ion-toolbar>
+
 <ion-buttons class="center-buttons">
   <ion-button class="home-button" href="">
     <img src="../assets/icon/møøhnika.png" height="100px" width="100px">
   </ion-button>
 </ion-buttons>
+
+<ion-menu contentId="main">
+  <div class="burger-buttons">
+    <ion-menu-toggle>
+      <ion-button fill="outline" color="dark">
+        Close
+      </ion-button>
+    </ion-menu-toggle>
+    <br/>
+    <ion-button fill="outline" color="dark">
+      Log out
+      <ion-icon slot="end" name="log-out-outline"></ion-icon>
+    </ion-button>
+    <br/>
+    <ion-button fill="outline" color="dark">
+      Profile
+      <ion-icon slot="end" name="person-circle-outline"></ion-icon>
+    </ion-button>
+    <br/>
+    <ion-button fill="outline" color="dark">
+      Staff
+      <ion-icon slot="end" name="people-circle-outline"></ion-icon>
+    </ion-button>
+    <br/>
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item class="accordion-header" slot="header" color="dark">
+          Animal species
+          <ion-icon slot="end" name="paw-outline" color="dark"></ion-icon>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-button class="accordion-button" color="dark" fill="outline">test1</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test2</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test3</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test4</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test5</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test6</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test7</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test8</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test9</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test10</ion-button>
+          <ion-button class="accordion-button" color="dark" fill="outline">test11</ion-button>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    <ion-button color="dark" fill="outline">TEST</ion-button>
+
+  </div>
+</ion-menu>
