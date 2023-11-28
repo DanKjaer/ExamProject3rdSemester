@@ -37,8 +37,8 @@ export class CustomToolbarComponent  implements OnInit {
     }
   }
 
-  goToProfile(){
-    this.router.navigate(['/profile'])
+  goToStaff(){
+    this.router.navigate(['/staff'])
   }
 
   protected readonly focus = focus;

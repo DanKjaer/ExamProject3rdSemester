@@ -26,7 +26,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'profile',
+    path: 'staff',
     component: EmployeeComponent
   }
 ];
