@@ -5,6 +5,7 @@ import { SpeciesComponent} from "./species/species.component"
 import {AnimalsComponent} from "./animals/animals.component";
 import {State} from "../state";
 import {LoginComponent} from "./login/login.component";
+import {EmployeeComponent} from "./employee/employee.component";
 
 
 const routes: Routes = [
@@ -24,10 +25,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-/*  {
-    path: 'Employee',
+  {
+    path: 'employee',
     component: EmployeeComponent
-  }*/
+  }
 ];
 
 @NgModule({
