@@ -26,3 +26,19 @@ export class AnimalFeed{
   speciesID!: number;
   animalName?: string;
 }
+
+export class Users{
+  userId!: number;
+  userName!: string;
+  userEmail!: string;
+  phoneNumber?: string;
+  disabled?: boolean;
+  /*toBeDisabledDate?
+  disabledDate?:*/
+  userType?: number;
+}
+
+export class userTypes{
+  userTypeId!: number;
+  userTypeName!: string;
+}
