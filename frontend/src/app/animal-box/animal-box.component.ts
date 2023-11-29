@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {AnimalSpeciesFeed} from "../../models";
+import {AnimalSpecies, AnimalSpeciesFeed} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
 import {Router} from "@angular/router";
@@ -30,8 +30,10 @@ export class AnimalBoxComponent  implements OnInit {
     }
   }
 
-  goToSpecies(animalNumber: number){
+  async goToSpecies(animalNumber: number) {
     this.state.currentAnimalSpecies.speciesID = animalNumber;
+    const result = await firstValueFrom(this.http.get<AnimalSpecies>('http://localhost:5000/api/animalspecies/' + this.state.currentAnimalSpecies.speciesID))
+    this.state.currentAnimalSpecies = result;
     this.router.navigate(['/species/' + animalNumber])
   }
 
