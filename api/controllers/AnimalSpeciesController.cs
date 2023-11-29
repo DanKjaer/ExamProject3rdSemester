@@ -51,4 +51,21 @@ public class AnimalSpeciesController
         
         return new { message = "Failed deleting the animal species from the system" };
     }
+
+    [HttpPost]
+    [Route("/api/sendEmail")]
+    public async Task<object> SendEmail([FromBody] SendEmailDTO emailDto)
+    {
+        AnimalSpecies animalSpecies = _animalSpeciesService.GetSpeciesById(emailDto.AnimalSpeciesId);
+        try
+        {
+            MailService.SendEmail(emailDto.ToName, animalSpecies, emailDto.ToAddress);
+            return new {message = "Email has been sent"};
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new {message = "Failed to send email, please try again or contact an administrator"};
+        }
+    }
 }

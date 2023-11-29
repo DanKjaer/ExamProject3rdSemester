@@ -4,7 +4,7 @@ public class AnimalNote
 {
     public int? NoteID { get; set; }
     
-    public required int AnimalID { get; set; }
+    public int? AnimalID { get; set; }
     
     public DateTime NoteDate { get; set; }
     

@@ -23,11 +23,7 @@ public class AnimalSpeciesService
 
     public AnimalSpecies UpdateSpecies(AnimalSpecies animalSpeciesModel)
     {
-        return _animalSpeciesRepository.UpdateSpecies(
-            speciesName: animalSpeciesModel.SpeciesName,
-            speciesDescription: animalSpeciesModel.SpeciesDescription,
-            speciesPicture: animalSpeciesModel.SpeciesPicture
-        );
+        return _animalSpeciesRepository.UpdateSpecies(animalSpeciesModel);
     }
 
     public bool DeleteSpecies(int speciesID)

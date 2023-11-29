@@ -29,19 +29,16 @@ RETURNING AnimalSpecies.SpeciesID,
         }
     }
 
-    public AnimalSpecies UpdateSpecies(string speciesName, string speciesDescription, string? speciesPicture)
+    public AnimalSpecies UpdateSpecies(AnimalSpecies animalSpeciesModel)
     {
         var sql = $@"
 UPDATE AnimalDB.AnimalSpecies SET speciesName = @speciesName, speciesDescription = @speciesDescription, speciesPicture = @speciesPicture
 WHERE speciesID = @speciesID
-RETURNING AnimalSpecies.SpeciesID,
-    SpeciesName,
-    SpeciesDescription,
-    SpeciesPicture;
+RETURNING *;
 ";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<AnimalSpecies>(sql, new { speciesName, speciesDescription, speciesPicture});
+            return conn.QueryFirst<AnimalSpecies>(sql, new { animalSpeciesModel.SpeciesName, animalSpeciesModel.SpeciesDescription, animalSpeciesModel.SpeciesPicture, animalSpeciesModel.SpeciesID});
         }
     }
 
