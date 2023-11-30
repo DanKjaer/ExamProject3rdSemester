@@ -21,20 +21,20 @@ public class Tests
     [Test]
     public async Task GetOneAnimalSpecies()
     {
-            var animalSpecies = new AnimalSpecies
-            {
-                SpeciesName = "Species",
-                SpeciesDescription = "stop",
-                SpeciesPicture = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Animal_diversity_b.png",
-            };
-            
-            var sql = $@" 
+        var animalSpecies = new AnimalSpecies
+        {
+            SpeciesName = "Species",
+            SpeciesDescription = "stop",
+            SpeciesPicture = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Animal_diversity_b.png",
+        };
+
+        var sql = $@" 
             INSERT INTO AnimalDB.AnimalSpecies (speciesName, speciesDescription, speciesPicture)
             VALUES (@speciesName, @speciesDescription, @speciesPicture)";
-            using (var conn = Helper.DataSource.OpenConnection())
-            {
-                conn.Execute(sql, animalSpecies);
-            }
+        using (var conn = Helper.DataSource.OpenConnection())
+        {
+            conn.Execute(sql, animalSpecies);
+        }
 
         HttpResponseMessage response;
         try
@@ -70,7 +70,7 @@ public class Tests
             SpeciesDescription = "stop",
             SpeciesPicture = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Animal_diversity_b.png",
         };
-            
+
         var sql = $@" 
             INSERT INTO AnimalDB.AnimalSpecies (speciesName, speciesDescription, speciesPicture)
             VALUES (@speciesName, @speciesDescription, @speciesPicture)";
@@ -78,15 +78,12 @@ public class Tests
         {
             conn.Execute(sql, animalSpecies);
         }
-        
+
     }
 
-    [Test]
-    public async Task GetAnimals()
+    public Animals MakeMeAnAnimal()
     {
-        MakeMeASpecies();
-        
-        var animals = new Animals()
+        var animal = new Animals()
         {
             SpeciesID = 1,
             AnimalName = "Animal",
@@ -96,15 +93,24 @@ public class Tests
             AnimalWeight = 24,
             AnimalGender = true,
         };
-        
         var sql = $@" 
             INSERT INTO AnimalDB.Animals (SpeciesID, AnimalName, AnimalBirthday, AnimalGender, AnimalDead, AnimalPicture, AnimalWeight)
             VALUES (@SpeciesID, @AnimalName, @AnimalBirthday, @AnimalGender, @AnimalDead, @AnimalPicture, @AnimalWeight)";
         using (var conn = Helper.DataSource.OpenConnection())
         {
-            conn.Execute(sql, animals);
+            conn.Execute(sql, animal);
         }
         
+        return animal;
+    }
+    
+
+    [Test]
+    public async Task GetAnimals()
+    {
+        MakeMeASpecies();
+        var animal = MakeMeAnAnimal();
+
         HttpResponseMessage response;
         try
         {
@@ -114,23 +120,23 @@ public class Tests
         {
             throw new Exception("stupid part 2");
         }
-        
+
         var content = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(animals.SpeciesID);
-        Animals animal;
-        animal = JsonConvert.DeserializeObject<Animals>(content);
+        Console.WriteLine(animal.SpeciesID);
+        Animals animals;
+        animals = JsonConvert.DeserializeObject<Animals>(content);
 
 
         using (new AssertionScope())
         {
-            animal.AnimalGender.Should().Be(animals.AnimalGender);
-            animal.AnimalDead.Should().Be(animals.AnimalDead);
-            animal.AnimalWeight.Should().Be(animals.AnimalWeight);
-            animal.AnimalName.Should().BeEquivalentTo(animals.AnimalName);
-            animal.AnimalPicture.Should().BeEquivalentTo(animals.AnimalPicture);
-            animal.SpeciesID.Should().Be(animals.SpeciesID);
+            animals.AnimalGender.Should().Be(animal.AnimalGender);
+            animals.AnimalDead.Should().Be(animal.AnimalDead);
+            animals.AnimalWeight.Should().Be(animal.AnimalWeight);
+            animals.AnimalName.Should().BeEquivalentTo(animal.AnimalName);
+            animals.AnimalPicture.Should().BeEquivalentTo(animal.AnimalPicture);
+            animals.SpeciesID.Should().Be(animal.SpeciesID);
         }
-        
+
     }
 
     [Test]
@@ -144,7 +150,7 @@ public class Tests
                 SpeciesName = "Species" + i,
                 SpeciesPicture = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Animal_diversity_b.png",
                 SpeciesDescription = "bobby han døde"
-                
+
             };
             var sql = $@" 
             INSERT INTO AnimalDB.AnimalSpecies (speciesName, speciesDescription, speciesPicture)
@@ -153,7 +159,7 @@ public class Tests
             {
                 conn.Execute(sql, animalSpecies);
             }
-            
+
             var animalSpeciesFeed = new AnimalSpeciesFeed()
             {
                 SpeciesName = animalSpecies.SpeciesName,
@@ -161,15 +167,15 @@ public class Tests
             };
             expected.Add(animalSpeciesFeed);
         }
-        
+
         HttpResponseMessage response;
-        
+
         response = await _httpClient.GetAsync("http://localhost:5000/api/animalspeciesfeed");
 
         var content = await response.Content.ReadAsStringAsync();
         IEnumerable<AnimalSpeciesFeed> speciesFeed;
         speciesFeed = JsonConvert.DeserializeObject<IEnumerable<AnimalSpeciesFeed>>(content);
-        
+
         using (new AssertionScope())
         {
             for (var i = 0; i < expected.Count; i++)
@@ -179,16 +185,69 @@ public class Tests
             }
         }
     }
-    
+
     [Test]
     public async Task GetAnimalFeed()
     {
         MakeMeASpecies();
+        var animal = MakeMeAnAnimal();
         
-        Assert.Pass();
-        
+        var expected = new List<AnimalFeed>();
+        for (var i = 1; i < 10; i++)
+        {
+            var animalFeed = new AnimalFeed()
+            {
+                AnimalName = animal.AnimalName,
+            };
+            expected.Add(animalFeed);
+        }
+
+        HttpResponseMessage response;
+
+        response = await _httpClient.GetAsync("http://localhost:5000/api/animalfeed/1");
+
+        var content = await response.Content.ReadAsStringAsync();
+        IEnumerable<AnimalFeed> animalsFeed;
+        animalsFeed = JsonConvert.DeserializeObject<IEnumerable<AnimalFeed>>(content);
+
+        using (new AssertionScope())
+        {
+            for (var i = 0; i < expected.Count; i++)
+            {
+                animalsFeed.ToList()[i].AnimalName.Should().BeEquivalentTo(expected.ToList()[i].AnimalName);
+            }
+        }
     }
-    
-    
-    
+
+    [Test]
+    public async Task CreateAnimal()
+    {
+        MakeMeASpecies();
+        var animal = MakeMeAnAnimal();
+
+        HttpResponseMessage response;
+        response = await _httpClient.GetAsync("http://localhost:5000/api/animal/1");
+
+        var content = await response.Content.ReadAsStringAsync();
+        Animals animals;
+        animals = JsonConvert.DeserializeObject<Animals>(content);
+        
+        using (new AssertionScope())
+        {
+            response.IsSuccessStatusCode.Should().BeTrue();
+            animals.AnimalGender.Should().Be(animal.AnimalGender);
+            animals.AnimalDead.Should().Be(animal.AnimalDead);
+            animals.AnimalWeight.Should().Be(animal.AnimalWeight);
+            animals.AnimalName.Should().BeEquivalentTo(animal.AnimalName);
+            animals.AnimalPicture.Should().BeEquivalentTo(animal.AnimalPicture);
+            animals.SpeciesID.Should().Be(animal.SpeciesID);
+        }
+    }
+
+    [Test]
+    public async Task UpdateAnimal()
+    {
+        MakeMeASpecies();
+        var animal = MakeMeAnAnimal();
+    }
 }
