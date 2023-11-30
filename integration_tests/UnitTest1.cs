@@ -136,7 +136,7 @@ public class Tests
     [Test]
     public async Task GetSpeciesFeed()
     {
-        var expected = new List<object>();
+        var expected = new List<AnimalSpeciesFeed>();
         for (var i = 1; i < 10; i++)
         {
             var animalSpecies = new AnimalSpecies()
@@ -163,14 +163,8 @@ public class Tests
         }
         
         HttpResponseMessage response;
-        try
-        {
-            response = await _httpClient.GetAsync("http://localhost:5000/api/animalspeciesfeed");
-        }
-        catch (HttpRequestException e)
-        {
-            throw new Exception("stupid part 3");
-        }
+        
+        response = await _httpClient.GetAsync("http://localhost:5000/api/animalspeciesfeed");
 
         var content = await response.Content.ReadAsStringAsync();
         IEnumerable<AnimalSpeciesFeed> speciesFeed;
@@ -178,21 +172,20 @@ public class Tests
         
         using (new AssertionScope())
         {
-            foreach (var species in speciesFeed)
+            for (var i = 0; i < expected.Count; i++)
             {
-                species.SpeciesName.Should()
-                species.SpeciesPicture.Should().NotBeNull();
+                speciesFeed.ToList()[i].SpeciesName.Should().BeEquivalentTo(expected.ToList()[i].SpeciesName);
+                speciesFeed.ToList()[i].SpeciesPicture.Should().BeEquivalentTo(expected.ToList()[i].SpeciesPicture);
             }
         }
     }
-    
     
     [Test]
     public async Task GetAnimalFeed()
     {
         MakeMeASpecies();
         
-        
+        Assert.Pass();
         
     }
     
