@@ -1,4 +1,5 @@
 
+using System.Net.Http.Json;
 using Dapper;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -81,12 +82,12 @@ public class Tests
 
     }
 
-    public Animals MakeMeAnAnimal()
+    public Animals MakeMeAnAnimal(int id)
     {
         var animal = new Animals()
         {
             SpeciesID = 1,
-            AnimalName = "Animal",
+            AnimalName = "Animal" + id,
             AnimalBirthday = new DateTime(03, 12, 10),
             AnimalDead = false,
             AnimalPicture = "https://media.wired.com/photos/593261cab8eb31692072f129/master/pass/85120553.jpg",
@@ -95,13 +96,12 @@ public class Tests
         };
         var sql = $@" 
             INSERT INTO AnimalDB.Animals (SpeciesID, AnimalName, AnimalBirthday, AnimalGender, AnimalDead, AnimalPicture, AnimalWeight)
-            VALUES (@SpeciesID, @AnimalName, @AnimalBirthday, @AnimalGender, @AnimalDead, @AnimalPicture, @AnimalWeight)";
+            VALUES (@SpeciesID, @AnimalName, @AnimalBirthday, @AnimalGender, @AnimalDead, @AnimalPicture, @AnimalWeight) 
+            RETURNING *";
         using (var conn = Helper.DataSource.OpenConnection())
         {
-            conn.Execute(sql, animal);
+            return conn.QueryFirst<Animals>(sql, animal);
         }
-        
-        return animal;
     }
     
 
@@ -109,7 +109,7 @@ public class Tests
     public async Task GetAnimals()
     {
         MakeMeASpecies();
-        var animal = MakeMeAnAnimal();
+        var animal = MakeMeAnAnimal(1);
 
         HttpResponseMessage response;
         try
@@ -190,14 +190,14 @@ public class Tests
     public async Task GetAnimalFeed()
     {
         MakeMeASpecies();
-        var animal = MakeMeAnAnimal();
         
         var expected = new List<AnimalFeed>();
         for (var i = 1; i < 10; i++)
         {
+            var animal = MakeMeAnAnimal(2);
             var animalFeed = new AnimalFeed()
             {
-                AnimalName = animal.AnimalName,
+                AnimalName = animal.AnimalName
             };
             expected.Add(animalFeed);
         }
@@ -223,7 +223,7 @@ public class Tests
     public async Task CreateAnimal()
     {
         MakeMeASpecies();
-        var animal = MakeMeAnAnimal();
+        var animal = MakeMeAnAnimal(3);
 
         HttpResponseMessage response;
         response = await _httpClient.GetAsync("http://localhost:5000/api/animal/1");
@@ -248,6 +248,20 @@ public class Tests
     public async Task UpdateAnimal()
     {
         MakeMeASpecies();
-        var animal = MakeMeAnAnimal();
+        var animal = MakeMeAnAnimal(4);
+        
+        HttpResponseMessage response;
+        animal.AnimalName = "sur søren";
+        response = await _httpClient.PutAsJsonAsync("http://localhost:5000/api/animal", animal);
+
+        var content = await response.Content.ReadAsStringAsync();
+        Animals animals;
+        animals = JsonConvert.DeserializeObject<Animals>(content);
+        
+        using (new AssertionScope())
+        {
+            response.IsSuccessStatusCode.Should().BeTrue();
+            animals.AnimalName.Should().BeEquivalentTo(animal.AnimalName);
+        }
     }
 }
