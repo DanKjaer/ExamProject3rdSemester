@@ -38,7 +38,8 @@ export class Users{
   userType?: number;
 }
 
-export class userTypes{
-  userTypeId!: number;
-  userTypeName!: string;
+export class passwordString{
+  userId!: number;
+  passwordHashed!: string;
+  passwordSalt!: string;
 }

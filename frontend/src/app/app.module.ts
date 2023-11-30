@@ -20,12 +20,13 @@ import {LoginComponent} from "./login/login.component";
 import {EmployeeComponent} from "./employee/employee.component";
 import {EmployeeCreateComponent} from "./employee-create/employee-create.component";
 import {EmployeeListComponent} from "./employee-list/employee-list.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent,
     SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent, AnimalInformationComponent, AnimalsComponent,
     LoginComponent, EmployeeComponent, EmployeeCreateComponent, EmployeeListComponent],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule, FormsModule, ReactiveFormsModule],
     exports: [RouterModule, AnimalBoxComponent],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

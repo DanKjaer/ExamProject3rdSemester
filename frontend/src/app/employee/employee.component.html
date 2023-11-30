@@ -1,11 +1,10 @@
 <ion-app>
-  <ion-content>
-
+  <ion-content class="Container">
     <app-profile-picture></app-profile-picture>
     <app-employee-list></app-employee-list>
 
     <ion-button>Slet</ion-button>
     <ion-button (click)="updateEmployee()">Rediger</ion-button>
-    <ion-button (click)="createEmployee()">Ny bruger</ion-button>
+    <ion-button (click)="openCreateEmployeeModal()">Ny bruger</ion-button>
   </ion-content>
 </ion-app>
