@@ -12,9 +12,16 @@ public class Users
     
     public required string PhoneNumber { get; set; }
     
-    public required int UserType { get; set; }
+    public required UserType UserType { get; set; }
     
     public bool Disabled { get; set; }
     
     public DateTime? ToBeDisabledDate { get; set; }
+}
+
+public enum UserType
+{
+    Manager,
+    Dyrepasser,
+    Elev,
 }
