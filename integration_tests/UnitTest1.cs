@@ -25,7 +25,7 @@ public class Tests
             {
                 SpeciesName = "Species",
                 SpeciesDescription = "stop",
-                SpeciesPicture = "cheese.com",
+                SpeciesPicture = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Animal_diversity_b.png",
             };
             
             var sql = $@" 
@@ -68,7 +68,7 @@ public class Tests
         {
             SpeciesName = "Species",
             SpeciesDescription = "stop",
-            SpeciesPicture = "cheese.com",
+            SpeciesPicture = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Animal_diversity_b.png",
         };
             
         var sql = $@" 
@@ -142,7 +142,7 @@ public class Tests
             var animalSpecies = new AnimalSpecies()
             {
                 SpeciesName = "Species" + i,
-                SpeciesPicture = "cheese.com",
+                SpeciesPicture = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Animal_diversity_b.png",
                 SpeciesDescription = "bobby han døde"
                 
             };
