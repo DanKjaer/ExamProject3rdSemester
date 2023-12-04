@@ -344,5 +344,66 @@ public class Tests
             }
         }
     }
-    
+
+    [Test]
+    public async Task CreateUser()
+    {
+        var user = new Users
+        {
+            UserEmail = "bobby@bobsen.dk",
+            UserName = "hennyy",
+            PhoneNumber = "23457823",
+            UserType = 1
+        };
+
+        HttpResponseMessage response;
+        response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/users?password=1234", user);
+        
+        var content = await response.Content.ReadAsStringAsync();
+        Users users;
+        users = JsonConvert.DeserializeObject<Users>(content);
+        
+        using (new AssertionScope())
+        {
+            response.IsSuccessStatusCode.Should().BeTrue();
+            users.UserName.Should().BeEquivalentTo(user.UserName);
+            users.UserEmail.Should().BeEquivalentTo(user.UserEmail);
+        }
+    }
+
+    [Test]
+    public async Task DisabledUser()
+    {
+        var user = new Users
+        {
+            UserEmail = "bobby@bobsen.dk",
+            UserName = "hennyy",
+            PhoneNumber = "23457823",
+            UserType = 1
+        };
+        
+        var sql = "INSERT INTO animaldb.users" +
+                  "(UserName, UserEmail, PhoneNumber, Usertype, ToBeDisabledDate)" +
+                  "VALUES (@UserName, @UserEmail, @PhoneNumber, @UserType, @ToBeDisabledDate) " +
+                  "RETURNING *;";
+
+        using (var conn = Helper.DataSource.OpenConnection())
+        {
+            user = conn.QueryFirst<Users>(sql, new {user.UserName, user.UserEmail, user.PhoneNumber, user.UserType, user.ToBeDisabledDate});
+        }
+
+        HttpResponseMessage response;
+        user.Disabled = true;
+        response = await _httpClient.PutAsJsonAsync("http://localhost:5000/api/users", user);
+        
+        var content = await response.Content.ReadAsStringAsync();
+        Users users;
+        users = JsonConvert.DeserializeObject<Users>(content);
+        
+        using (new AssertionScope())
+        {
+            response.IsSuccessStatusCode.Should().BeTrue();
+            users.Disabled.Should().BeTrue();
+        }
+    }
 }
