@@ -2,6 +2,37 @@
   <div class="content">
     <app-animal-names style="margin-top: 100px; margin-left: 50px"></app-animal-names>
   </div>
+  <ion-buttons style="margin-left: 60px">
+    <ion-button id="open-modal" color="dark" fill="outline">Create Animal</ion-button>
+  </ion-buttons>
+
+  <div [formGroup]="createNewAnimalForm">
+    <ion-modal trigger="open-modal">
+      <ng-template>
+        <ion-content class="modal-content">
+          <ion-item>
+            <ion-input type="text" placeholder="Dan" label="Name" formControlName="animalName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="number" placeholder="60" label="Weight" formControlName="animalWeight"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select placeholder="Select Gender" interface="popover" label="Gender" formControlName="animalGender">
+              <ion-select-option [value]="true">Male</ion-select-option>
+              <ion-select-option [value]="false">Female</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-input type="date" label="Birthday" formControlName="animalBirthday"></ion-input>
+          </ion-item>
+        </ion-content>
+        <ion-footer>
+          <ion-button color="dark" fill="outline" (click)="createAnimal()">Create</ion-button>
+        </ion-footer>
+      </ng-template>
+    </ion-modal>
+  </div>
+
   <app-animal-information style="margin-top: -320px; margin-right: 50px; align-self: end"></app-animal-information>
   <app-animal-picture style="margin-left: 50px; margin-top: 500px; position: absolute"></app-animal-picture>
 

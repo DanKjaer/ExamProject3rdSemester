@@ -4,7 +4,6 @@ import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
 import {ActivatedRoute} from "@angular/router";
 import {AnimalNote, Animals, AnimalSpecies} from "../../models";
-import {text, toggle} from "ionicons/icons";
 import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
