@@ -63,7 +63,7 @@ public class Tests
 
     }
 
-    public void MakeMeASpecies()
+    public AnimalSpecies MakeMeASpecies()
     {
         var animalSpecies = new AnimalSpecies()
         {
@@ -74,10 +74,11 @@ public class Tests
 
         var sql = $@" 
             INSERT INTO AnimalDB.AnimalSpecies (speciesName, speciesDescription, speciesPicture)
-            VALUES (@speciesName, @speciesDescription, @speciesPicture)";
+            VALUES (@speciesName, @speciesDescription, @speciesPicture) 
+            RETURNING *";
         using (var conn = Helper.DataSource.OpenConnection())
         {
-            conn.Execute(sql, animalSpecies);
+             return conn.QueryFirst<AnimalSpecies>(sql, animalSpecies);
         }
 
     }
@@ -223,10 +224,14 @@ public class Tests
     public async Task CreateAnimal()
     {
         MakeMeASpecies();
-        var animal = MakeMeAnAnimal(3);
-
+        var animal = new Animals
+        {
+            AnimalName = "Alfred",
+            SpeciesID = 1
+        };
+        
         HttpResponseMessage response;
-        response = await _httpClient.GetAsync("http://localhost:5000/api/animal/1");
+        response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/animal", animal);
 
         var content = await response.Content.ReadAsStringAsync();
         Animals animals;
@@ -235,11 +240,7 @@ public class Tests
         using (new AssertionScope())
         {
             response.IsSuccessStatusCode.Should().BeTrue();
-            animals.AnimalGender.Should().Be(animal.AnimalGender);
-            animals.AnimalDead.Should().Be(animal.AnimalDead);
-            animals.AnimalWeight.Should().Be(animal.AnimalWeight);
             animals.AnimalName.Should().BeEquivalentTo(animal.AnimalName);
-            animals.AnimalPicture.Should().BeEquivalentTo(animal.AnimalPicture);
             animals.SpeciesID.Should().Be(animal.SpeciesID);
         }
     }
@@ -264,4 +265,60 @@ public class Tests
             animals.AnimalName.Should().BeEquivalentTo(animal.AnimalName);
         }
     }
+
+    [Test]
+    public async Task UpdateAnimalSpecies()
+    {
+        var species = MakeMeASpecies();
+        
+        HttpResponseMessage response;
+        species.SpeciesName = "sur søren species";
+        response = await _httpClient.PutAsJsonAsync("http://localhost:5000/api/animalspecies", species);
+        
+        var content = await response.Content.ReadAsStringAsync();
+        AnimalSpecies animalSpecies;
+        animalSpecies = JsonConvert.DeserializeObject<AnimalSpecies>(content);
+        
+        using (new AssertionScope())
+        {
+            response.IsSuccessStatusCode.Should().BeTrue();
+            animalSpecies.SpeciesName.Should().BeEquivalentTo(species.SpeciesName);
+        }
+    }
+
+    [Test]
+    public async Task CreateAnimalNote()
+    {
+        MakeMeASpecies();
+        MakeMeAnAnimal(1);
+
+        var animalNote = new AnimalNote
+        {
+            AnimalID = 1,
+            NoteText = "kalder på hjælp fra testene...."
+        };
+        /*var sql = $@"
+            INSERT INTO AnimalDB.AnimalNote (AnimalID, NoteDate, NoteText) 
+            VALUES (@AnimalID, @NoteDate, @NoteText) 
+            RETURNING *;
+            ";
+        using (var conn = Helper.DataSource.OpenConnection())
+        {
+            conn.QueryFirst<AnimalNote>(sql, new {animalNote.AnimalID, NoteDate = DateTimeOffset.UtcNow, animalNote.NoteText});
+        }*/
+        
+        HttpResponseMessage response;
+        response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/animalnote", animalNote);
+
+        var content = await response.Content.ReadAsStringAsync();
+        AnimalNote animalNotes;
+        animalNotes = JsonConvert.DeserializeObject<AnimalNote>(content);
+        
+        using (new AssertionScope())
+        {
+            response.IsSuccessStatusCode.Should().BeTrue();
+            animalNotes.NoteText.Should().Be(animalNote.NoteText);
+        }
+    }
+    
 }

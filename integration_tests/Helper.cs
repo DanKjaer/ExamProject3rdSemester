@@ -17,7 +17,6 @@ public static class Helper
         string envVarKeyName = "pgconn";
 
         rawConnectionString = Environment.GetEnvironmentVariable(envVarKeyName)!;
-        Console.WriteLine(rawConnectionString);
         if (rawConnectionString == null)
         {
             throw new Exception("Empty pgconn");
