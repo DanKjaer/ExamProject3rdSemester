@@ -107,23 +107,15 @@ public class Tests
     
 
     [Test]
-    public async Task GetAnimals()
+    public async Task GetAnimal()
     {
         MakeMeASpecies();
         var animal = MakeMeAnAnimal(1);
 
         HttpResponseMessage response;
-        try
-        {
-            response = await _httpClient.GetAsync("http://localhost:5000/api/animal/1");
-        }
-        catch (HttpRequestException e)
-        {
-            throw new Exception("stupid part 2");
-        }
+        response = await _httpClient.GetAsync("http://localhost:5000/api/animal/1");
 
         var content = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(animal.SpeciesID);
         Animals animals;
         animals = JsonConvert.DeserializeObject<Animals>(content);
 
@@ -297,15 +289,6 @@ public class Tests
             AnimalID = 1,
             NoteText = "kalder på hjælp fra testene...."
         };
-        /*var sql = $@"
-            INSERT INTO AnimalDB.AnimalNote (AnimalID, NoteDate, NoteText) 
-            VALUES (@AnimalID, @NoteDate, @NoteText) 
-            RETURNING *;
-            ";
-        using (var conn = Helper.DataSource.OpenConnection())
-        {
-            conn.QueryFirst<AnimalNote>(sql, new {animalNote.AnimalID, NoteDate = DateTimeOffset.UtcNow, animalNote.NoteText});
-        }*/
         
         HttpResponseMessage response;
         response = await _httpClient.PostAsJsonAsync("http://localhost:5000/api/animalnote", animalNote);
@@ -318,6 +301,47 @@ public class Tests
         {
             response.IsSuccessStatusCode.Should().BeTrue();
             animalNotes.NoteText.Should().Be(animalNote.NoteText);
+        }
+    }
+    
+    [Test]
+    public async Task GetAnimalNotes()
+    {
+        MakeMeASpecies();
+        MakeMeAnAnimal(1);
+        
+        var expected = new List<AnimalNote>();
+        for (var i = 1; i < 10; i++)
+        {
+            var animalNote = new AnimalNote()
+            {
+                AnimalID = 1,
+                NoteText = "kalder på hjælp fra testene...." + i
+            };
+            var sql = $@" 
+            INSERT INTO AnimalDB.AnimalNote (AnimalID, NoteDate, NoteText)
+            VALUES (@AnimalID, @NoteDate, @NoteText)
+            RETURNING *;";
+            using (var conn = Helper.DataSource.OpenConnection())
+            {
+                expected.Add(conn.QueryFirst<AnimalNote>(sql, animalNote));
+            }
+        }
+        
+        HttpResponseMessage response;
+        response = await _httpClient.GetAsync("http://localhost:5000/api/animalnote/1");
+
+        var content = await response.Content.ReadAsStringAsync();
+        
+        IEnumerable<AnimalNote> animalNotes;
+        animalNotes = JsonConvert.DeserializeObject<IEnumerable<AnimalNote>>(content);
+
+        using (new AssertionScope())
+        {
+            for (var i = 0; i < expected.Count; i++)
+            {
+                animalNotes.ToList()[1].NoteText.Should().BeEquivalentTo(expected.ToList()[1].NoteText);
+            }
         }
     }
     
