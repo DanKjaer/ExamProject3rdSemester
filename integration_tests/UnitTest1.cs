@@ -406,4 +406,10 @@ public class Tests
             users.Disabled.Should().BeTrue();
         }
     }
+
+    [Test]
+    public async Task SomethingThatShouldNotWork()
+    {
+        Assert.Pass();
+    }
 }
