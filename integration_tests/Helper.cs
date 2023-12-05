@@ -17,7 +17,6 @@ public static class Helper
         string envVarKeyName = "pgconn";
 
         rawConnectionString = Environment.GetEnvironmentVariable(envVarKeyName)!;
-        Console.WriteLine(rawConnectionString);
         if (rawConnectionString == null)
         {
             throw new Exception("Empty pgconn");
@@ -80,11 +79,6 @@ CREATE TABLE AnimalDB.AnimalNote (
     NoteText TEXT
 );
 
-CREATE TABLE AnimalDB.UserTypes (
-    UserTypeID SERIAL PRIMARY KEY,
-    UserTypeName VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE AnimalDB.Users (
     UserID SERIAL PRIMARY KEY,
     UserName VARCHAR(50) NOT NULL,
@@ -93,9 +87,8 @@ CREATE TABLE AnimalDB.Users (
     Disabled BOOLEAN,
     ToBeDisabledDate DATE,
     DisabledDate DATE,
-    UserType INTEGER REFERENCES AnimalDB.UserTypes(UserTypeID)
+    UserType INTEGER
 );
-
 
 CREATE TABLE AnimalDB.Password (
     UserID INTEGER REFERENCES AnimalDB.Users(UserID),
