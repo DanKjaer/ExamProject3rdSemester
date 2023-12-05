@@ -1,16 +1,33 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {AnimalBoxComponent} from "./animal-box/animal-box.component";
+import { SpeciesComponent} from "./species/species.component"
+import {AnimalsComponent} from "./animals/animals.component";
+import {State} from "../state";
+import {LoginComponent} from "./login/login.component";
+
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: '',
+    component: AnimalBoxComponent
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'species/:id',
+    component: SpeciesComponent
   },
+  {
+    path: 'animals/:id',
+    component: AnimalsComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+/*  {
+    path: 'Employee',
+    component: EmployeeComponent
+  }*/
 ];
 
 @NgModule({
