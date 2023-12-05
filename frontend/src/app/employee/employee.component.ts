@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ModalController} from "@ionic/angular";
 import {EmployeeCreateComponent} from "../employee-create/employee-create.component";
 import {EmployeeUpdateComponent} from "../employee-update/employee-update.component";
@@ -47,4 +47,14 @@ export class EmployeeComponent  implements OnInit {
     modal.present();
   }
 
+  async deleteEmployee(userId: number) {
+    if(this.state.selectedUser !== null){
+      /*const userDelete = this.state.selectedUser.userId;*/
+      console.log('Delete user with userId', userId);
+      this.state.user = this.state.user.filter(user => user.userId != userId);
+      this.state.selectedUser = new Users();
+    } else{
+      console.error('No user selected for deletion.');
+    }
+  }
 }

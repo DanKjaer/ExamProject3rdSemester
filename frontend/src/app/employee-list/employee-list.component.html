@@ -7,10 +7,9 @@
   </ion-toolbar>
 </ion-header>
 
-
   <ion-list>
-    <ion-item *ngFor="let user of state.user ">
-      {{ user.userName }} - {{user.userEmail}}
+    <ion-item *ngFor="let user of state.user" [class.ion-activated]="user === state.selectedUser" (click)="focusEmployee(user)" [disabled]="false">
+      <ion-label>{{ user.userName }} - {{user.userEmail}}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

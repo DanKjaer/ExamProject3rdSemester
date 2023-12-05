@@ -8,4 +8,11 @@
 ion-item{
   background-color: #fff;
   padding: 10px;
+
+  &.ion-activated{
+    background-color: #0cd1e8;
+    border: 1px solid #cccccc;
+  }
 }
+
+

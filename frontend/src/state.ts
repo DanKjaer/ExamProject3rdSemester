@@ -12,4 +12,5 @@ export class State{
   currentAnimal: Animals = new Animals();
   user: Users[] = [];
   currentUser: Users = new Users();
+  selectedUser: Users = new Users();
 }
