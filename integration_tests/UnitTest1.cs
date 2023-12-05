@@ -353,7 +353,7 @@ public class Tests
             UserEmail = "bobby@bobsen.dk",
             UserName = "hennyy",
             PhoneNumber = "23457823",
-            UserType = 1
+            UserType = Dyrepasser
         };
 
         HttpResponseMessage response;
@@ -379,7 +379,7 @@ public class Tests
             UserEmail = "bobby@bobsen.dk",
             UserName = "hennyy",
             PhoneNumber = "23457823",
-            UserType = 1
+            UserType = Dyrepasser
         };
         
         var sql = "INSERT INTO animaldb.users" +
