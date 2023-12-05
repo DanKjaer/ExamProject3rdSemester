@@ -28,7 +28,7 @@ export class AnimalFeed{
 }
 
 export class Users{
-  userId!: number;
+  userID!: number;
   userName!: string;
   userEmail!: string;
   phoneNumber?: string;

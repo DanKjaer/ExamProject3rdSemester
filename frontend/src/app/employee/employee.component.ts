@@ -38,6 +38,7 @@ export class EmployeeComponent  implements OnInit {
       component: EmployeeCreateComponent
     })
     modal.present();
+    console.log("test 33: " + this.state.selectedUser)
   }
 
   async updateEmployee(){
@@ -50,8 +51,9 @@ export class EmployeeComponent  implements OnInit {
   async deleteEmployee(userId: number) {
     if(this.state.selectedUser !== null){
       /*const userDelete = this.state.selectedUser.userId;*/
-      console.log('Delete user with userId', userId);
-      this.state.user = this.state.user.filter(user => user.userId != userId);
+      console.log("selected user: ", this.state.selectedUser, this.state.selectedUser.userID)
+      console.log('UserId given to method: ', userId);
+      this.state.user = this.state.user.filter(user => user.userID != userId);
       this.state.selectedUser = new Users();
     } else{
       console.error('No user selected for deletion.');
