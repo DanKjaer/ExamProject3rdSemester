@@ -16,6 +16,7 @@ export class EmployeeComponent  implements OnInit {
 
   private apiUrl = 'http://localhost:5000/api/users';
 
+
   constructor(public modalController: ModalController, public http: HttpClient, public state: State,) { }
 
   ngOnInit() {
@@ -48,15 +49,24 @@ export class EmployeeComponent  implements OnInit {
     modal.present();
   }
 
-  async deleteEmployee(userId: number) {
-    if(this.state.selectedUser !== null){
-      /*const userDelete = this.state.selectedUser.userId;*/
-      console.log("selected user: ", this.state.selectedUser, this.state.selectedUser.userID)
-      console.log('UserId given to method: ', userId);
-      this.state.user = this.state.user.filter(user => user.userID != userId);
-      this.state.selectedUser = new Users();
-    } else{
-      console.error('No user selected for deletion.');
+  async disableEmployee(userId: number) {
+    this.state.selectedUser.disabled = true;
+    await firstValueFrom(this.http.put<Users>(this.apiUrl, this.state.selectedUser))
+    console.log("selected user: ", this.state.selectedUser, this.state.selectedUser.userID)
+    console.log('UserId given to method: ', userId);
+    this.state.user = this.state.user.filter(user => user.userID != userId);
+    this.state.selectedUser = new Users();
+  }
+
+  async setDisabledUser(){
+    const currentDate = new Date().getTime();
+    await firstValueFrom(this.http.put<Users>(this.apiUrl, this.state.user))
+    for(const user of this.state.user){
+      if (user.toBeDisabledDate && currentDate >= user.toBeDisabledDate){
+        user.disabled = true;
+        user.disabledDate = currentDate;
+      }
     }
   }
 }
+
