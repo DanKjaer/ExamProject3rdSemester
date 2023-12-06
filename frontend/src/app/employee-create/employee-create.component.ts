@@ -41,7 +41,7 @@ export class EmployeeCreateComponent  implements OnInit {
         ...this.createNewEmployee.getRawValue(),
         ...this.roleForm.getRawValue()
       };
-      info.toBeDisabledDate = this.createNewEmployee.get('toBeDisabledDate')?.value || null;
+      info.toBeDisabledDate = this.roleForm.get('toBeDisabledDate')?.value || null;
       console.log('Request Data:', info);
       const observable = this.http.post<Users>(this.apiUrl + "?password=" + this.createNewEmployee.getRawValue().password, info);
       const response = await firstValueFrom(observable);
