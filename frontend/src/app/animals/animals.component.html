@@ -51,7 +51,7 @@
         </ion-item>
       </ion-list>
       <ion-footer>
-        <ion-input class="text-area" formControlName="noteText"></ion-input>
+        <ion-input class="text-area" [(ngModel)]="noteInput" formControlName="noteText"></ion-input>
         <ion-buttons style="gap: 10px">
           <ion-button color="dark" fill="outline" (click)="saveNote()">Save Note</ion-button>
         </ion-buttons>

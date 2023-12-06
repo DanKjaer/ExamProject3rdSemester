@@ -22,6 +22,7 @@ export class AnimalsComponent implements OnInit {
   animalId?: string | null;
   animalBirthday?: Date;
   animalAge?: number;
+  noteInput: string | undefined;
 
   constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder) {
   }
@@ -63,12 +64,17 @@ export class AnimalsComponent implements OnInit {
     this.state.animalNoteFeed = result!;
   }
 
+  clearNoteInput() {
+    this.noteInput = '';
+  }
+
   async saveNote() {
     let dto = this.createAnimalNoteForm.getRawValue();
     dto.animalsID = Number(this.state.currentAnimal.animalID);
     const observable = await this.http.post<AnimalNote>('http://localhost:5000/api/animalnote/', dto);
     const result = await firstValueFrom(observable);
     this.state.animalNoteFeed.push(<AnimalNoteFeed>result);
+    this.clearNoteInput();
   }
 
   async deleteNote(noteId: number) {
