@@ -15,8 +15,8 @@ import {toggle} from "ionicons/icons";
 export class AnimalsComponent implements OnInit {
 
   createAnimalNoteForm = this.fb.group({
-    animalsID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
-    noteText: ['', Validators.required]
+    animalID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
+    noteText: ['', Validators.required, Validators.minLength(3)]
   })
 
   animalId?: string | null;
@@ -65,12 +65,12 @@ export class AnimalsComponent implements OnInit {
   }
 
   clearNoteInput() {
-    this.noteInput = '';
+    this.createAnimalNoteForm.get('noteText')?.setValue('');
   }
 
   async saveNote() {
     let dto = this.createAnimalNoteForm.getRawValue();
-    dto.animalsID = Number(this.state.currentAnimal.animalID);
+    dto.animalID = Number(this.state.currentAnimal.animalID);
     const observable = await this.http.post<AnimalNote>('http://localhost:5000/api/animalnote/', dto);
     const result = await firstValueFrom(observable);
     this.state.animalNoteFeed.push(<AnimalNoteFeed>result);
