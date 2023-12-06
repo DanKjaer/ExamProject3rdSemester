@@ -66,16 +66,14 @@ export class AnimalsComponent implements OnInit {
   async saveNote() {
     let dto = this.createAnimalNoteForm.getRawValue();
     dto.animalsID = Number(this.state.currentAnimal.animalID);
-    
-    let animalnote = new AnimalNote;
-    animalnote.animalID = this.state.currentAnimal.animalID!
-    animalnote.noteText = this.createAnimalNoteForm.getRawValue().noteText!
-    console.log("weird way: ", animalnote)
-    console.log("sensible way: " ,dto)
-    const observable = await this.http.post<AnimalNote>('http://localhost:5000/api/animalnote/', animalnote);
+    const observable = await this.http.post<AnimalNote>('http://localhost:5000/api/animalnote/', dto);
     const result = await firstValueFrom(observable);
     this.state.animalNoteFeed.push(<AnimalNoteFeed>result);
+  }
 
+  async deleteNote(noteId: number) {
+    await firstValueFrom(this.http.delete('http://localhost:5000/api/animalnote/' + noteId));
+    this.state.animalNoteFeed = this.state.animalNoteFeed.filter(note => note.noteID !== noteId);
   }
 
 }

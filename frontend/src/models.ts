@@ -29,10 +29,8 @@ export class AnimalFeed{
 }
 
 export class AnimalNote{
-  noteID?: number;
   animalID!: number;
   noteText!: string;
-  noteDate!: Date;
 }
 
 export class AnimalNoteFeed{

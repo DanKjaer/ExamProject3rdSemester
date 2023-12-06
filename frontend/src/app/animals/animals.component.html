@@ -37,20 +37,26 @@
   </ion-card>
 
   <div [formGroup]="createAnimalNoteForm">
-  <ion-card class="note">
-    <ion-card-header>Notes</ion-card-header>
-    <ion-list class="note-list">
-      <ion-item *ngFor="let AnimalNoteFeed of state.animalNoteFeed">
-        <ion-label>{{AnimalNoteFeed.noteText}}</ion-label>
-      </ion-item>
-    </ion-list>
-    <ion-footer>
-      <ion-input class="text-area" formControlName="noteText"></ion-input>
-      <ion-buttons style="gap: 10px">
-        <ion-button color="dark" fill="outline" (click)="saveNote()">Save Note</ion-button>
-      </ion-buttons>
-    </ion-footer>
-  </ion-card>
+    <ion-card class="note">
+      <ion-card-header>Notes</ion-card-header>
+      <ion-list class="note-list">
+        <ion-item *ngFor="let AnimalNoteFeed of state.animalNoteFeed">
+          <ion-label>{{AnimalNoteFeed.noteText}}</ion-label>
+          <ion-note>{{AnimalNoteFeed.noteDate}}</ion-note>
+          <ion-buttons>
+            <ion-button (click)="deleteNote(AnimalNoteFeed.noteID)">
+              <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+      <ion-footer>
+        <ion-input class="text-area" formControlName="noteText"></ion-input>
+        <ion-buttons style="gap: 10px">
+          <ion-button color="dark" fill="outline" (click)="saveNote()">Save Note</ion-button>
+        </ion-buttons>
+      </ion-footer>
+    </ion-card>
   </div>
 </div>
 
