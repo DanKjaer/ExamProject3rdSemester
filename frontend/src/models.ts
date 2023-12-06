@@ -33,8 +33,8 @@ export class Users{
   userEmail!: string;
   phoneNumber?: string;
   disabled?: boolean;
-  toBeDisabledDate?: number;
-  disabledDate?: number;
+  toBeDisabledDate?: Date;
+  disabledDate?: Date;
   userType?: number;
 }
 

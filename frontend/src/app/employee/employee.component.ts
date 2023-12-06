@@ -59,10 +59,10 @@ export class EmployeeComponent  implements OnInit {
   }
 
   async setDisabledUser(){
-    const currentDate = new Date().getTime();
+    const currentDate = new Date();
     await firstValueFrom(this.http.put<Users>(this.apiUrl, this.state.user))
     for(const user of this.state.user){
-      if (user.toBeDisabledDate && currentDate >= user.toBeDisabledDate){
+      if (user.toBeDisabledDate instanceof Date && currentDate >= user.toBeDisabledDate){
         user.disabled = true;
         user.disabledDate = currentDate;
       }

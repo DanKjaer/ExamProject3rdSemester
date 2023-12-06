@@ -16,7 +16,7 @@
     <ion-item>
       <ion-input type="tel" formControlName="phoneNumber" label="Telefon nummer"></ion-input>
     </ion-item>
-
+  <form [formGroup]="roleForm">
     <ion-list>
       <ion-radio-group formControlName="userType">
         <!--Radio button for manager-->
@@ -32,7 +32,13 @@
           <ion-radio value="2">Praktikant</ion-radio>
         </ion-item>
       </ion-radio-group>
+
+      <ion-item *ngIf="roleForm.get('userType')?.value === '2'">
+        <ion-input type="date" formControlName="toBeDisabledDate" label="Date"></ion-input>
+      </ion-item>
     </ion-list>
+  </form>
+
     <!--Buttons-->
     <ion-button shape="round" (click)="newEmployee()">Create</ion-button>
     <ion-button shape="round" (click)="modalClose()">Cancel</ion-button>
