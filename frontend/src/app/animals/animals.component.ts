@@ -1,37 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
 import {ActivatedRoute} from "@angular/router";
-import {AnimalNote, Animals, AnimalSpecies} from "../../models";
+import {AnimalNote, AnimalNoteFeed, Animals, AnimalSpecies} from "../../models";
 import {FormBuilder, Validators} from "@angular/forms";
+import {toggle} from "ionicons/icons";
 
 @Component({
   selector: 'app-animals',
   templateUrl: './animals.component.html',
   styleUrls: ['./animals.component.scss'],
 })
-export class AnimalsComponent  implements OnInit {
+export class AnimalsComponent implements OnInit {
 
   createAnimalNoteForm = this.fb.group({
-    noteID: ['', Validators.required],
-    animalsId: ['', [Validators.required, Validators.min(0)]],
-    noteText: ['', Validators.required],
-    noteDate: ['', Validators.required]
-  })
-
-  updateAnimalNoteForm = this.fb.group({
-    noteID: [this.state.currentAnimalNote.noteID, Validators.required],
-    animalsId: [this.state.currentAnimalNote.animalsId, Validators.required],
-    noteText: [this.state.currentAnimalNote.noteText, Validators.required],
-    noteDate: [this.state.currentAnimalNote.noteDate, Validators.required]
+    animalsID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
+    noteText: ['', Validators.required]
   })
 
   animalId?: string | null;
   animalBirthday?: Date;
   animalAge?: number;
-  toggleEditButtons: boolean = false;
-  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder) { }
+
+  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder) {
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -47,7 +40,7 @@ export class AnimalsComponent  implements OnInit {
     this.getSpeciesName(this.state.currentAnimal.speciesID);
     this.animalBirthday = new Date(this.state.currentAnimal.animalBirthday!);
     this.calculateAge();
-    this.getNote(this.state.currentAnimal.animalID);
+    this.getNote();
   }
 
   async getSpeciesName(speciesId: number | undefined) {
@@ -61,37 +54,22 @@ export class AnimalsComponent  implements OnInit {
     }
 
     let timeDiff = Math.abs(Date.now() - this.animalBirthday?.getTime());
-    let age = Math.floor(timeDiff / (1000*3600*24*365));
+    let age = Math.floor(timeDiff / (1000 * 3600 * 24 * 365));
     this.animalAge = age;
   }
 
-  async getNote(animalId: number | undefined) {
-    const result = await firstValueFrom(this.http.get<AnimalNote>('http://localhost:5000/api/animalnote/' + animalId));
-    this.state.currentAnimalNote = result;
+  async getNote() {
+    const result = await firstValueFrom(this.http.get<AnimalNoteFeed[]>('http://localhost:5000/api/animalnote/' + this.state.currentAnimal.animalID));
+    this.state.animalNoteFeed = result!;
   }
 
-  toggleEdit() {
-    this.toggleEditButtons = !this.toggleEditButtons;
-    return this.toggleEditButtons;
-  }
-
-  saveNote() {
-    const textField: HTMLElement | null = document.getElementById('text-area');
-    this.state.currentAnimalNote.noteText = <string>textField?.textContent;
-    if (this.state.currentAnimal.animalID != null) {
-      this.state.currentAnimalNote.animalsId = this.state.currentAnimal.animalID;
-    }
-    this.toggleEdit();
-    if (this.state.currentAnimalNote.noteID == null) {
-      //create
-      let dto = this.createAnimalNoteForm.getRawValue();
-      this.http.post('https://localhost:5000/api/animalnote/', dto);
-      this.getNote(this.state.currentAnimal.animalID);
-    } else {
-      //update
-      let dto = this.updateAnimalNoteForm.getRawValue();
-      this.http.put('https://localhost:5000/api/animalnote/' + this.state.currentAnimal.animalID, dto);
-    }
+  async saveNote() {
+    let dto = this.createAnimalNoteForm.getRawValue();
+    dto.animalsID = Number(this.state.currentAnimal.animalID);
+    console.log(dto)
+    const observable = await this.http.post<AnimalNote>('http://localhost:5000/api/animalnote/', dto);
+    const result = await firstValueFrom(observable);
+    this.state.animalNoteFeed.push(<AnimalNoteFeed>result);
 
   }
 

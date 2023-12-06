@@ -5,11 +5,12 @@
 
 .note {
   width: 500px;
-  max-height: 350px;
+  max-height: 500px;
 }
 
-.text-area {
- height: 268px;
+.note-list{
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .content {
