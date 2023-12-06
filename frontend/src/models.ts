@@ -30,14 +30,14 @@ export class AnimalFeed{
 
 export class AnimalNote{
   noteID?: number;
-  animalsID!: number;
+  animalID!: number;
   noteText!: string;
   noteDate!: Date;
 }
 
 export class AnimalNoteFeed{
   noteID!: number;
-  animalsID!: number;
+  animalID!: number;
   noteText!: string;
   noteDate!: Date;
 }
