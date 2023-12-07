@@ -24,6 +24,12 @@ export class SpeciesComponent  implements OnInit {
     animalDead: [false]
   })
 
+  updateSpeciesForm = this.fb.group({
+    speciesName: ['', Validators.required],
+    speciesDescription: ['', Validators.required],
+    speciesPicture: ['']
+  })
+
   constructor(public fb: FormBuilder, public http : HttpClient, public state: State, public toastController: ToastController, public route: ActivatedRoute) { }
 
   speciesId?: string | null;
@@ -55,6 +61,13 @@ export class SpeciesComponent  implements OnInit {
         this.toastController.create({message: e.error.messageToCient}).then(res => res.present)
       }
     }
+  }
+
+  async updateSpecies() {
+    let dto = this.updateSpeciesForm.getRawValue();
+    const observable = this.http.put<AnimalSpecies>('http://localhost:5000/api/animalspecies', dto);
+    const response = await firstValueFrom(observable);
+    this.state.currentAnimalSpecies = response;
   }
 
 }
