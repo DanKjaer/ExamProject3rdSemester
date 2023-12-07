@@ -1,3 +1,5 @@
+using api;
+using api.Middleware;
 using infrastructure;
 using infrastructure.Repositories;
 using service.PasswordHashing;
@@ -22,6 +24,10 @@ builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<SearchService>();
 builder.Services.AddSingleton<HashingArgon2id>();
 
+builder.Services.AddAvatarBlobService();
+builder.Services.AddJwtService();
+builder.Services.AddSwaggerGenWithBearerJWT();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -36,15 +42,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(options =>
-{
-    options.SetIsOriginAllowed(origin => true)
+var frontendOrigin = app.Services.GetService<IConfiguration>()!["FrontendOrigin"];
+app.UseCors(policy =>
+    policy
+        .SetIsOriginAllowed(origin => origin == frontendOrigin)
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .AllowCredentials();
-});
+);
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseMiddleware<JwtBearerHandler>();
+app.UseMiddleware<GlobalExceptionHandler>();
 app.Run();
