@@ -1,4 +1,3 @@
- <ion-card class="animal-profile-flex">
-    <img class="profile-picture" src="../assets/icon/møøhnika.png">
-  </ion-card>
-
+<ion-card class="animal-profile-flex">
+  <img class="profile-picture" [src]="this.state.currentAnimal.animalPicture || this.state.currentAnimalSpecies.speciesPicture  || '../assets/icon/møøhnika.png'">
+</ion-card>

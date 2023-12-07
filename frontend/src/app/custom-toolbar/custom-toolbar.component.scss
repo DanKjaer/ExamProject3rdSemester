@@ -27,7 +27,7 @@ ion-toolbar {
 .burger-buttons {
   margin: 15px;
   text-align: center;
-  overflow: scroll;
+  overflow-y: auto;
 }
 ion-button {
   width: 200px;
@@ -57,7 +57,7 @@ ion-accordion {
 
 .ion-padding {
   display: inline-block;
-  overflow: scroll;
+  overflow-y: auto;
   max-height: 425px;
 }
 
