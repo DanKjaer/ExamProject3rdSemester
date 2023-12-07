@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {AnimalSpecies, AnimalSpeciesFeed} from "../../models";
+import {AnimalNote, AnimalSpecies, AnimalSpeciesFeed} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
 import {Router} from "@angular/router";
+import {FormBuilder, Validators} from "@angular/forms";
 
 
 @Component({
@@ -14,7 +15,13 @@ import {Router} from "@angular/router";
 })
 export class AnimalBoxComponent  implements OnInit {
 
-  constructor(public http: HttpClient, public state: State, public router: Router) { }
+  createSpeciesForm = this.fb.group({
+    speciesName: ['', Validators.required],
+    speciesDescription: ['', Validators.required],
+    speciesPicture: ['', Validators.required]
+  });
+
+  constructor(public http: HttpClient, public state: State, public router: Router, public fb: FormBuilder) { }
 
   ngOnInit() {
     this.getAnimalSpeciesFeed()
@@ -37,5 +44,10 @@ export class AnimalBoxComponent  implements OnInit {
     this.router.navigate(['/species/' + animalNumber])
   }
 
-  protected readonly AnimalSpeciesFeed = AnimalSpeciesFeed;
+  async createSpecies() {
+    let dto = this.createSpeciesForm.getRawValue();
+    const observable = await this.http.post<AnimalSpecies>('http://localhost:5000/api/animalspecies', dto);
+    const response = await firstValueFrom(observable);
+    this.state.animalSpeciesFeed.push(response);
+  }
 }

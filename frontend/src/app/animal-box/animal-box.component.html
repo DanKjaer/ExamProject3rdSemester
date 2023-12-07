@@ -1,16 +1,48 @@
 <ion-app>
-  <ion-content>
-      <div class="card-container">
-      <ion-card class="results" *ngFor="let AnimalSpeciesFeed of state.animalSpeciesFeed" (click)="goToSpecies(AnimalSpeciesFeed.speciesID)">
-        <ion-toolbar>
-          <ion-title class="animal-box-name">{{AnimalSpeciesFeed.speciesName}}</ion-title>
-        </ion-toolbar>
-          <div class="animal-box-full">
-            <div class="animal-image-container">
-              <img class="animal-image" [src]="AnimalSpeciesFeed?.speciesPicture || '../assets/icon/møøhnika.png'">
-            </div>
-          </div>
-        </ion-card>
+  <div class="card-container">
+    <ion-card class="results" *ngFor="let AnimalSpeciesFeed of state.animalSpeciesFeed"
+              (click)="goToSpecies(AnimalSpeciesFeed.speciesID)">
+      <ion-toolbar>
+        <ion-title class="animal-box-name">{{AnimalSpeciesFeed.speciesName}}</ion-title>
+      </ion-toolbar>
+      <div class="animal-box-full">
+        <div class="animal-image-container">
+          <img class="animal-image" [src]="AnimalSpeciesFeed?.speciesPicture || '../assets/icon/møøhnika.png'">
+        </div>
       </div>
-  </ion-content>
+    </ion-card>
+  </div>
+
+  <div class="create-button-container">
+    <ion-buttons>
+      <ion-button id="open-create" color="dark" fill="outline">Create Species</ion-button>
+    </ion-buttons>
+  </div>
+
+  <div [formGroup]="createSpeciesForm">
+    <ion-modal trigger="open-create">
+      <ng-template>
+        <ion-content>
+          <ion-item>
+            <ion-input type="text" label="Species Name" placeholder="Species Name"
+                       formControlName="speciesName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" label="Description" placeholder="Description"
+                       formControlName="speciesDescription"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="url" label="Species Picture" placeholder="Species Picture"
+                       formControlName="speciesPicture"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-buttons>
+              <ion-button color="dark" fill="outline" (click)="createSpecies()">Create</ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
 </ion-app>
