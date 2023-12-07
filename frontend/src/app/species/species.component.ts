@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {AnimalFeed, Animals} from "../../models";
+import {AnimalFeed, Animals, AnimalSpecies} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
 import {ToastController} from "@ionic/angular";
@@ -26,7 +26,19 @@ export class SpeciesComponent  implements OnInit {
 
   constructor(public fb: FormBuilder, public http : HttpClient, public state: State, public toastController: ToastController, public route: ActivatedRoute) { }
 
-  ngOnInit() {}
+  speciesId?: string | null;
+
+  ngOnInit() {
+    this.getSpecies();
+  }
+
+  async getSpecies() {
+    this.route.paramMap.subscribe(params => {
+      this.speciesId = params.get('id');
+    })
+    const result = await firstValueFrom(this.http.get<AnimalSpecies>('http://localhost:5000/api/animalspecies/' + this.speciesId));
+    this.state.currentAnimalSpecies = result;
+  }
 
   async createAnimal() {
     try {
