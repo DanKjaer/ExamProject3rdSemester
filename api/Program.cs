@@ -47,7 +47,7 @@ if (app.Environment.IsDevelopment())
 var frontendOrigin = app.Services.GetService<IConfiguration>()!["FrontendOrigin"];
 app.UseCors(policy =>
     policy
-        .SetIsOriginAllowed(origin => origin == frontendOrigin)
+        .SetIsOriginAllowed(origin => origin == "http://localhost:4200")
         .AllowAnyMethod()
         .AllowAnyHeader()
 );
