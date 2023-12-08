@@ -82,7 +82,7 @@ CREATE TABLE AnimalDB.AnimalNote (
 CREATE TABLE AnimalDB.Users (
     UserID SERIAL PRIMARY KEY,
     UserName VARCHAR(50) NOT NULL,
-    UserEmail VARCHAR(50) NOT NULL,
+    UserEmail VARCHAR(50) NOT NULL UNIQUE,
     PhoneNumber VARCHAR(20),
     Disabled BOOLEAN,
     ToBeDisabledDate DATE,
