@@ -1,9 +1,11 @@
-﻿using infrastructure.datamodels;
+﻿using api.filters;
+using infrastructure.datamodels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 
 namespace api.Controllers;
 
+[RequireAuthentication]
 [ApiController]
 public class AnimalController
 {

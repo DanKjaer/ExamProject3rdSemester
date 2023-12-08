@@ -1,3 +1,5 @@
+using api;
+using api.Middleware;
 using infrastructure;
 using infrastructure.Repositories;
 using service.PasswordHashing;
@@ -15,12 +17,18 @@ builder.Services.AddSingleton<AnimalSpeciesRepository>();
 builder.Services.AddSingleton<AnimalsRepository>();
 builder.Services.AddSingleton<UserRepository>();
 builder.Services.AddSingleton<SearchRepository>();
+builder.Services.AddSingleton<AuthenticateRepository>();
 
 builder.Services.AddSingleton<AnimalSpeciesService>();
 builder.Services.AddSingleton<AnimalService>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<SearchService>();
 builder.Services.AddSingleton<HashingArgon2id>();
+builder.Services.AddSingleton<AuthenticationService>();
+
+builder.Services.AddAvatarBlobService();
+builder.Services.AddJwtService();
+builder.Services.AddSwaggerGenWithBearerJWT();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -36,15 +44,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(options =>
-{
-    options.SetIsOriginAllowed(origin => true)
+var frontendOrigin = app.Services.GetService<IConfiguration>()!["FrontendOrigin"];
+app.UseCors(policy =>
+    policy
+        .SetIsOriginAllowed(origin => origin == frontendOrigin)
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .AllowCredentials();
-});
+);
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseMiddleware<JwtBearerHandler>();
+app.UseMiddleware<GlobalExceptionHandler>();
 app.Run();
