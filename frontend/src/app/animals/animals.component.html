@@ -64,6 +64,48 @@
   <app-animal-picture></app-animal-picture>
 </div>
 
+<div class="button-container">
+  <ion-buttons>
+    <ion-button id="edit-modal" color="dark" fill="outline">Edit</ion-button>
+  </ion-buttons>
+</div>
+
+<div [formGroup]="updateAnimalForm">
+  <ion-modal trigger="edit-modal">
+    <ng-template>
+      <ion-content class="modal-content">
+        <ion-item>
+          <ion-input type="text" placeholder="Dan" label="Name" label-placement="stacked" formControlName="animalName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="number" placeholder="60" label="Weight" label-placement="stacked" formControlName="animalWeight"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-select placeholder="Select Gender" interface="popover" label="Gender" label-placement="stacked" formControlName="animalGender">
+            <ion-select-option [value]="true">Male</ion-select-option>
+            <ion-select-option [value]="false">Female</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select placeholder="Yes/No" interface="popover" label="Deceased" label-placement="stacked" formControlName="animalDead">
+            <ion-select-option [value]="true">Yes</ion-select-option>
+            <ion-select-option [value]="false">No</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input type="date" label="Birthday" label-placement="stacked" formControlName="animalBirthday"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="url" label="Picture" label-placement="stacked" formControlName="animalPicture" placeholder="Picture url"></ion-input>
+        </ion-item>
+      </ion-content>
+      <ion-footer>
+        <ion-button color="dark" fill="outline" (click)="updateAnimal()">Save</ion-button>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+</div>
+
 <ng-template #female>
   <ion-item>
     <ion-label>

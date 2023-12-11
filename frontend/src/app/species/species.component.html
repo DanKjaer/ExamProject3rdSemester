@@ -11,19 +11,19 @@
       <ng-template>
         <ion-content class="modal-content">
           <ion-item>
-            <ion-input type="text" placeholder="Dan" label="Name" formControlName="animalName"></ion-input>
+            <ion-input type="text" placeholder="Dan" label="Name" label-placement="stacked" formControlName="animalName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="number" placeholder="60" label="Weight" formControlName="animalWeight"></ion-input>
+            <ion-input type="number" placeholder="60" label="Weight" label-placement="stacked" formControlName="animalWeight"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-select placeholder="Select Gender" interface="popover" label="Gender" formControlName="animalGender">
+            <ion-select placeholder="Select Gender" interface="popover" label="Gender" label-placement="stacked" formControlName="animalGender">
               <ion-select-option [value]="true">Male</ion-select-option>
               <ion-select-option [value]="false">Female</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-input type="date" label="Birthday" formControlName="animalBirthday"></ion-input>
+            <ion-input type="date" label="Birthday" label-placement="stacked" formControlName="animalBirthday"></ion-input>
           </ion-item>
         </ion-content>
         <ion-footer>

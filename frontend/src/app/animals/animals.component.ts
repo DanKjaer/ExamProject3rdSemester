@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {booleanAttribute, Component, OnInit} from '@angular/core';
 import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
@@ -17,6 +17,17 @@ export class AnimalsComponent implements OnInit {
   createAnimalNoteForm = this.fb.group({
     animalID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
     noteText: ['', Validators.required, Validators.minLength(3)]
+  })
+
+  updateAnimalForm = this.fb.group({
+    animalID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
+    speciesID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
+    animalName: ['', Validators.required],
+    animalBirthday: [this.state.currentAnimal.animalBirthday, Validators.required],
+    animalGender: [false, Validators.required],
+    animalDead: [false, Validators.required],
+    animalPicture: ['', Validators.required],
+    animalWeight: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]]
   })
 
   animalId?: string | null;
@@ -42,6 +53,18 @@ export class AnimalsComponent implements OnInit {
     this.animalBirthday = new Date(this.state.currentAnimal.animalBirthday!);
     this.calculateAge();
     this.getNote();
+    this.initializeEdit();
+  }
+
+  initializeEdit() {
+    this.updateAnimalForm.patchValue({
+      animalName: this.state.currentAnimal.animalName,
+      animalWeight: this.state.currentAnimal.animalWeight,
+      animalPicture: this.state.currentAnimal.animalPicture,
+      animalGender: this.state.currentAnimal.animalGender,
+      animalDead: this.state.currentAnimal.animalDead,
+      animalBirthday: this.state.currentAnimal.animalBirthday
+    });
   }
 
   async getSpeciesName(speciesId: number | undefined) {
@@ -82,4 +105,13 @@ export class AnimalsComponent implements OnInit {
     this.state.animalNoteFeed = this.state.animalNoteFeed.filter(note => note.noteID !== noteId);
   }
 
+
+  async updateAnimal() {
+    let dto = this.updateAnimalForm.getRawValue();
+    dto.animalID = Number(this.state.currentAnimal.animalID);
+    dto.speciesID = Number(this.state.currentAnimal.speciesID);
+    const observable = await this.http.put<Animals>('http://localhost:5000/api/animal', dto);
+    const result = await firstValueFrom(observable);
+    this.state.currentAnimal = result;
+  }
 }
