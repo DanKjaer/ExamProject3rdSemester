@@ -15,6 +15,7 @@ export class Animals{
   animalID?: number;
   speciesID?: number;
   animalName?: string;
+  animalBirthday?: Date;
   animalGender?: boolean;
   animalDead?: boolean;
   animalPicture?: string;
@@ -27,7 +28,8 @@ export class AnimalFeed{
   animalName?: string;
 }
 
-export class Users{
+
+export class Users {
   userID!: number;
   userName!: string;
   userEmail!: string;
@@ -35,4 +37,17 @@ export class Users{
   disabled?: boolean;
   toBeDisabledDate?: Date;
   userType?: number;
+}
+
+export class AnimalNote{
+  animalID!: number;
+  noteText!: string;
+}
+
+export class AnimalNoteFeed{
+  noteID!: number;
+  animalID!: number;
+  noteText!: string;
+  noteDate!: Date;
+
 }

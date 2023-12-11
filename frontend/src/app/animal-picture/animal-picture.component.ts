@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {State} from "../../state";
 
 @Component({
   selector: 'app-animal-picture',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnimalPictureComponent  implements OnInit {
 
-  constructor() { }
+  constructor(public state: State) { }
 
   ngOnInit() {}
 

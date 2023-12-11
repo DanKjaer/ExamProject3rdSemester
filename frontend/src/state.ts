@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {AnimalFeed, Animals, AnimalSpecies, AnimalSpeciesFeed, Users} from "./models";
+import {AnimalFeed, AnimalNote, AnimalNoteFeed, Animals, AnimalSpecies, AnimalSpeciesFeed, Users} from "./models";
 
 @Injectable({
   providedIn: 'root'
@@ -13,4 +13,7 @@ export class State{
   user: Users[] = [];
   currentUser: Users = new Users();
   selectedUser: Users = new Users();
+  currentAnimalNote: AnimalNote = new AnimalNote();
+  animalNoteFeed: AnimalNoteFeed[] = [];
+
 }
