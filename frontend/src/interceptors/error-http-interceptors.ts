@@ -2,10 +2,12 @@ import {Injectable} from "@angular/core";
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {catchError, Observable} from "rxjs";
 import { ToastController } from "@ionic/angular";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class ErrorHttpInterceptor implements HttpInterceptor {
-  constructor(private readonly toast: ToastController) {}
+  constructor(private readonly toast: ToastController,
+              private readonly router: Router) {}
   private async showError(message: string) {
     return (await this.toast.create({
       message: message,
@@ -14,9 +16,16 @@ export class ErrorHttpInterceptor implements HttpInterceptor {
     })).present()
   }
   intercept(req: HttpRequest<any>, next: HttpHandler):
-    Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(catchError(async e => {
-      if (e instanceof HttpErrorResponse) {
+    Observable<HttpEvent<any>>
+  {
+    return next.handle(req).pipe(catchError(async e =>
+    {
+      if (e instanceof HttpErrorResponse)
+      {
+        if (e.statusText === "Unauthorized")
+        {
+          this.router.navigateByUrl("/login")
+        }
         this.showError(e.statusText);
       }
       throw e;
