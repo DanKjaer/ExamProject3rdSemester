@@ -34,12 +34,5 @@ export class Users{
   phoneNumber?: string;
   disabled?: boolean;
   toBeDisabledDate?: Date;
-  disabledDate?: Date;
   userType?: number;
-}
-
-export class passwordString{
-  userId!: number;
-  passwordHashed!: string;
-  passwordSalt!: string;
 }

@@ -5,7 +5,6 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Users} from "../../models";
 import {firstValueFrom} from "rxjs";
-import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-employee-create',
@@ -37,13 +36,13 @@ export class EmployeeCreateComponent  implements OnInit {
 
   async newEmployee(){
     try{
-      let info = {
+      let dto = {
         ...this.createNewEmployee.getRawValue(),
         ...this.roleForm.getRawValue()
       };
-      info.toBeDisabledDate = this.roleForm.get('toBeDisabledDate')?.value || null;
-      console.log('Request Data:', info);
-      const observable = this.http.post<Users>(this.apiUrl + "?password=" + this.createNewEmployee.getRawValue().password, info);
+      dto.toBeDisabledDate = this.roleForm.get('toBeDisabledDate')?.value || null;
+      console.log('Request Data:', dto);
+      const observable = this.http.post<Users>(this.apiUrl + "?password=" + this.createNewEmployee.getRawValue().password, dto);
       const response = await firstValueFrom(observable);
       this.state.user.push(response);
       console.log(observable)
@@ -51,7 +50,7 @@ export class EmployeeCreateComponent  implements OnInit {
     } catch (e) {
       if (e instanceof HttpErrorResponse){
         this.toast.create({message: e.error.messageToClient, duration: 1000}).then((res) => res.present())
-      };
+      }
     }
   }
 

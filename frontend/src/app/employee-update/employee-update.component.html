@@ -1,3 +1,18 @@
-<p>
-  employee-update works!
-</p>
+<div class="modal-container" [formGroup]="updateEmployee">
+  <!--Name field-->
+  <ion-item>
+    <ion-input type="text" formControlName="userName" label="Navn"></ion-input>
+  </ion-item>
+  <!--Mail field-->
+  <ion-item>
+    <ion-input type="email" formControlName="userEmail" label="Mail"></ion-input>
+  </ion-item>
+  <!--Phone number field-->
+  <ion-item>
+    <ion-input type="tel" formControlName="phoneNumber" label="Telefon nummer"></ion-input>
+  </ion-item>
+
+  <!--Buttons-->
+  <ion-button shape="round" (click)="updateEmployeeMethod()">Rediger</ion-button>
+  <ion-button shape="round" (click)="modalClose()">Cancel</ion-button>
+</div>

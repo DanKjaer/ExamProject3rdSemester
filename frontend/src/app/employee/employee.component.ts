@@ -14,7 +14,7 @@ import {State} from "../../state";
 })
 export class EmployeeComponent  implements OnInit {
 
-  private apiUrl = 'http://localhost:5000/api/users';
+  apiUrl = 'http://localhost:5000/api/users';
 
 
   constructor(public modalController: ModalController, public http: HttpClient, public state: State,) { }
@@ -64,7 +64,6 @@ export class EmployeeComponent  implements OnInit {
     for(const user of this.state.user){
       if (user.toBeDisabledDate instanceof Date && currentDate >= user.toBeDisabledDate){
         user.disabled = true;
-        user.disabledDate = currentDate;
       }
     }
   }
