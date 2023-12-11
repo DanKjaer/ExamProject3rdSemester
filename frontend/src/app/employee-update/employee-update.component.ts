@@ -41,15 +41,16 @@ export class EmployeeUpdateComponent  implements OnInit {
     this.state.selectedUser = result;
     }
   }
-
-
+  
   async updateEmployeeMethod(){
     try{
       let dto = this.updateEmployee.getRawValue();
       const observable = this.http.put<Users>(this.apiUrl + '/' + this.state.selectedUser.userID, dto);
       const response = await firstValueFrom(observable);
-      this.state.user = this.state.user.filter(user => user.userID != this.state.selectedUser.userID);
-      this.state.user.push(response);
+      const index = this.state.user.findIndex((user) => user.userID === this.state.selectedUser.userID);
+      if(index !== -1){
+        this.state.user[index] = response;
+      }
       this.modalController.dismiss
     }catch (e){
       if(e instanceof HttpErrorResponse){
