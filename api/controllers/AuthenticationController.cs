@@ -19,19 +19,19 @@ public class AuthenticationController : ControllerBase
 
     [HttpPost]
     [Route("/api/Login")]
-    public ResponseDto Login([FromBody] UserLogin userLogin)
+    public ResponseToken Login([FromBody] UserLogin userLogin)
     {
         var user = _authenticationService.Authenticate(userLogin);
         if (user == null)
         {
-            return new ResponseDto()
+            return new ResponseToken()
             {
                 token = "Failure to Authenticate"
             };
         }
 
         var token = _jwtService.IssueToken(SessionData.FromUser(user!));
-        var result = new ResponseDto()
+        var result = new ResponseToken()
         {
             token = token
         };

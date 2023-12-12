@@ -2,5 +2,6 @@
 
 public class ResponseDto
 {
-    public string token { get; set; }
+    public string MessageToClient { get; set; }
+    public object? ResponseData { get; set; }
 }
