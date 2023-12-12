@@ -36,7 +36,7 @@ export class Users {
   phoneNumber?: string;
   disabled?: boolean;
   toBeDisabledDate?: Date;
-  userType?: number;
+  userType?: UserType;
 }
 
 export class AnimalNote{
@@ -49,5 +49,10 @@ export class AnimalNoteFeed{
   animalID!: number;
   noteText!: string;
   noteDate!: Date;
+}
 
+export enum UserType{
+  manager,
+  dyrepasser,
+  elev
 }

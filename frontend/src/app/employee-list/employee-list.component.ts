@@ -33,7 +33,7 @@ export class EmployeeListComponent  implements OnInit {
 
   private sortUserList() {
     console.log('before sort',this.state.currentUser)
-    this.state.user = this.state.user.sort((a, b) =>{
+    this.state.user = this.state.user.sort((a) =>{
       return a.disabled ? 1 : -1;
     });
     console.log('After sort', this.state.user)

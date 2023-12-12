@@ -41,7 +41,7 @@ export class EmployeeUpdateComponent  implements OnInit {
     this.state.selectedUser = result;
     }
   }
-  
+
   async updateEmployeeMethod(){
     try{
       let dto = this.updateEmployee.getRawValue();
@@ -51,7 +51,7 @@ export class EmployeeUpdateComponent  implements OnInit {
       if(index !== -1){
         this.state.user[index] = response;
       }
-      this.modalController.dismiss
+      this.modalController.dismiss();
     }catch (e){
       if(e instanceof HttpErrorResponse){
         this.toast.create({message: e.error.messageToClient, duration: 1000}).then((res) => res.present())

@@ -3,7 +3,7 @@ import {State} from "../../state";
 import {ModalController, ToastController} from "@ionic/angular";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Users} from "../../models";
+import {Users, UserType} from "../../models";
 import {firstValueFrom} from "rxjs";
 
 @Component({
@@ -30,7 +30,7 @@ export class EmployeeCreateComponent  implements OnInit {
     userEmail: ['', Validators.required],
     password: ['', Validators.required],
     phoneNumber: ['', Validators.required],
-    userType: [0, Validators.required],
+    userType: [UserType, Validators.required],
     toBeDisabledDate: ['']
   })
 
@@ -48,6 +48,7 @@ export class EmployeeCreateComponent  implements OnInit {
       console.log(observable)
       this.modalController.dismiss();
     } catch (e) {
+      console.log(e)
       if (e instanceof HttpErrorResponse){
         this.toast.create({message: e.error.messageToClient, duration: 1000}).then((res) => res.present())
       }
@@ -57,5 +58,7 @@ export class EmployeeCreateComponent  implements OnInit {
     async modalClose(){
     this.modalController.dismiss();
     }
+
+  protected readonly UserType = UserType;
 }
 
