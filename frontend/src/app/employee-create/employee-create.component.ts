@@ -36,13 +36,16 @@ export class EmployeeCreateComponent  implements OnInit {
 
   async newEmployee(){
     try{
-      let dto = {
-        ...this.createNewEmployee.getRawValue(),
-        ...this.roleForm.getRawValue()
-      };
-      dto.toBeDisabledDate = this.roleForm.get('toBeDisabledDate')?.value || null;
-      console.log('Request Data:', dto);
-      const observable = this.http.post<Users>(this.apiUrl + "?password=" + this.createNewEmployee.getRawValue().password, dto);
+      // Making the new User as an object so we can sent it to API
+      const newUser = new Users;
+      newUser.userName = this.createNewEmployee.getRawValue().userName!;
+      newUser.userEmail = this.createNewEmployee.getRawValue().userEmail!;
+      newUser.phoneNumber = this.createNewEmployee.getRawValue().phoneNumber!;
+      newUser.userType = Number.parseInt(this.roleForm.get("userType")!.value);
+      newUser.toBeDisabledDate = new Date(this.roleForm.get("toBeDisabledDate")!.value);
+
+      console.log('Request Data:', newUser);
+      const observable = this.http.post<Users>(this.apiUrl + "?password=" + this.createNewEmployee.getRawValue().password, newUser);
       const response = await firstValueFrom(observable);
       this.state.user.push(response);
       console.log(observable)

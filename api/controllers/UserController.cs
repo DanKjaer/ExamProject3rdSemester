@@ -32,6 +32,7 @@ public class UserController
     [Route("/api/users")]
     public Users CreateUser([FromBody] Users user, [FromQuery]string password)
     {
+        Console.WriteLine("HALLLØJ");
         return _userService.CreateUser(user, password);
     }
 
