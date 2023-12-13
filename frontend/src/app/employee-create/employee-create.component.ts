@@ -49,7 +49,7 @@ export class EmployeeCreateComponent  implements OnInit {
       const response = await firstValueFrom(observable);
       this.state.user.push(response);
       console.log(observable)
-      this.sortUserList();
+      this.state.sortUser();
       this.modalController.dismiss();
     } catch (e) {
       console.log(e)

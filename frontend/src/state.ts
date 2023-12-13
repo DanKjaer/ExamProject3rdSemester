@@ -16,4 +16,11 @@ export class State{
   currentAnimalNote: AnimalNote = new AnimalNote();
   animalNoteFeed: AnimalNoteFeed[] = [];
 
+  sortUser(){
+      this.user = this.user.sort((a, b) =>{
+        return a.disabled ? 1 : -1;
+      });
+      console.log('After sort', this.user)
+    }
 }
+

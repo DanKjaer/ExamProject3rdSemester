@@ -21,7 +21,7 @@ export class EmployeeListComponent  implements OnInit {
       if(userData !== undefined){
         this.state.user = userData;
 
-        this.sortUserList()
+        this.state.sortUser();
       }
     });
   }
@@ -33,18 +33,6 @@ export class EmployeeListComponent  implements OnInit {
   focusEmployee(user: Users){
     this.state.selectedUser = user;
     console.log('Focus Employee', this.state.selectedUser)
-  }
-
-  /**
-   * A method used to sort users. Puts disabled users at the bottom of the list.
-   * @private
-   */
-  private sortUserList() {
-    console.log('before sort',this.state.currentUser)
-    this.state.user = this.state.user.sort((a) =>{
-      return a.disabled ? 1 : -1;
-    });
-    console.log('After sort', this.state.user)
   }
 
   /**

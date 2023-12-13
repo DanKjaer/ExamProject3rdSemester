@@ -66,24 +66,12 @@ export class EmployeeComponent  implements OnInit {
     if(updatedUser !== null && updatedUser !== undefined){
       updatedUser.disabled = true
       await firstValueFrom(this.http.put<Users>(url, this.state.selectedUser));
-      this.sortUserList();
+      this.state.sortUser();
       this.state.selectedUser = new Users();
     }else{
       console.error('User not found for ID: ', userId);
     }
 
-  }
-
-  /**
-   * A method used to sort disabled users to the bottom of the list
-   * @private
-   */
-  private sortUserList() {
-    console.log('before sort',this.state.currentUser)
-    this.state.user = this.state.user.sort((a, b) =>{
-      return a.disabled ? 1 : -1;
-    });
-    console.log('After sort', this.state.user)
   }
 
   /**
