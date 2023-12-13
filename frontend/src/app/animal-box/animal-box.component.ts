@@ -17,7 +17,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 export class AnimalBoxComponent  implements OnInit {
 
   constructor(public http: HttpClient, public state: State, public router: Router,
-              private readonly token: TokenService)
+              private readonly token: TokenService, public fb: FormBuilder)
     {
         this.checkIfLogin();
     }
