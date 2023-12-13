@@ -20,11 +20,13 @@ jobs:
         run: cd api && dotnet run & echo "API_PID=$!" >> $GITHUB_ENV
         env:
           pgconn: ${{secrets.PGCONN}}
+          JWT: ${{secrets.JWT}}
 
       - name: Run tests once API is running (sleep interval set to 60 seconds)
         run: cd integration_tests && sleep 60 && dotnet build && dotnet test
         env:
           pgconn: ${{secrets.PGCONN}}
+          JWT: ${{secrets.JWT}}
 
       - name: Shutdown Web API once the tests are done running
         run: kill $API_PID
