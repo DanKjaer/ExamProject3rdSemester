@@ -44,6 +44,7 @@ export class SpeciesComponent  implements OnInit {
     })
     const result = await firstValueFrom(this.http.get<AnimalSpecies>('http://localhost:5000/api/animalspecies/' + this.speciesId));
     this.state.currentAnimalSpecies = result;
+    this.initializeEdit();
   }
 
   async createAnimal() {
@@ -61,6 +62,14 @@ export class SpeciesComponent  implements OnInit {
         this.toastController.create({message: e.error.messageToCient}).then(res => res.present)
       }
     }
+  }
+
+  initializeEdit(){
+    this.updateSpeciesForm.patchValue({
+      speciesName: this.state.currentAnimalSpecies.speciesName,
+      speciesDescription: this.state.currentAnimalSpecies.speciesDescription,
+      speciesPicture: this.state.currentAnimalSpecies.speciesPicture
+    });
   }
 
   async updateSpecies() {

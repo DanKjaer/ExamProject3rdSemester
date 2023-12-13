@@ -33,7 +33,6 @@ export class AnimalsComponent implements OnInit {
   animalId?: string | null;
   animalBirthday?: Date;
   animalAge?: number;
-  noteInput: string | undefined;
 
   constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder) {
   }
@@ -113,5 +112,6 @@ export class AnimalsComponent implements OnInit {
     const observable = await this.http.put<Animals>('http://localhost:5000/api/animal', dto);
     const result = await firstValueFrom(observable);
     this.state.currentAnimal = result;
+
   }
 }
