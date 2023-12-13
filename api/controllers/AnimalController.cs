@@ -57,6 +57,7 @@ public class AnimalController
     [Route("/api/animalnote/")]
     public AnimalNote CreateAnimalNote([FromBody] AnimalNote animalNote)
     {
+        Console.WriteLine(animalNote);
         return _animalService.CreateAnimalNote(animalNote);
     }
 

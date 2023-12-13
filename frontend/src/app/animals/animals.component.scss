@@ -1,4 +1,31 @@
-.label{
-  background-color: red;
-  color: red;
+.info-list {
+  max-width: 400px;
+  height: 350px;
+  position: fixed;
+  top: 10%;
+  left: 25px;
+}
+
+.note {
+  display: block;
+  width: 500px;
+  max-height: 800px;
+  position: fixed;
+  right: 25px;
+  top: 10%;
+}
+
+.note-list{
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.content {
+  display: flex;
+}
+
+.picture {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
 }

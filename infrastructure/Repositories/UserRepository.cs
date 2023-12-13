@@ -50,11 +50,17 @@ public class UserRepository
         var sql = "INSERT INTO animaldb.users" +
                   "(UserName, UserEmail, PhoneNumber, Usertype, ToBeDisabledDate)" +
                   "VALUES (@UserName, @UserEmail, @PhoneNumber, @UserType, @ToBeDisabledDate) " +
+                  "ON CONFLICT(UserEmail) DO NOTHING " +
                   "RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Users>(sql, new {user.UserName, user.UserEmail, user.PhoneNumber, user.UserType, user.ToBeDisabledDate,});
+            var response = conn.QueryFirst<Users?>(sql, new {user.UserName, user.UserEmail, user.PhoneNumber, user.UserType, user.ToBeDisabledDate,});
+            if (response == null)
+            {
+                throw new Exception("User already exists");
+            }
+            return response;
         }
     }
 
