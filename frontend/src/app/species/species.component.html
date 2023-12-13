@@ -11,19 +11,19 @@
       <ng-template>
         <ion-content class="modal-content">
           <ion-item>
-            <ion-input type="text" placeholder="Dan" label="Name" label-placement="stacked" formControlName="animalName"></ion-input>
+            <ion-input type="text" placeholder="Dan" label="Name" label-placement="floating" formControlName="animalName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="number" placeholder="60" label="Weight" label-placement="stacked" formControlName="animalWeight"></ion-input>
+            <ion-input type="number" placeholder="60" label="Weight" label-placement="floating" formControlName="animalWeight"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-select placeholder="Select Gender" interface="popover" label="Gender" label-placement="stacked" formControlName="animalGender">
+            <ion-select placeholder="Select Gender" interface="popover" label="Gender" label-placement="floating" formControlName="animalGender">
               <ion-select-option [value]="true">Male</ion-select-option>
               <ion-select-option [value]="false">Female</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-input type="date" label="Birthday" label-placement="stacked" formControlName="animalBirthday"></ion-input>
+            <ion-input type="date" label="Birthday" label-placement="floating" formControlName="animalBirthday"></ion-input>
           </ion-item>
         </ion-content>
         <ion-footer>
@@ -46,13 +46,13 @@
       <ng-template>
         <ion-content>
           <ion-item>
-            <ion-input type="text" label="Species Name" placeholder="Species Name" formControlName="speciesName"></ion-input>
+            <ion-input type="text" label="Species Name" label-placement="floating" placeholder="Species Name" formControlName="speciesName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="text" label="Description" placeholder="Description" formControlName="speciesDescription"></ion-input>
+            <ion-input type="text" label="Description" label-placement="floating" placeholder="Description" formControlName="speciesDescription"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="url" label="Species Picture" placeholder="Species Picture" formControlName="speciesPicture"></ion-input>
+            <ion-input type="url" label="Species Picture" label-placement="floating" placeholder="Species Picture" formControlName="speciesPicture"></ion-input>
           </ion-item>
           <ion-item>
             <ion-buttons>

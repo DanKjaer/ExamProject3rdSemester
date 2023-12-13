@@ -23,10 +23,10 @@ export class AnimalsComponent implements OnInit {
     animalID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
     speciesID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
     animalName: ['', Validators.required],
-    animalBirthday: [this.state.currentAnimal.animalBirthday, Validators.required],
+    animalBirthday: [new Date(), Validators.required],
     animalGender: [false, Validators.required],
     animalDead: [false, Validators.required],
-    animalPicture: ['', Validators.required],
+    animalPicture: [''],
     animalWeight: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]]
   })
 
