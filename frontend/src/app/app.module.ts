@@ -21,6 +21,7 @@ import {ErrorHttpInterceptor} from "../interceptors/error-http-interceptors";
 import { TokenService } from 'src/services/token.services';
 import { AuthHttpInterceptor } from 'src/interceptors/auth-http-interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent,

@@ -38,14 +38,8 @@ public class Tests
         }
 
         HttpResponseMessage response;
-        try
-        {
-            response = await _httpClient.GetAsync("http://localhost:5000/api/animalspecies/1");
-        }
-        catch (HttpRequestException e)
-        {
-            throw new Exception("stupid");
-        }
+        
+        response = await _httpClient.GetAsync("http://localhost:5000/api/animalspecies/1");
 
         var content = await response.Content.ReadAsStringAsync();
         Console.WriteLine(content);

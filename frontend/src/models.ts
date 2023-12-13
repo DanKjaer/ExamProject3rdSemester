@@ -15,6 +15,7 @@ export class Animals{
   animalID?: number;
   speciesID?: number;
   animalName?: string;
+  animalBirthday?: Date;
   animalGender?: boolean;
   animalDead?: boolean;
   animalPicture?: string;
@@ -29,4 +30,16 @@ export class AnimalFeed{
 
 export class LoginResponse{
   token!: string;
+}
+
+export class AnimalNote{
+  animalID!: number;
+  noteText!: string;
+}
+
+export class AnimalNoteFeed{
+  noteID!: number;
+  animalID!: number;
+  noteText!: string;
+  noteDate!: Date;
 }
