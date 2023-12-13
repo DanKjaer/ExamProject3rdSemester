@@ -49,6 +49,7 @@ export class EmployeeCreateComponent  implements OnInit {
       const response = await firstValueFrom(observable);
       this.state.user.push(response);
       console.log(observable)
+      this.sortUserList();
       this.modalController.dismiss();
     } catch (e) {
       console.log(e)
@@ -61,6 +62,14 @@ export class EmployeeCreateComponent  implements OnInit {
     async modalClose(){
     this.modalController.dismiss();
     }
+
+  private sortUserList() {
+    console.log('before sort',this.state.currentUser)
+    this.state.user = this.state.user.sort((a, b) =>{
+      return a.disabled ? 1 : -1;
+    });
+    console.log('After sort', this.state.user)
+  }
 
   protected readonly UserType = UserType;
 }

@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {ModalController} from "@ionic/angular";
 import {EmployeeCreateComponent} from "../employee-create/employee-create.component";
 import {EmployeeUpdateComponent} from "../employee-update/employee-update.component";
 import {HttpClient} from "@angular/common/http";
-import {firstValueFrom} from "rxjs";
+import {firstValueFrom, Observable, of} from "rxjs";
 import {Users} from "../../models";
 import {State} from "../../state";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-employee',
@@ -13,7 +14,6 @@ import {State} from "../../state";
   styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent  implements OnInit {
-
   apiUrl = 'http://localhost:5000/api/users';
 
 
@@ -34,6 +34,9 @@ export class EmployeeComponent  implements OnInit {
 
   }
 
+  /**
+   * Modal window for create employee
+   */
   async openCreateEmployeeModal(){
     const modal = await this.modalController.create({
       component: EmployeeCreateComponent
@@ -42,6 +45,9 @@ export class EmployeeComponent  implements OnInit {
     console.log("test 33: " + this.state.selectedUser)
   }
 
+  /**
+   * Modal window for the update employee
+   */
   async updateEmployee(){
     const modal = await this.modalController.create({
       component: EmployeeUpdateComponent
@@ -49,23 +55,47 @@ export class EmployeeComponent  implements OnInit {
     modal.present();
   }
 
-  async disableEmployee(userId: number) {
+  /**
+   * A method that changes a users status to disabled
+   * @param userId
+   */
+  async disableEmployee(userId: number){
     this.state.selectedUser.disabled = true;
-    await firstValueFrom(this.http.put<Users>(this.apiUrl, this.state.selectedUser))
-    console.log("selected user: ", this.state.selectedUser, this.state.selectedUser.userID)
-    console.log('UserId given to method: ', userId);
-    this.state.user = this.state.user.filter(user => user.userID != userId);
-    this.state.selectedUser = new Users();
+    const url = `${this.apiUrl}/${userId}`
+    const updatedUser = this.state.user.find(user => user.userID === userId);
+    if(updatedUser !== null && updatedUser !== undefined){
+      updatedUser.disabled = true
+      await firstValueFrom(this.http.put<Users>(url, this.state.selectedUser));
+      this.sortUserList();
+      this.state.selectedUser = new Users();
+    }else{
+      console.error('User not found for ID: ', userId);
+    }
+
   }
 
-  async setDisabledUser(){
-    const currentDate = new Date();
-    await firstValueFrom(this.http.put<Users>(this.apiUrl, this.state.user))
-    for(const user of this.state.user){
-      if (user.toBeDisabledDate instanceof Date && currentDate >= user.toBeDisabledDate){
-        user.disabled = true;
-      }
-    }
+  /**
+   * A method used to sort disabled users to the bottom of the list
+   * @private
+   */
+  private sortUserList() {
+    console.log('before sort',this.state.currentUser)
+    this.state.user = this.state.user.sort((a, b) =>{
+      return a.disabled ? 1 : -1;
+    });
+    console.log('After sort', this.state.user)
+  }
+
+  /**
+   * A method used to fetch an array of users.
+   */
+  fetchUserData(): Observable<Users[] | undefined> {
+    return this.http.get<Users[]>(this.apiUrl).pipe(
+      catchError((error) => {
+        console.error('Eror fetching user data', error);
+        return of(undefined);
+      })
+    );
   }
 }
 

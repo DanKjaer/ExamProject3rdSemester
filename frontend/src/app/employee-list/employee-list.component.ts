@@ -26,11 +26,19 @@ export class EmployeeListComponent  implements OnInit {
     });
   }
 
+  /**
+   * A method used to focus an employee on the list
+   * @param user
+   */
   focusEmployee(user: Users){
     this.state.selectedUser = user;
     console.log('Focus Employee', this.state.selectedUser)
   }
 
+  /**
+   * A method used to sort users. Puts disabled users at the bottom of the list.
+   * @private
+   */
   private sortUserList() {
     console.log('before sort',this.state.currentUser)
     this.state.user = this.state.user.sort((a) =>{
@@ -39,6 +47,9 @@ export class EmployeeListComponent  implements OnInit {
     console.log('After sort', this.state.user)
   }
 
+  /**
+   * A method used to fetch an array of users.
+   */
   fetchUserData(): Observable<Users[] | undefined> {
       return this.http.get<Users[]>(this.apiUrl).pipe(
         catchError((error) => {

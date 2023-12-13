@@ -52,11 +52,20 @@ export class EmployeeUpdateComponent  implements OnInit {
         this.state.user[index] = response;
       }
       this.modalController.dismiss();
+      this.sortUserList();
     }catch (e){
       if(e instanceof HttpErrorResponse){
         this.toast.create({message: e.error.messageToClient, duration: 1000}).then((res) => res.present())
       }
     }
+  }
+
+  private sortUserList() {
+    console.log('before sort',this.state.currentUser)
+    this.state.user = this.state.user.sort((a, b) =>{
+      return a.disabled ? 1 : -1;
+    });
+    console.log('After sort', this.state.user)
   }
 
   async modalClose(){
