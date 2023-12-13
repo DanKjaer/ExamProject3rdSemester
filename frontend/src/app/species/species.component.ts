@@ -4,7 +4,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {AnimalFeed, Animals, AnimalSpecies} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
-import {ToastController} from "@ionic/angular";
+import {ModalController, ToastController} from "@ionic/angular";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -12,7 +12,7 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './species.component.html',
   styleUrls: ['./species.component.scss'],
 })
-export class SpeciesComponent  implements OnInit {
+export class SpeciesComponent implements OnInit {
 
   createNewAnimalForm = this.fb.group({
     speciesID: ['', Validators.required],
@@ -30,7 +30,8 @@ export class SpeciesComponent  implements OnInit {
     speciesPicture: ['']
   })
 
-  constructor(public fb: FormBuilder, public http : HttpClient, public state: State, public toastController: ToastController, public route: ActivatedRoute) { }
+  constructor(public fb: FormBuilder, public http: HttpClient, public state: State, public toastController: ToastController, public route: ActivatedRoute, public modal: ModalController) {
+  }
 
   speciesId?: string | null;
 
@@ -55,16 +56,16 @@ export class SpeciesComponent  implements OnInit {
       });
       const observable = this.http.post<Animals>('http://localhost:5000/api/animal', dto);
       const response = await firstValueFrom(observable);
-      console.log(response);
       this.state.animalFeed.push(<AnimalFeed>response);
-    }catch (e) {
+      await this.modal.dismiss();
+    } catch (e) {
       if (e instanceof HttpErrorResponse) {
         this.toastController.create({message: e.error.messageToCient}).then(res => res.present)
       }
     }
   }
 
-  initializeEdit(){
+  initializeEdit() {
     this.updateSpeciesForm.patchValue({
       speciesName: this.state.currentAnimalSpecies.speciesName,
       speciesDescription: this.state.currentAnimalSpecies.speciesDescription,
@@ -77,6 +78,7 @@ export class SpeciesComponent  implements OnInit {
     const observable = this.http.put<AnimalSpecies>('http://localhost:5000/api/animalspecies', dto);
     const response = await firstValueFrom(observable);
     this.state.currentAnimalSpecies = response;
+    await this.modal.dismiss();
   }
 
 }

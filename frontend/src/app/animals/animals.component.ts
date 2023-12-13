@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {AnimalNote, AnimalNoteFeed, Animals, AnimalSpecies} from "../../models";
 import {FormBuilder, Validators} from "@angular/forms";
 import {toggle} from "ionicons/icons";
+import {ModalController} from "@ionic/angular";
 
 @Component({
   selector: 'app-animals',
@@ -34,7 +35,7 @@ export class AnimalsComponent implements OnInit {
   animalBirthday?: Date;
   animalAge?: number;
 
-  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder) {
+  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder, public modal: ModalController) {
   }
 
   ngOnInit() {
@@ -46,7 +47,6 @@ export class AnimalsComponent implements OnInit {
 
   async getAnimal() {
     const result = await firstValueFrom(this.http.get<Animals>('http://localhost:5000/api/animal/' + this.animalId));
-    console.log(result)
     this.state.currentAnimal = result;
     this.getSpeciesName(this.state.currentAnimal.speciesID);
     this.animalBirthday = new Date(this.state.currentAnimal.animalBirthday!);
@@ -62,6 +62,7 @@ export class AnimalsComponent implements OnInit {
       animalPicture: this.state.currentAnimal.animalPicture,
       animalGender: this.state.currentAnimal.animalGender,
       animalDead: this.state.currentAnimal.animalDead,
+      //virker men viser det ikke ¯\_(ツ)_/¯
       animalBirthday: this.state.currentAnimal.animalBirthday
     });
   }
@@ -109,9 +110,9 @@ export class AnimalsComponent implements OnInit {
     let dto = this.updateAnimalForm.getRawValue();
     dto.animalID = Number(this.state.currentAnimal.animalID);
     dto.speciesID = Number(this.state.currentAnimal.speciesID);
-    const observable = await this.http.put<Animals>('http://localhost:5000/api/animal', dto);
+    const observable = this.http.put<Animals>('http://localhost:5000/api/animal', dto);
     const result = await firstValueFrom(observable);
     this.state.currentAnimal = result;
-
+    await this.modal.dismiss();
   }
 }
