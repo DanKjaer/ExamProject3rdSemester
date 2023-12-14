@@ -54,7 +54,7 @@ app.UseCors(policy =>
 );
 
 app.UseHttpsRedirection();
-//app.UseAuthorization();
+app.UseAuthorization();
 app.MapControllers();
 app.UseMiddleware<JwtBearerHandler>();
 app.UseMiddleware<GlobalExceptionHandler>();
