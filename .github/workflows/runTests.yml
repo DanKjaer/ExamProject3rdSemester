@@ -21,6 +21,7 @@ jobs:
         env:
           pgconn: ${{secrets.PGCONN}}
           JWT: ${{secrets.JWT}}
+          JwtSecret: ${{secrets.JwtSecret}}
 
       - name: Run tests once API is running (sleep interval set to 60 seconds)
         run: cd integration_tests && sleep 60 && dotnet build && dotnet test
