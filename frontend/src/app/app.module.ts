@@ -17,12 +17,17 @@ import {AnimalNamesComponent} from "./animal-names/animal-names.component";
 import {AnimalInformationComponent} from "./animal-information/animal-information.component";
 import {AnimalsComponent} from "./animals/animals.component";
 import {LoginComponent} from "./login/login.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {EmployeeComponent} from "./employee/employee.component";
+import {EmployeeCreateComponent} from "./employee-create/employee-create.component";
+import {EmployeeListComponent} from "./employee-list/employee-list.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {EmployeeUpdateComponent} from "./employee-update/employee-update.component";
 
 @NgModule({
   declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent,
-    SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent, AnimalInformationComponent, AnimalsComponent, LoginComponent],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule, ReactiveFormsModule],
+    SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent, AnimalInformationComponent, AnimalsComponent,
+    LoginComponent, EmployeeComponent, EmployeeCreateComponent, EmployeeListComponent, EmployeeUpdateComponent],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule, FormsModule, ReactiveFormsModule],
     exports: [RouterModule, AnimalBoxComponent],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
