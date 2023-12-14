@@ -80,8 +80,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<BlobService>(provider =>
         {
-            var connectionString = provider.GetService<IConfiguration>()!
-                .GetConnectionString("AvatarStorage");
+            var connectionString = Environment.GetEnvironmentVariable("PictureStorage");
             var client = new BlobServiceClient(connectionString);
             return new BlobService(client);
         });

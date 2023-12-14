@@ -11,6 +11,35 @@
   <ion-item>
     <ion-input type="tel" formControlName="phoneNumber" label="Telefon nummer"></ion-input>
   </ion-item>
+  <!--Password field-->
+  <ion-item>
+    <ion-input type="tel" formControlName="password" label="Password: "></ion-input>
+  </ion-item>
+  <!--Picture field-->
+  <ion-item>
+    <ion-input
+      #avatarInput
+      [hidden]="true"
+      type="file"
+      label="Avatar"
+      formControlName="picture"
+      accept="image/png, image/jpeg"
+      (change)="onFileChanged($event)"
+    ></ion-input>
+    <ion-img
+      *ngIf="UserPicture && !imageChangedEvent"
+      [src]="UserPicture"
+    ></ion-img>
+    <image-cropper
+      [hidden]="!imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [resizeToHeight]="200"
+      [resizeToWidth]="200"
+      format="jpeg"
+      [imageChangedEvent]="imageChangedEvent"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+  </ion-item>
 
   <!--Buttons-->
   <ion-button shape="round" (click)="updateEmployeeMethod()">Rediger</ion-button>

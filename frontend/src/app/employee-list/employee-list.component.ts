@@ -13,6 +13,7 @@ import {catchError} from 'rxjs/operators'
 export class EmployeeListComponent  implements OnInit {
   users: Users[] = [];
   apiUrl = 'http://localhost:5000/api/users';
+  UserPicture?: string;
 
   constructor(public state: State, public http: HttpClient) { }
 
@@ -22,6 +23,7 @@ export class EmployeeListComponent  implements OnInit {
         this.state.user = userData;
 
         this.state.sortUser();
+
       }
     });
   }
@@ -32,6 +34,10 @@ export class EmployeeListComponent  implements OnInit {
    */
   focusEmployee(user: Users){
     this.state.selectedUser = user;
+
+    if(this.state.selectedUser){
+      this.UserPicture = this.state.selectedUser.profilePicture;
+    }
   }
 
   /**
