@@ -1,4 +1,5 @@
-﻿using infrastructure.datamodels;
+﻿using api.transferModels;
+using infrastructure.datamodels;
 using Microsoft.AspNetCore.Mvc;
 using service;
 using service.Services;
@@ -18,15 +19,22 @@ public class AuthenticationController : ControllerBase
 
     [HttpPost]
     [Route("/api/Login")]
-    public IActionResult Login([FromBody] UserLogin userLogin)
+    public ResponseToken Login([FromBody] UserLogin userLogin)
     {
         var user = _authenticationService.Authenticate(userLogin);
         if (user == null)
         {
-            return Unauthorized();
+            return new ResponseToken()
+            {
+                token = "Failure to Authenticate"
+            };
         }
 
         var token = _jwtService.IssueToken(SessionData.FromUser(user!));
-        return Ok(new { token });
+        var result = new ResponseToken()
+        {
+            token = token
+        };
+        return result;
     }
 }
