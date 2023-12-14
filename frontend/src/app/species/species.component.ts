@@ -30,6 +30,12 @@ export class SpeciesComponent implements OnInit {
     speciesPicture: ['']
   })
 
+  emailForm = this.fb.group({
+    animalSpeciesId: ['', Validators.required],
+    toAddress: ['', Validators.required],
+    toName: ['', Validators.required]
+  })
+
   constructor(public fb: FormBuilder, public http: HttpClient, public state: State, public toastController: ToastController, public route: ActivatedRoute, public modal: ModalController) {
   }
 
@@ -79,6 +85,17 @@ export class SpeciesComponent implements OnInit {
     const response = await firstValueFrom(observable);
     this.state.currentAnimalSpecies = response;
     await this.modal.dismiss();
+  }
+
+  async sendMail() {
+    let dto = this.emailForm.getRawValue();
+    this.route.paramMap.subscribe(params => {
+      dto.animalSpeciesId = params.get('id');
+    });
+    const observable = this.http.post('http://localhost:5000/api/sendEmail', dto);
+    const response = await firstValueFrom(observable);
+    await this.modal.dismiss();
+    await this.toastController.create({message: response.toString(), duration: 5000}).then(res => res.present);
   }
 
 }
