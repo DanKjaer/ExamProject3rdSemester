@@ -392,7 +392,7 @@ public class Tests
 
         HttpResponseMessage response;
         user.Disabled = true;
-        response = await _httpClient.PutAsJsonAsync("http://localhost:5000/api/users", user);
+        response = await _httpClient.PutAsJsonAsync("http://localhost:5000/api/users/" + user.UserID, user);
         
         var content = await response.Content.ReadAsStringAsync();
         Users users;
