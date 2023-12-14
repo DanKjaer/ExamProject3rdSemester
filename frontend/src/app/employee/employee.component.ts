@@ -1,12 +1,11 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ModalController} from "@ionic/angular";
 import {EmployeeCreateComponent} from "../employee-create/employee-create.component";
 import {EmployeeUpdateComponent} from "../employee-update/employee-update.component";
 import {HttpClient} from "@angular/common/http";
-import {firstValueFrom, Observable, of} from "rxjs";
-import {Users} from "../../models";
+import {firstValueFrom} from "rxjs";
+import {Users, UserType} from "../../models";
 import {State} from "../../state";
-import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-employee',
@@ -17,7 +16,8 @@ export class EmployeeComponent  implements OnInit {
   apiUrl = 'http://localhost:5000/api/users';
 
 
-  constructor(public modalController: ModalController, public http: HttpClient, public state: State,) { }
+
+  constructor(public modalController: ModalController, public http: HttpClient, public state: State) { }
 
   ngOnInit() {
     this.getEmployeeList();
@@ -69,7 +69,6 @@ export class EmployeeComponent  implements OnInit {
     }else{
       console.error('User not found for ID: ', userId);
     }
-
   }
 }
 
