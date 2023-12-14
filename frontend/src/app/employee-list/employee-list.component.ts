@@ -32,7 +32,6 @@ export class EmployeeListComponent  implements OnInit {
    */
   focusEmployee(user: Users){
     this.state.selectedUser = user;
-    console.log('Focus Employee', this.state.selectedUser)
   }
 
   /**

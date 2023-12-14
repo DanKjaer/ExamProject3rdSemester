@@ -26,7 +26,6 @@ export class EmployeeComponent  implements OnInit {
   async getEmployeeList(){
     try{
       const result = await firstValueFrom(this.http.get<Users[]>(this.apiUrl))
-      console.log(result);
       this.state.user = result!;
     }catch(error){
       console.error('Error fetching data:', error)
@@ -42,7 +41,6 @@ export class EmployeeComponent  implements OnInit {
       component: EmployeeCreateComponent
     })
     modal.present();
-    console.log("test 33: " + this.state.selectedUser)
   }
 
   /**
@@ -72,18 +70,6 @@ export class EmployeeComponent  implements OnInit {
       console.error('User not found for ID: ', userId);
     }
 
-  }
-
-  /**
-   * A method used to fetch an array of users.
-   */
-  fetchUserData(): Observable<Users[] | undefined> {
-    return this.http.get<Users[]>(this.apiUrl).pipe(
-      catchError((error) => {
-        console.error('Eror fetching user data', error);
-        return of(undefined);
-      })
-    );
   }
 }
 

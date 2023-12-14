@@ -36,7 +36,7 @@ export class EmployeeCreateComponent  implements OnInit {
 
   async newEmployee(){
     try{
-      // Making the new User as an object so we can sent it to API
+      // Making the new User as an object, so we can send it to API
       const newUser = new Users;
       newUser.userName = this.createNewEmployee.getRawValue().userName!;
       newUser.userEmail = this.createNewEmployee.getRawValue().userEmail!;
@@ -48,7 +48,6 @@ export class EmployeeCreateComponent  implements OnInit {
       const observable = this.http.post<Users>(this.apiUrl + "?password=" + this.createNewEmployee.getRawValue().password, newUser);
       const response = await firstValueFrom(observable);
       this.state.user.push(response);
-      console.log(observable)
       this.state.sortUser();
       this.modalController.dismiss();
     } catch (e) {
@@ -62,14 +61,6 @@ export class EmployeeCreateComponent  implements OnInit {
     async modalClose(){
     this.modalController.dismiss();
     }
-
-  private sortUserList() {
-    console.log('before sort',this.state.currentUser)
-    this.state.user = this.state.user.sort((a, b) =>{
-      return a.disabled ? 1 : -1;
-    });
-    console.log('After sort', this.state.user)
-  }
 
   protected readonly UserType = UserType;
 }
