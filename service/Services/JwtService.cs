@@ -25,7 +25,7 @@ public class JwtService
                 SignatureAlgorithm
             ),
             Issuer = _options.Address,
-            Audience = "http://localhost:4200",
+            Audience = _options.Audience,
             Expires = DateTime.UtcNow.Add(_options.Lifetime),
             Claims = data.ToDictionary()
         });
@@ -46,7 +46,7 @@ public class JwtService
             ValidateIssuer = true,
             ValidateLifetime = true,
 
-            ValidAudience = "http://localhost:4200",
+            ValidAudience = _options.Audience,
             ValidIssuer = _options.Address,
 
             // Set to 0 when validating on the same system that created the token

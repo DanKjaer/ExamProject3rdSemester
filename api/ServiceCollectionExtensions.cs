@@ -21,9 +21,10 @@ public static class ServiceCollectionExtensions
             // Setting variables for the JwtOption
             byte[] secret = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JwtSecret")!);
             TimeSpan lifetime = TimeSpan.Parse(configuration["JWT:Lifetime"]!);
+            string audience = configuration["JWT:Audience"]!;
             
             // Creating JwtOptions with the variables we want, except address
-            var options = JwtOptions.create(secret, lifetime);
+            var options = JwtOptions.create(secret, lifetime, audience);
 
             // If address isn't set in the config, use the server address as the issuer for JWT
             if (string.IsNullOrEmpty(options?.Address))
