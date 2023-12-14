@@ -27,6 +27,7 @@ jobs:
         env:
           pgconn: ${{secrets.PGCONN}}
           JWT: ${{secrets.JWT}}
+          JwtSecret: ${{secrets.JwtSecret}}
 
       - name: Shutdown Web API once the tests are done running
         run: kill $API_PID
