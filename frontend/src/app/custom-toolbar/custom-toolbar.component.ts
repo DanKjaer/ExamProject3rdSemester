@@ -45,6 +45,10 @@ export class CustomToolbarComponent  implements OnInit {
     }
   }
 
+
+  goToStaff(){
+    this.router.navigate(['/staff'])}
+
   async getSpecies() {
     const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('http://localhost:5000/api/animalspeciesfeed'))
     this.state.animalSpeciesFeed = result!;
@@ -53,6 +57,7 @@ export class CustomToolbarComponent  implements OnInit {
   goToSpecies(animalNumber: number){
     this.state.currentAnimalSpecies.speciesID = animalNumber;
     this.router.navigate(['/species/' + animalNumber])
+
   }
 
   protected readonly focus = focus;

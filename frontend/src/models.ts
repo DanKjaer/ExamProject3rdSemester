@@ -28,8 +28,18 @@ export class AnimalFeed{
   animalName?: string;
 }
 
-export class LoginResponse{
+export class LoginResponse {
   token!: string;
+}
+
+export class Users {
+  userID!: number;
+  userName!: string;
+  userEmail!: string;
+  phoneNumber?: string;
+  disabled?: boolean;
+  toBeDisabledDate?: Date;
+  userType?: UserType;
 }
 
 export class AnimalNote{
@@ -42,4 +52,10 @@ export class AnimalNoteFeed{
   animalID!: number;
   noteText!: string;
   noteDate!: Date;
+}
+
+export enum UserType{
+  manager,
+  dyrepasser,
+  elev
 }

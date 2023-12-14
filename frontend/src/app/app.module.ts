@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {CustomToolbarComponent} from "./custom-toolbar/custom-toolbar.component";
@@ -20,12 +18,18 @@ import {LoginComponent} from "./login/login.component";
 import {ErrorHttpInterceptor} from "../interceptors/error-http-interceptors";
 import { TokenService } from 'src/services/token.services';
 import { AuthHttpInterceptor } from 'src/interceptors/auth-http-interceptor';
-import { ReactiveFormsModule } from '@angular/forms';
+import {EmployeeComponent} from "./employee/employee.component";
+import {EmployeeCreateComponent} from "./employee-create/employee-create.component";
+import {EmployeeListComponent} from "./employee-list/employee-list.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {EmployeeUpdateComponent} from "./employee-update/employee-update.component";
 
 @NgModule({
   declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent,
-    SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent, AnimalInformationComponent, AnimalsComponent, LoginComponent],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule, ReactiveFormsModule ],
+    SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent, AnimalInformationComponent, AnimalsComponent,
+    LoginComponent, EmployeeComponent, EmployeeCreateComponent, EmployeeListComponent, EmployeeUpdateComponent],
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule, FormsModule, ReactiveFormsModule],
+
     exports: [RouterModule, AnimalBoxComponent],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
               { provide: HTTP_INTERCEPTORS, useClass: ErrorHttpInterceptor, multi: true },

@@ -1,6 +1,5 @@
-ion-card.animal-names {
-  flex: 0 0 calc(10% - 16px); /* Adjust the width as needed (3 cards per row) */
-  max-width: calc(30% - 16px); /* Adjust the width as needed (3 cards per row) */
-  /* Add any other styling you want for the cards here */
-  margin-bottom: 16px; /* Add margin to create space between rows */
+ion-card.picture-card {
+  max-width: 300px;
+  max-height: 300px;
+  margin-bottom: 20px;
 }
