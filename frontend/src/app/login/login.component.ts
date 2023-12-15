@@ -53,7 +53,7 @@ export class LoginComponent  implements OnInit {
   }
 
   async setCurrentUser(email: string) {
-    const observable = this.http.get<Users>("http://localhost:5000/api/users/" + email)
+    const observable = this.http.get<Users>("http://localhost:5000/api/users/email/" + email)
     const response = await firstValueFrom(observable);
     this.state.currentUser = response;
   }
