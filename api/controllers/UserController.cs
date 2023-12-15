@@ -32,7 +32,7 @@ public class UserController
 
     [HttpGet]
     [Route("api/users/email/{email}")]
-    public Users GetUserFromEmail([FromQuery]string email)
+    public Users GetUserFromEmail([FromRoute]string email)
     {
         return _userService.GetUserByEmail(email);
     }
