@@ -15,7 +15,7 @@
 
   <div class="create-button-container">
     <ion-buttons>
-      <ion-button id="open-create" color="dark" fill="outline">Create Species</ion-button>
+      <ion-button *ngIf="this.state.currentUser.userType === 0" id="open-create" color="dark" fill="outline">Create Species</ion-button>
     </ion-buttons>
   </div>
 

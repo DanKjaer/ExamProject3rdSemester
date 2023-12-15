@@ -3,11 +3,11 @@
     <app-animal-names style="margin-top: 100px; margin-left: 50px"></app-animal-names>
   </div>
   <ion-buttons style="margin-left: 60px">
-    <ion-button id="open-modal" color="dark" fill="outline">Create Animal</ion-button>
+    <ion-button *ngIf="this.state.currentUser.userType === 0" id="open-create" color="dark" fill="outline">Create Animal</ion-button>
   </ion-buttons>
 
   <div [formGroup]="createNewAnimalForm">
-    <ion-modal trigger="open-modal">
+    <ion-modal trigger="open-create">
       <ng-template>
         <ion-content class="modal-content">
           <ion-item>
@@ -37,7 +37,7 @@
   <app-animal-picture style="margin-left: 50px; margin-top: 500px; position: absolute"></app-animal-picture>
 
   <ion-buttons style="margin: 50px; gap: 25px">
-    <ion-button id="open-edit" fill="outline" color="dark" style="width: 150px">Edit</ion-button>
+    <ion-button *ngIf="this.state.currentUser.userType !== 2" id="open-edit" fill="outline" color="dark" style="width: 150px">Edit</ion-button>
     <ion-button fill="outline" color="dark" style="width: 150px">Email</ion-button>
   </ion-buttons>
 
