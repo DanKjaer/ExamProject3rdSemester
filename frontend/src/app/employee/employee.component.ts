@@ -14,6 +14,7 @@ import {State} from "../../state";
 })
 export class EmployeeComponent  implements OnInit {
   apiUrl = 'http://localhost:5000/api/users';
+  type = UserType;
 
 
 
@@ -21,6 +22,7 @@ export class EmployeeComponent  implements OnInit {
 
   ngOnInit() {
     this.getEmployeeList();
+    console.log('KIG HER ~~~~~~~~~~~~',this.state.currentUser.userType)
   }
 
   async getEmployeeList(){
