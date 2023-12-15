@@ -5,6 +5,7 @@ using service;
 using service.Services;
 
 namespace api.Controllers;
+
 [ApiController]
 public class AuthenticationController : ControllerBase
 {

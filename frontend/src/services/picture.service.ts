@@ -20,13 +20,16 @@ export class PictureService{
   constructor(private readonly http: HttpClient, private readonly state: State) {}
 
   update(value: UserUpdate) {
+    const url = "http://localhost:5000"
     const formData = new FormData();
-    Object.entries(value).forEach(([key, value]) =>
-      formData.append(key, value)
-    );
+    Object.entries(value).forEach(([key, value]) => {
+      if (value) {
+        formData.append(key, value);
+      }
+    });
     if(formData.get("password")){
-      return this.http.put<Users>('/api/users/' + this.state.selectedUser.userID.valueOf() + "?" + formData.get("password"), formData);
+      return this.http.put<Users>(url + '/api/users/' + this.state.selectedUser.userID.valueOf() + "?" + formData.get("password"), formData);
     }
-    return this.http.put<Users>('/api/users/' + this.state.selectedUser.userID.valueOf(), formData);
+    return this.http.put<Users>(url + '/api/users/' + this.state.selectedUser.userID.valueOf(), formData);
   }
 }

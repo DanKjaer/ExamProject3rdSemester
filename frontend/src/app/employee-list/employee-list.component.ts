@@ -36,7 +36,9 @@ export class EmployeeListComponent  implements OnInit {
     this.state.selectedUser = user;
 
     if(this.state.selectedUser){
-      this.UserPicture = this.state.selectedUser.profilePicture;
+      this.UserPicture = this.state.selectedUser.picture;
+      console.log("userpicture: ", this.UserPicture);
+      console.log("selected: ", this.state.selectedUser.picture);
     }
   }
 
