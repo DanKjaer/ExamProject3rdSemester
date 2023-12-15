@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {booleanAttribute, Component, OnInit} from '@angular/core';
 import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {AnimalNote, AnimalNoteFeed, Animals, AnimalSpecies} from "../../models";
 import {FormBuilder, Validators} from "@angular/forms";
 import {toggle} from "ionicons/icons";
+import {ModalController} from "@ionic/angular";
 
 @Component({
   selector: 'app-animals',
@@ -19,12 +20,22 @@ export class AnimalsComponent implements OnInit {
     noteText: ['', Validators.required, Validators.minLength(3)]
   })
 
+  updateAnimalForm = this.fb.group({
+    animalID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
+    speciesID: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]],
+    animalName: ['', Validators.required],
+    animalBirthday: [new Date(), Validators.required],
+    animalGender: [false, Validators.required],
+    animalDead: [false, Validators.required],
+    animalPicture: [''],
+    animalWeight: [0, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.min(0)]]
+  })
+
   animalId?: string | null;
   animalBirthday?: Date;
   animalAge?: number;
-  noteInput: string | undefined;
 
-  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder) {
+  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder, public modal: ModalController) {
   }
 
   ngOnInit() {
@@ -36,12 +47,24 @@ export class AnimalsComponent implements OnInit {
 
   async getAnimal() {
     const result = await firstValueFrom(this.http.get<Animals>('http://localhost:5000/api/animal/' + this.animalId));
-    console.log(result)
     this.state.currentAnimal = result;
     this.getSpeciesName(this.state.currentAnimal.speciesID);
     this.animalBirthday = new Date(this.state.currentAnimal.animalBirthday!);
     this.calculateAge();
     this.getNote();
+    this.initializeEdit();
+  }
+
+  initializeEdit() {
+    this.updateAnimalForm.patchValue({
+      animalName: this.state.currentAnimal.animalName,
+      animalWeight: this.state.currentAnimal.animalWeight,
+      animalPicture: this.state.currentAnimal.animalPicture,
+      animalGender: this.state.currentAnimal.animalGender,
+      animalDead: this.state.currentAnimal.animalDead,
+      //virker men viser det ikke ¯\_(ツ)_/¯
+      animalBirthday: this.state.currentAnimal.animalBirthday
+    });
   }
 
   async getSpeciesName(speciesId: number | undefined) {
@@ -82,4 +105,14 @@ export class AnimalsComponent implements OnInit {
     this.state.animalNoteFeed = this.state.animalNoteFeed.filter(note => note.noteID !== noteId);
   }
 
+
+  async updateAnimal() {
+    let dto = this.updateAnimalForm.getRawValue();
+    dto.animalID = Number(this.state.currentAnimal.animalID);
+    dto.speciesID = Number(this.state.currentAnimal.speciesID);
+    const observable = this.http.put<Animals>('http://localhost:5000/api/animal', dto);
+    const result = await firstValueFrom(observable);
+    this.state.currentAnimal = result;
+    await this.modal.dismiss();
+  }
 }

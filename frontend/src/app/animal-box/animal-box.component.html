@@ -20,7 +20,7 @@
   </div>
 
   <div [formGroup]="createSpeciesForm">
-    <ion-modal trigger="open-create">
+    <ion-modal class="modalBox" trigger="open-create">
       <ng-template>
         <ion-content>
           <ion-item>
@@ -35,11 +35,11 @@
             <ion-input type="url" label="Species Picture" placeholder="Species Picture"
                        formControlName="speciesPicture"></ion-input>
           </ion-item>
-          <ion-item>
+          <ion-footer>
             <ion-buttons>
               <ion-button color="dark" fill="outline" (click)="createSpecies()">Create</ion-button>
             </ion-buttons>
-          </ion-item>
+          </ion-footer>
         </ion-content>
       </ng-template>
     </ion-modal>
