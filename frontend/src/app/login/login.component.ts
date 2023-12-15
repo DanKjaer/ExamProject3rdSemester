@@ -3,9 +3,10 @@ import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder, Validators } from '@angular/forms';
 import { TokenService } from 'src/services/token.services';
-import { LoginResponse } from 'src/models';
+import {LoginResponse, Users} from 'src/models';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import {State} from "../../state";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent  implements OnInit {
               private readonly token: TokenService,
               private readonly fb: FormBuilder,
               private readonly router: Router,
-              private readonly toast: ToastController,) {}
+              private readonly toast: ToastController,
+              public state: State) {}
 
   readonly form = this.fb.group({
     Email: ['', [Validators.required, Validators.email]],
@@ -40,6 +42,7 @@ export class LoginComponent  implements OnInit {
       })).present();
     }
     else {
+      this.setCurrentUser(this.form.value.Email!)
       this.router.navigateByUrl('/');
       (await this.toast.create({
         message: "Login successfull",
@@ -47,6 +50,12 @@ export class LoginComponent  implements OnInit {
         duration: 5000
       })).present();
     }
+  }
+
+  async setCurrentUser(email: string) {
+    const observable = this.http.get<Users>("http://localhost:5000/api/users/" + email)
+    const response = await firstValueFrom(observable);
+    this.state.currentUser = response;
   }
 
   ResetPassword() {
