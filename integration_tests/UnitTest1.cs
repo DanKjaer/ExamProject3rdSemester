@@ -1,4 +1,5 @@
 
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Dapper;
 using FluentAssertions;
@@ -16,6 +17,9 @@ public class Tests
     public void Setup()
     {
         _httpClient = new HttpClient();
+        string jwtToken = Environment.GetEnvironmentVariable("JWT")!;
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+        Console.WriteLine(_httpClient.DefaultRequestHeaders.Authorization);
         Helper.TriggerRebuild();
     }
 
@@ -388,7 +392,7 @@ public class Tests
 
         HttpResponseMessage response;
         user.Disabled = true;
-        response = await _httpClient.PutAsJsonAsync("http://localhost:5000/api/users", user);
+        response = await _httpClient.PutAsJsonAsync("http://localhost:5000/api/users/" + user.UserID, user);
         
         var content = await response.Content.ReadAsStringAsync();
         Users users;

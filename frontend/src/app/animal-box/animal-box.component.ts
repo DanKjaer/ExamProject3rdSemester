@@ -4,6 +4,7 @@ import {AnimalNote, AnimalSpecies, AnimalSpeciesFeed} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
 import {Router} from "@angular/router";
+import { TokenService } from 'src/services/token.services';
 import {FormBuilder, Validators} from "@angular/forms";
 
 
@@ -15,17 +16,26 @@ import {FormBuilder, Validators} from "@angular/forms";
 })
 export class AnimalBoxComponent  implements OnInit {
 
+  constructor(public http: HttpClient, public state: State, public router: Router,
+              private readonly token: TokenService, public fb: FormBuilder)
+    {
+        this.checkIfLogin();
+    }
   createSpeciesForm = this.fb.group({
     speciesName: ['', Validators.required],
     speciesDescription: ['', Validators.required],
     speciesPicture: ['', Validators.required]
   });
 
-  constructor(public http: HttpClient, public state: State, public router: Router, public fb: FormBuilder) { }
-
   ngOnInit() {
-    this.getAnimalSpeciesFeed()
+        this.getAnimalSpeciesFeed();
   }
+
+  checkIfLogin() {
+        if(!this.token.getToken()){
+          this.router.navigateByUrl("/login");
+        }
+    }
 
   async getAnimalSpeciesFeed(){
     try{

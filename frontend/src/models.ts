@@ -28,6 +28,9 @@ export class AnimalFeed{
   animalName?: string;
 }
 
+export class LoginResponse {
+  token!: string;
+}
 
 export class Users {
   userID!: number;

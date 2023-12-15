@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using api.filters;
+using Microsoft.AspNetCore.Mvc;
 using service.Services;
 
 namespace api.Controllers;
 
+[RequireAuthentication]
 [ApiController]
 public class SearchController
 {
