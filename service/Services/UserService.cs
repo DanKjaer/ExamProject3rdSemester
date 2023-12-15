@@ -24,6 +24,11 @@ public class UserService
         return _userRepository.GetUserById(userId);
     }
 
+    public Users GetUserByEmail(string email)
+    {
+        return _userRepository.Get
+    }
+    
     public IEnumerable<Users> GetUsers()
     {
         UserDisableAndDeletion();

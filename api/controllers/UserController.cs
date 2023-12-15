@@ -30,11 +30,17 @@ public class UserController
         return _userService.GetUserById(id);
     }
 
+    [HttpGet]
+    [Route("api/users/")]
+    public Users GetUserFromEmail([FromQuery]string email)
+    {
+        return _userService.GetUserByEmail(email);
+    }
+    
     [HttpPost]
     [Route("/api/users")]
     public Users CreateUser([FromBody] Users user, [FromQuery]string password)
     {
-        Console.WriteLine("HALLLØJ");
         return _userService.CreateUser(user, password);
     }
 
@@ -43,7 +49,6 @@ public class UserController
     public Users UpdateUser([FromBody] Users user, [FromQuery]string? password, [FromRoute] int id)
     {
         user.UserID = id;
-        Console.WriteLine("FEJLEN STÅR HER VENNER ~~~~~~~~~~~~" + user.UserID);
         return _userService.UpdateUser(user, password);
     }
 }
