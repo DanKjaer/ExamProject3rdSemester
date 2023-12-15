@@ -26,7 +26,7 @@ public class UserService
 
     public Users GetUserByEmail(string email)
     {
-        return _userRepository.Get
+        return _userRepository.GetUserByEmail(email);
     }
     
     public IEnumerable<Users> GetUsers()
