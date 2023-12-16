@@ -101,7 +101,6 @@ public class Tests
         }
     }
     
-
     [Test]
     public async Task GetAnimal()
     {
@@ -125,7 +124,6 @@ public class Tests
             animals.AnimalPicture.Should().BeEquivalentTo(animal.AnimalPicture);
             animals.SpeciesID.Should().Be(animal.SpeciesID);
         }
-
     }
 
     [Test]
