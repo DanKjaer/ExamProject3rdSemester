@@ -7,7 +7,7 @@ namespace api.Controllers;
 
 [RequireAuthentication]
 [ApiController]
-public class AnimalSpeciesController
+public class AnimalSpeciesController : ControllerBase
 {
 
     private readonly AnimalSpeciesService _animalSpeciesService;
@@ -33,16 +33,24 @@ public class AnimalSpeciesController
     
     [HttpPost]
     [Route("/api/animalspecies")]
-    public AnimalSpecies CreateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
+    public IActionResult CreateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
     {
-        return _animalSpeciesService.CreateSpecies(animalSpecies);
+        if (!HttpContext.GetSessionData()!.IsManager)
+        {
+            return StatusCode(StatusCodes.Status401Unauthorized);
+        }
+        return Ok(_animalSpeciesService.CreateSpecies(animalSpecies));
     }
 
     [HttpPut]
     [Route("/api/animalspecies")]
-    public AnimalSpecies UpdateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
+    public IActionResult UpdateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
     {
-        return _animalSpeciesService.UpdateSpecies(animalSpecies);
+        if (!HttpContext.GetSessionData()!.IsManager)
+        {
+            return StatusCode(StatusCodes.Status401Unauthorized);
+        }
+        return Ok(_animalSpeciesService.UpdateSpecies(animalSpecies));
     }
 
     [HttpDelete]

@@ -35,16 +35,20 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("/api/users")]
-    public Users CreateUser([FromBody] Users user, [FromQuery]string password)
+    public IActionResult CreateUser([FromBody] Users user, [FromQuery]string password)
     {
-        return _userService.CreateUser(user, password);
+        if (!HttpContext.GetSessionData().IsManager)
+        {
+            return StatusCode(StatusCodes.Status401Unauthorized);
+        }
+        return Ok(_userService.CreateUser(user, password));
     }
 
     [HttpPut]
     [Route("/api/users/{id}")]
     public IActionResult UpdateUser([FromForm] Users user, IFormFile? profilePicture, [FromQuery]string? password, [FromRoute] int id)
     {
-        if (!HttpContext.GetSessionData().IsAdmin)
+        if (!HttpContext.GetSessionData()!.IsManager)
         {
             return StatusCode(StatusCodes.Status401Unauthorized);
         }

@@ -7,7 +7,7 @@ namespace api.Controllers;
 
 [RequireAuthentication]
 [ApiController]
-public class AnimalController
+public class AnimalController : ControllerBase
 {
     private readonly AnimalService _animalService;
     
@@ -32,22 +32,34 @@ public class AnimalController
     
     [HttpPost]
     [Route("/api/animal")]
-    public Animals CreateAnimal([FromBody] Animals animal)
+    public IActionResult CreateAnimal([FromBody] Animals animal)
     {
-        return _animalService.CreateAnimal(animal);
+        if (!HttpContext.GetSessionData()!.IsManager && !HttpContext.GetSessionData()!.IsDyrepasser)
+        {
+            return StatusCode(StatusCodes.Status401Unauthorized);
+        }
+        return Ok(_animalService.CreateAnimal(animal));
     }
 
     [HttpPut]
     [Route("/api/animal")]
-    public Animals UpdateAnimal([FromBody] Animals animal)
+    public IActionResult UpdateAnimal([FromBody] Animals animal)
     {
-        return _animalService.UpdateAnimal(animal);
+        if (!HttpContext.GetSessionData()!.IsManager && !HttpContext.GetSessionData()!.IsDyrepasser)
+        {
+            return StatusCode(StatusCodes.Status401Unauthorized);
+        }
+        return Ok(_animalService.UpdateAnimal(animal));
     }
 
     [HttpDelete]
     [Route("/api/animal/{id}")]
     public object DeleteAnimal(int id)
     {
+        if (!HttpContext.GetSessionData()!.IsManager && !HttpContext.GetSessionData()!.IsDyrepasser)
+        {
+            return new { message = "Failed deleting the animal from the system" };
+        }
         if (_animalService.DeleteAnimal(id)) return new { message = "Animal successfully deleted from system" };
         
         return new { message = "Failed deleting the animal from the system" };
