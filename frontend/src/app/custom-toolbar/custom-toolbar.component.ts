@@ -47,7 +47,12 @@ export class CustomToolbarComponent  implements OnInit {
 
 
   goToStaff(){
-    this.router.navigate(['/staff'])}
+    this.router.navigate(['/staff']);
+  }
+
+  goToHome() {
+    this.router.navigate(['']);
+  }
 
   async getSpecies() {
     const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('http://localhost:5000/api/animalspeciesfeed'))

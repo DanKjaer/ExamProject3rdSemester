@@ -3,15 +3,19 @@
     <app-profile-picture></app-profile-picture>
     <app-employee-list></app-employee-list>
 
-    <ion-button *ngIf="this.state.currentUser.userType === type.manager && state.selectedUser?.userID !== undefined; else isDisabled"
-                (click)="disableEmployee(state.selectedUser.userID)">Disable
+    <ion-button
+      *ngIf="this.state.currentUser.userType === type.manager && state.selectedUser?.userID !== undefined; else isDisabled"
+      (click)="disableEmployee(state.selectedUser.userID)" color="dark" fill="outline">Disable
     </ion-button>
 
-    <ion-button *ngIf="this.state.currentUser.userType === 0 && state.selectedUser?.userID !== undefined; else editDisable"
-                (click)="updateEmployee()">Edit
+    <ion-button
+      *ngIf="this.state.currentUser.userType === 0 && state.selectedUser?.userID !== undefined; else editDisable"
+      (click)="updateEmployee()" color="dark" fill="outline">Edit
     </ion-button>
 
-    <ion-button *ngIf="this.state.currentUser.userType === 0; else createDisable" (click)="openCreateEmployeeModal()">Create user</ion-button>
+    <ion-button *ngIf="this.state.currentUser.userType === 0; else createDisable" (click)="openCreateEmployeeModal()"
+                color="dark" fill="outline">Create user
+    </ion-button>
 
     <ng-template #isDisabled>
       <ion-button [disabled]="true">Disable</ion-button>
