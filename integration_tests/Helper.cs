@@ -38,7 +38,7 @@ public static class Helper
         }
         catch (Exception e)
         {
-            throw new Exception("Connection string couldn't be used, fix ur shit");
+            throw new Exception(e.Message);
         }
     }
 
