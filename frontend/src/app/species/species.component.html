@@ -4,7 +4,7 @@
   </div>
 
   <ion-buttons style="margin-left: 60px">
-    <ion-button id="open-create" color="dark" fill="outline" >
+    <ion-button id="open-create" color="dark" fill="outline" [disabled]="this.state.currentUser.userType === 2">
       Create Animal
     </ion-button>
   </ion-buttons>
