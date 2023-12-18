@@ -15,6 +15,8 @@ import {catchError} from "rxjs/operators";
 })
 export class EmployeeComponent  implements OnInit {
   apiUrl = 'http://localhost:5000/api/users';
+  UserPicture?: string;
+  imageChangedEvent: Event | undefined;
 
 
   constructor(public modalController: ModalController, public http: HttpClient, public state: State,) { }

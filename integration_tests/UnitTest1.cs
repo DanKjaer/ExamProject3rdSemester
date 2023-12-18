@@ -19,7 +19,6 @@ public class Tests
         _httpClient = new HttpClient();
         string jwtToken = Environment.GetEnvironmentVariable("JWT")!;
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-        Console.WriteLine(_httpClient.DefaultRequestHeaders.Authorization);
         Helper.TriggerRebuild();
     }
 
@@ -46,8 +45,7 @@ public class Tests
         response = await _httpClient.GetAsync("http://localhost:5000/api/animalspecies/1");
 
         var content = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(content);
-        Console.WriteLine(response);
+        
         AnimalSpecies species;
         species = JsonConvert.DeserializeObject<AnimalSpecies>(content);
 
@@ -103,7 +101,6 @@ public class Tests
         }
     }
     
-
     [Test]
     public async Task GetAnimal()
     {
@@ -116,7 +113,7 @@ public class Tests
         var content = await response.Content.ReadAsStringAsync();
         Animals animals;
         animals = JsonConvert.DeserializeObject<Animals>(content);
-
+        
 
         using (new AssertionScope())
         {
@@ -127,7 +124,6 @@ public class Tests
             animals.AnimalPicture.Should().BeEquivalentTo(animal.AnimalPicture);
             animals.SpeciesID.Should().Be(animal.SpeciesID);
         }
-
     }
 
     [Test]
@@ -391,10 +387,19 @@ public class Tests
         }
 
         HttpResponseMessage response;
-        user.Disabled = true;
-        response = await _httpClient.PutAsJsonAsync("http://localhost:5000/api/users/" + user.UserID, user);
+        
+        var formData = new MultipartFormDataContent();
+        formData.Add(new StringContent(user.UserName), "UserName");
+        formData.Add(new StringContent(user.UserEmail), "UserEmail");
+        formData.Add(new StringContent(user.PhoneNumber), "PhoneNumber");
+        formData.Add(new StringContent(((int)user.UserType).ToString()), "UserType");
+        formData.Add(new StringContent(user.ToBeDisabledDate.ToString()), "ToBeDisabledDate");
+        formData.Add(new StringContent("true"), "Disabled");
+
+        response = await _httpClient.PutAsync($"http://localhost:5000/api/users/{user.UserID}", formData);
         
         var content = await response.Content.ReadAsStringAsync();
+        
         Users users;
         users = JsonConvert.DeserializeObject<Users>(content);
         

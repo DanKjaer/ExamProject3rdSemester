@@ -6,6 +6,8 @@ import {Users} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {ModalController, ToastController} from "@ionic/angular";
 import {ActivatedRoute} from "@angular/router";
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { PictureService, UserUpdate } from 'src/services/picture.service';
 
 @Component({
   selector: 'app-employee-update',
@@ -18,14 +20,20 @@ export class EmployeeUpdateComponent  implements OnInit {
     userEmail: [this.state.selectedUser.userEmail, Validators.required],
     phoneNumber: [this.state.selectedUser.phoneNumber, Validators.required],
     userType: [this.state.selectedUser.userType, Validators.required],
-    toBeDisabledDate: [this.state.selectedUser.toBeDisabledDate, Validators.required]
+    toBeDisabledDate: [this.state.selectedUser.toBeDisabledDate, Validators.required],
+    password: [''],
+    profilePicture: [null as Blob | null],
   })
 
   apiUrl = 'http://localhost:5000/api/users';
 
-  constructor(public fb: FormBuilder, public state: State, public http: HttpClient, public modalController: ModalController, public toast: ToastController, public route: ActivatedRoute) { }
+  constructor(public fb: FormBuilder, public state: State, public http: HttpClient,
+              public modalController: ModalController, public toast: ToastController, public route: ActivatedRoute,
+              public service: PictureService) { }
 
   staffId?: string | null;
+  UserPicture?: string;
+  imageChangedEvent: Event | undefined;
 
   ngOnInit() {
     this.getEmployeeId();
@@ -44,9 +52,9 @@ export class EmployeeUpdateComponent  implements OnInit {
 
   async updateEmployeeMethod(){
     try{
-      let dto = this.updateEmployee.getRawValue();
-      const observable = this.http.put<Users>(this.apiUrl + '/' + this.state.selectedUser.userID, dto);
-      const response = await firstValueFrom(observable);
+      //let dto = this.updateEmployee.getRawValue();
+      //const observable = this.http.put<Users>(this.apiUrl + '/' + this.state.selectedUser.userID, dto);
+      const response = await firstValueFrom<Users>(this.service.update(this.updateEmployee.value as UserUpdate));
       const index = this.state.user.findIndex((user) => user.userID === this.state.selectedUser.userID);
       if(index !== -1){
         this.state.user[index] = response;
@@ -62,5 +70,13 @@ export class EmployeeUpdateComponent  implements OnInit {
 
   async modalClose(){
     this.modalController.dismiss();
+  }
+
+  onFileChanged($event: Event) {
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped($event: any) {
+    this.updateEmployee.patchValue({ profilePicture: $event.blob! });
   }
 }

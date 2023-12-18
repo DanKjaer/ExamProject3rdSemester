@@ -80,13 +80,13 @@ public class UserRepository
     {
         const string sql = "UPDATE animaldb.users " +
                   "SET username=@UserName, useremail=@UserEmail, phonenumber=@PhoneNumber, " +
-                  "usertype=@UserType " +
+                  "usertype=@UserType, picture=@Picture " +
                   "WHERE userid=@UserID " +
                   "RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Users>(sql, new {user.UserName, user.UserEmail, user.PhoneNumber, user.UserType, user.UserID});
+            return conn.QueryFirst<Users>(sql, new {user.UserName, user.UserEmail, user.PhoneNumber, user.UserType, user.Picture, user.UserID});
         }
     }
 
