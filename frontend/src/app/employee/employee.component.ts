@@ -15,6 +15,8 @@ import {State} from "../../state";
 export class EmployeeComponent  implements OnInit {
   apiUrl = 'http://localhost:5000/api/users';
   type = UserType;
+  UserPicture?: string;
+  imageChangedEvent: Event | undefined;
 
 
 

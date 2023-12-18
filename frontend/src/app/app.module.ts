@@ -23,18 +23,20 @@ import {EmployeeCreateComponent} from "./employee-create/employee-create.compone
 import {EmployeeListComponent} from "./employee-list/employee-list.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EmployeeUpdateComponent} from "./employee-update/employee-update.component";
+import {ImageCropperModule} from "ngx-image-cropper";
+import { PictureService } from 'src/services/picture.service';
 
 @NgModule({
   declarations: [AppComponent, CustomToolbarComponent, AnimalBoxComponent, ProfilePictureComponent,
     SpeciesComponent, AnimalPictureComponent, AnimalNamesComponent, AnimalInformationComponent, AnimalsComponent,
     LoginComponent, EmployeeComponent, EmployeeCreateComponent, EmployeeListComponent, EmployeeUpdateComponent],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule, FormsModule, ReactiveFormsModule],
-
+    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule, AppRoutingModule, RouterModule, FormsModule, ReactiveFormsModule, ImageCropperModule],
     exports: [RouterModule, AnimalBoxComponent],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
               { provide: HTTP_INTERCEPTORS, useClass: ErrorHttpInterceptor, multi: true },
               { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
-              TokenService],
+              TokenService,
+              PictureService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

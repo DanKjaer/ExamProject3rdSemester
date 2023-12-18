@@ -38,7 +38,7 @@ public static class Helper
         }
         catch (Exception e)
         {
-            throw new Exception("Connection string couldn't be used, fix ur shit");
+            throw new Exception(e.Message);
         }
     }
 
@@ -87,7 +87,8 @@ CREATE TABLE AnimalDB.Users (
     Disabled BOOLEAN,
     ToBeDisabledDate DATE,
     DisabledDate DATE,
-    UserType INTEGER
+    UserType INTEGER,
+    picture VARCHAR(130)
 );
 
 CREATE TABLE AnimalDB.Password (

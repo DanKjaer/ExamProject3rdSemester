@@ -40,6 +40,7 @@ export class Users {
   disabled?: boolean;
   toBeDisabledDate?: Date;
   userType?: UserType;
+  picture?: string;
 }
 
 export class AnimalNote{
