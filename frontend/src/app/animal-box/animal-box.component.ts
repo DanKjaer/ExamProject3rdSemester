@@ -27,7 +27,6 @@ export class AnimalBoxComponent implements OnInit {
     speciesDescription: ['', Validators.required],
     speciesPicture: ['', Validators.required]
   });
-  constructor(public http: HttpClient, public state: State, public router: Router, public fb: FormBuilder, public modal: ModalController) { }
 
   ngOnInit() {
     this.getAnimalSpeciesFeed();
