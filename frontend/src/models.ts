@@ -15,7 +15,7 @@ export class Animals{
   animalID?: number;
   speciesID?: number;
   animalName?: string;
-  animalBirthday?: Date;
+  animalBirthday!: Date;
   animalGender?: boolean;
   animalDead?: boolean;
   animalPicture?: string;

@@ -6,6 +6,7 @@ import {State} from "../../state";
 import {Router} from "@angular/router";
 import { TokenService } from 'src/services/token.services';
 import {FormBuilder, Validators} from "@angular/forms";
+import {ModalController} from "@ionic/angular";
 
 
 @Component({
@@ -27,6 +28,8 @@ export class AnimalBoxComponent  implements OnInit {
     speciesPicture: ['', Validators.required]
   });
 
+  constructor(public http: HttpClient, public state: State, public router: Router, public fb: FormBuilder, public modal: ModalController) { }
+  
   ngOnInit() {
         this.getAnimalSpeciesFeed();
   }
@@ -40,7 +43,6 @@ export class AnimalBoxComponent  implements OnInit {
   async getAnimalSpeciesFeed(){
     try{
     const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('http://localhost:5000/api/animalspeciesfeed'));
-    console.log(result);
     this.state.animalSpeciesFeed = result!;
     }catch(error){
       console.error('Error fetching data:', error)
@@ -56,8 +58,9 @@ export class AnimalBoxComponent  implements OnInit {
 
   async createSpecies() {
     let dto = this.createSpeciesForm.getRawValue();
-    const observable = await this.http.post<AnimalSpecies>('http://localhost:5000/api/animalspecies', dto);
+    const observable = this.http.post<AnimalSpecies>('http://localhost:5000/api/animalspecies', dto);
     const response = await firstValueFrom(observable);
     this.state.animalSpeciesFeed.push(response);
+    await this.modal.dismiss();
   }
 }
