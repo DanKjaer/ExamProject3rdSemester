@@ -1,6 +1,6 @@
 <ion-app>
   <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-    
+
     <!-- Image -->
     <img src="../assets/icon/møøhnika.png" height="175" width="175" style="margin-bottom: 25px;">
 
@@ -10,18 +10,16 @@
 
         <!-- Username -->
         <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input formControlName="Email" type="username" placeholder="name@company.com"></ion-input>
+          <ion-input formControlName="Email" label="Email" label-placement="floating" type="username" placeholder="name@company.com"></ion-input>
         </ion-item>
 
         <!-- Password -->
         <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input formControlName="Password" type="password"></ion-input>
+          <ion-input formControlName="Password" type="password" label="Password" label-placement="floating"></ion-input>
         </ion-item>
 
         <div style="display: flex; align-items: center; justify-content: center; margin-top: 7px;">
-          <ion-button (click)="submit()">Login</ion-button>
+          <ion-button color="dark" fill="outline" (click)="submit()">Login</ion-button>
         </div>
 
       </form>

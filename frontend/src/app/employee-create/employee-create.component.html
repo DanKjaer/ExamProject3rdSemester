@@ -2,19 +2,19 @@
   <div class="info">
     <!--Name field-->
     <ion-item>
-      <ion-input type="text" formControlName="userName" label="Navn"></ion-input>
+      <ion-input type="text" formControlName="userName" label="Username"></ion-input>
     </ion-item>
     <!--Password field-->
     <ion-item>
-      <ion-input type="password" formControlName="password" label="Kodeord"></ion-input>
+      <ion-input type="password" formControlName="password" label="Password"></ion-input>
     </ion-item>
     <!--Email field-->
     <ion-item>
-      <ion-input type="email" formControlName="userEmail" label="Mail"></ion-input>
+      <ion-input type="email" formControlName="userEmail" label="Email"></ion-input>
     </ion-item>
     <!--Phone number field-->
     <ion-item>
-      <ion-input type="tel" formControlName="phoneNumber" label="Telefon nummer"></ion-input>
+      <ion-input type="tel" formControlName="phoneNumber" label="Phone number"></ion-input>
     </ion-item>
   <form [formGroup]="roleForm">
     <ion-list>
@@ -25,11 +25,11 @@
         </ion-item>
         <!--Radio button for zookeeper-->
         <ion-item>
-          <ion-radio value="{{UserType.dyrepasser}}">Dyrepasser</ion-radio>
+          <ion-radio value="{{UserType.dyrepasser}}">Zookeeper</ion-radio>
         </ion-item>
         <!--Radio button for intern-->
         <ion-item>
-          <ion-radio value="{{UserType.elev}}">Elev</ion-radio>
+          <ion-radio value="{{UserType.elev}}">Intern</ion-radio>
         </ion-item>
       </ion-radio-group>
 

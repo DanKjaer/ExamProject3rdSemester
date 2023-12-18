@@ -33,6 +33,13 @@ public class UserController : ControllerBase
         return _userService.GetUserById(id);
     }
 
+    [HttpGet]
+    [Route("api/users/email/{email}")]
+    public Users GetUserFromEmail([FromRoute]string email)
+    {
+        return _userService.GetUserByEmail(email);
+    }
+    
     [HttpPost]
     [Route("/api/users")]
     public IActionResult CreateUser([FromBody] Users user, [FromQuery]string password)

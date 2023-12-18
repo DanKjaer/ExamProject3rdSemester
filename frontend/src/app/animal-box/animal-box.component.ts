@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AnimalNote, AnimalSpecies, AnimalSpeciesFeed} from "../../models";
 import {firstValueFrom} from "rxjs";
 import {State} from "../../state";
 import {Router} from "@angular/router";
-import { TokenService } from 'src/services/token.services';
+import {TokenService} from 'src/services/token.services';
 import {FormBuilder, Validators} from "@angular/forms";
 import {ModalController} from "@ionic/angular";
 
@@ -15,36 +15,34 @@ import {ModalController} from "@ionic/angular";
   styleUrls: ['./animal-box.component.scss'],
 
 })
-export class AnimalBoxComponent  implements OnInit {
+export class AnimalBoxComponent implements OnInit {
 
   constructor(public http: HttpClient, public state: State, public router: Router,
-              private readonly token: TokenService, public fb: FormBuilder)
-    {
-        this.checkIfLogin();
-    }
+              private readonly token: TokenService, public fb: FormBuilder, public modal: ModalController) {
+    this.checkIfLogin();
+  }
+
   createSpeciesForm = this.fb.group({
     speciesName: ['', Validators.required],
     speciesDescription: ['', Validators.required],
     speciesPicture: ['', Validators.required]
   });
 
-  constructor(public http: HttpClient, public state: State, public router: Router, public fb: FormBuilder, public modal: ModalController) { }
-  
   ngOnInit() {
-        this.getAnimalSpeciesFeed();
+    this.getAnimalSpeciesFeed();
   }
 
   checkIfLogin() {
-        if(!this.token.getToken()){
-          this.router.navigateByUrl("/login");
-        }
+    if (!this.token.getToken()) {
+      this.router.navigateByUrl("/login");
     }
+  }
 
-  async getAnimalSpeciesFeed(){
-    try{
-    const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('http://localhost:5000/api/animalspeciesfeed'));
-    this.state.animalSpeciesFeed = result!;
-    }catch(error){
+  async getAnimalSpeciesFeed() {
+    try {
+      const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('http://localhost:5000/api/animalspeciesfeed'));
+      this.state.animalSpeciesFeed = result!;
+    } catch (error) {
       console.error('Error fetching data:', error)
     }
   }

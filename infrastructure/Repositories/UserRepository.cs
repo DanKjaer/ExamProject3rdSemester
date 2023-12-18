@@ -34,6 +34,17 @@ public class UserRepository
         }
     }
 
+    public Users GetUserByEmail(string email)
+    {
+        var sql = "SELECT * FROM animaldb.users " +
+                        "WHERE userEmail = @UserEmail";
+        
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return conn.QueryFirst<Users>(sql, new { UserEmail = email });
+        }
+    }
+    
     public void CreatePassword(string hash, string salt, int? userId)
     {
         var sql = "INSERT INTO animaldb.password " +

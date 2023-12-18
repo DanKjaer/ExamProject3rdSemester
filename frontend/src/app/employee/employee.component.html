@@ -2,21 +2,29 @@
   <ion-content class="Container">
     <app-employee-list></app-employee-list>
 
-      <ion-button *ngIf="state.selectedUser?.userID !== undefined; else isDisabled"
-                  (click)="disableEmployee(state.selectedUser.userID)">Disable
-      </ion-button>
-      <ng-template #isDisabled>
+    <ion-button
+      *ngIf="this.state.currentUser.userType === type.manager && state.selectedUser?.userID !== undefined; else isDisabled"
+      (click)="disableEmployee(state.selectedUser.userID)" color="dark" fill="outline">Disable
+    </ion-button>
+
+    <ion-button
+      *ngIf="this.state.currentUser.userType === 0 && state.selectedUser?.userID !== undefined; else editDisable"
+      (click)="updateEmployee()" color="dark" fill="outline">Edit
+    </ion-button>
+
+    <ion-button *ngIf="this.state.currentUser.userType === 0; else createDisable" (click)="openCreateEmployeeModal()"
+                color="dark" fill="outline">Create user
+    </ion-button>
+
+    <ng-template #isDisabled>
       <ion-button [disabled]="true">Disable</ion-button>
     </ng-template>
 
     <ng-template #editDisable>
-      <ion-button [disabled]="true">Rediger</ion-button>
+      <ion-button [disabled]="true">Edit</ion-button>
     </ng-template>
-
-    <ion-button *ngIf="state.selectedUser?.userID !== undefined; else editDisable"
-                (click)="updateEmployee()">Rediger
-    </ion-button>
-    <ion-button (click)="openCreateEmployeeModal()">Ny bruger</ion-button>
-
+    <ng-template #createDisable>
+      <ion-button [disabled]="true">Create</ion-button>
+    </ng-template>
   </ion-content>
 </ion-app>

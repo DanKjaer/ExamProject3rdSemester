@@ -6,16 +6,17 @@
 </ion-card>
 <ion-content class="container">
   <ion-header>
-  <ion-toolbar>
     <ion-title>
       Staff list
     </ion-title>
-  </ion-toolbar>
-</ion-header>
+  </ion-header>
 
-  <ion-list>
-    <ion-item *ngFor="let user of state.user" [class.ion-activated]="user === state.selectedUser" (click)="focusEmployee(user)" [style.color]="user.disabled ? 'grey' : 'black'" >
-      <ion-label>{{ user.userName }} - {{user.userEmail}}</ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-content class="employee-list">
+    <ion-list>
+      <ion-item *ngFor="let user of state.user" [class.ion-activated]="user === state.selectedUser"
+                (click)="focusEmployee(user)" [style.color]="user.disabled ? 'grey' : 'black'">
+        <ion-label>{{ user.userName }} - {{ user.userEmail }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-content>

@@ -40,7 +40,6 @@ export class SpeciesComponent implements OnInit {
   }
 
   speciesId?: string | null;
-
   ngOnInit() {
     this.getSpecies();
   }

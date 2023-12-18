@@ -16,7 +16,7 @@
 </ion-toolbar>
 
 <ion-buttons class="center-buttons">
-  <ion-button class="home-button" href="">
+  <ion-button class="home-button" (click)="goToHome()">
     <img src="../assets/icon/møøhnika.png" height="100px" width="100px">
   </ion-button>
 </ion-buttons>
@@ -29,15 +29,19 @@
       </ion-button>
     </ion-menu-toggle>
     <br/>
-    <ion-button fill="outline" color="dark" (click)="logOut()">
-      Log out
-      <ion-icon slot="end" name="log-out-outline"></ion-icon>
-    </ion-button>
+    <ion-menu-toggle>
+      <ion-button fill="outline" color="dark" (click)="logOut()">
+        Log out
+        <ion-icon slot="end" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
     <br/>
-    <ion-button fill="outline" color="dark" (click)="goToStaff()">
-      Staff
-      <ion-icon slot="end" name="people-circle-outline"></ion-icon>
-    </ion-button>
+    <ion-menu-toggle>
+      <ion-button fill="outline" color="dark" (click)="goToStaff()">
+        Staff
+        <ion-icon slot="end" name="people-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
     <br/>
     <ion-accordion-group>
       <ion-accordion value="first">
@@ -46,14 +50,14 @@
           <ion-icon slot="end" name="paw-outline" color="dark"></ion-icon>
         </ion-item>
         <div class="ion-padding" slot="content">
-          <ion-button class="accordion-button" color="dark" fill="outline"
-                      *ngFor="let AnimalSpeciesFeed of state.animalSpeciesFeed"
-                      (click)="goToSpecies(AnimalSpeciesFeed.speciesID)">{{AnimalSpeciesFeed.speciesName}}</ion-button>
+          <ion-menu-toggle>
+            <ion-button class="accordion-button" color="dark" fill="outline"
+                        *ngFor="let AnimalSpeciesFeed of state.animalSpeciesFeed"
+                        (click)="goToSpecies(AnimalSpeciesFeed.speciesID)">{{ AnimalSpeciesFeed.speciesName }}
+            </ion-button>
+          </ion-menu-toggle>
         </div>
       </ion-accordion>
     </ion-accordion-group>
-
-    <ion-button color="dark" fill="outline">TEST</ion-button>
-
   </div>
 </ion-menu>
