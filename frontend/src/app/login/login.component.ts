@@ -42,7 +42,7 @@ export class LoginComponent  implements OnInit {
       })).present();
     }
     else {
-      this.setCurrentUser(this.form.value.Email!)
+      this.setCurrentUser(this.form.value.Email!);
       this.router.navigateByUrl('/');
       (await this.toast.create({
         message: "Login successfull",

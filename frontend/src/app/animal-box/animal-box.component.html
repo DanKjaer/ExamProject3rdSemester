@@ -15,12 +15,13 @@
 
   <div class="create-button-container">
     <ion-buttons>
-      <ion-button *ngIf="this.state.currentUser.userType === 0" id="open-create" color="dark" fill="outline">Create Species</ion-button>
+      <ion-button id="open-create" color="dark" fill="outline" [disabled]="this.state.currentUser.userType !== 0">
+        Create Species</ion-button>
     </ion-buttons>
   </div>
 
   <div [formGroup]="createSpeciesForm">
-    <ion-modal class="modalBox" trigger="open-create">
+    <ion-modal trigger="open-create">
       <ng-template>
         <ion-content>
           <ion-item>
