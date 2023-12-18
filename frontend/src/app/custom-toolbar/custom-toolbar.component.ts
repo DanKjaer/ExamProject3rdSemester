@@ -62,7 +62,6 @@ export class CustomToolbarComponent  implements OnInit {
   goToSpecies(animalNumber: number){
     this.state.currentAnimalSpecies.speciesID = animalNumber;
     this.router.navigate(['/species/' + animalNumber])
-
   }
 
   protected readonly focus = focus;
