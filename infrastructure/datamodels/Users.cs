@@ -17,6 +17,8 @@ public class Users
     public bool Disabled { get; set; }
     
     public DateTime? ToBeDisabledDate { get; set; }
+    
+    public string? Picture { get; set; }
 }
 
 public enum UserType

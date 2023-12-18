@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
 import {IonSearchbar} from "@ionic/angular";
+import { TokenService } from 'src/services/token.services';
 import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
@@ -27,7 +28,8 @@ import {Router} from "@angular/router";
 export class CustomToolbarComponent  implements OnInit {
   @ViewChild('searchbar', {static: false}) searchbar!: IonSearchbar;
   isSearch: boolean = false;
-  constructor(public http: HttpClient, public state: State, public router: Router) { }
+
+  constructor(public http: HttpClient, public state: State, public router: Router, private readonly token: TokenService) { }
 
   ngOnInit() {
     this.getSpecies();
@@ -59,4 +61,9 @@ export class CustomToolbarComponent  implements OnInit {
   }
 
   protected readonly focus = focus;
+
+  logOut() {
+    this.token.clearToken();
+    this.router.navigateByUrl("/login");
+  }
 }

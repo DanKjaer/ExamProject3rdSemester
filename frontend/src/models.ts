@@ -28,6 +28,9 @@ export class AnimalFeed{
   animalName?: string;
 }
 
+export class LoginResponse {
+  token!: string;
+}
 
 export class Users {
   userID!: number;
@@ -37,6 +40,7 @@ export class Users {
   disabled?: boolean;
   toBeDisabledDate?: Date;
   userType?: UserType;
+  picture?: string;
 }
 
 export class AnimalNote{
