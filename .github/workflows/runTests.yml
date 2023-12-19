@@ -21,14 +21,16 @@ jobs:
         env:
           pgconn: ${{secrets.PGCONN}}
           JWT: ${{secrets.JWT}}
-          JwtSecret: ${{secrets.JwtSecret}}
+          JwtSecret: ${{secrets.JWTSECRET}}
+          PictureStorage: ${{secrets.PICTURESTORAGE}}
 
       - name: Run tests once API is running (sleep interval set to 60 seconds)
         run: cd integration_tests && sleep 60 && dotnet build && dotnet test
         env:
           pgconn: ${{secrets.PGCONN}}
           JWT: ${{secrets.JWT}}
-          JwtSecret: ${{secrets.JwtSecret}}
+          JwtSecret: ${{secrets.JWTSECRET}}
+          PictureStorage: ${{secrets.PICTURESTORAGE}}
 
       - name: Shutdown Web API once the tests are done running
         run: kill $API_PID

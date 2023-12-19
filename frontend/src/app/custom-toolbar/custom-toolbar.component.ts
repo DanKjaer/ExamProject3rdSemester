@@ -32,7 +32,9 @@ export class CustomToolbarComponent  implements OnInit {
   constructor(public http: HttpClient, public state: State, public router: Router, private readonly token: TokenService) { }
 
   ngOnInit() {
-    this.getSpecies();
+    if(this.token.getToken()) {
+      this.getSpecies();
+    }
   }
 
   toggleSearch() {
