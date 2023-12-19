@@ -60,3 +60,19 @@ export enum UserType{
   dyrepasser,
   elev
 }
+
+export class AnimalSearchFeed{
+  animalID!: number;
+  animalName!: string;
+}
+
+export class AnimalSpeciesSearchFeed{
+  speciesID!: number;
+  speciesName!: string;
+  speciesPicture?: string;
+}
+
+export class SearchFeed{
+  AnimalSpecies?: AnimalSpeciesSearchFeed[];
+  Animals?: AnimalSearchFeed[];
+}
