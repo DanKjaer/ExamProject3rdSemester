@@ -1,0 +1,123 @@
+<div class="content">
+  <ion-card class="info-list">
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            Name: {{ state.currentAnimal.animalName }}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            Weight: {{ state.currentAnimal.animalWeight }} kg.
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="state.currentAnimal.animalGender else female">
+          <ion-label>
+            Gender: Male
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            Age: {{ animalAge }} years old.
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            Birthday: {{ state.currentAnimal.animalBirthday | date:'dd/MM/yyyy' }}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            Species: {{ state.currentAnimalSpecies.speciesName }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <div [formGroup]="createAnimalNoteForm">
+    <ion-card class="note">
+      <ion-card-header>Notes</ion-card-header>
+      <ion-list class="note-list">
+        <ion-item *ngFor="let AnimalNoteFeed of state.animalNoteFeed">
+          <ion-label class="ion-text-wrap">{{ AnimalNoteFeed.noteText }}</ion-label>
+          <ion-note>{{ AnimalNoteFeed.noteDate | date:'dd/MM/yyyy' }}</ion-note>
+          <ion-buttons>
+            <ion-button (click)="deleteNote(AnimalNoteFeed.noteID)">
+              <ion-icon slot="icon-only" name="close-circle-outline" color="danger"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+      <ion-footer>
+        <ion-input class="text-area" formControlName="noteText"></ion-input>
+        <ion-buttons style="gap: 10px">
+          <ion-button color="dark" fill="outline" (click)="saveNote()">Save Note</ion-button>
+        </ion-buttons>
+      </ion-footer>
+    </ion-card>
+  </div>
+</div>
+
+<div class="picture">
+  <app-animal-picture></app-animal-picture>
+</div>
+
+<div class="button-container">
+  <ion-buttons>
+    <ion-button [disabled]="this.state.currentUser.userType === 2" id="edit-modal" color="dark" fill="outline">Edit</ion-button>
+  </ion-buttons>
+</div>
+
+<div [formGroup]="updateAnimalForm">
+  <ion-modal trigger="edit-modal">
+    <ng-template>
+      <ion-content class="modal-content">
+        <ion-item>
+          <ion-input type="text" placeholder="Dan" label="Name" label-placement="floating"
+                     formControlName="animalName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="number" placeholder="60" label="Weight" label-placement="floating"
+                     formControlName="animalWeight"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-select placeholder="Select Gender" interface="popover" label="Gender" label-placement="floating"
+                      formControlName="animalGender">
+            <ion-select-option [value]="true">Male</ion-select-option>
+            <ion-select-option [value]="false">Female</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select placeholder="Yes/No" interface="popover" label="Deceased" label-placement="floating"
+                      formControlName="animalDead">
+            <ion-select-option [value]="true">Yes</ion-select-option>
+            <ion-select-option [value]="false">No</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input type="date" label="Birthday" label-placement="floating"
+                     formControlName="animalBirthday"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="url" label="Picture" label-placement="floating" formControlName="animalPicture"
+                     placeholder="Picture url"></ion-input>
+        </ion-item>
+      </ion-content>
+      <ion-footer>
+        <ion-buttons>
+          <ion-button color="dark" fill="outline" (click)="updateAnimal()">Save</ion-button>
+        </ion-buttons>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
+</div>
+
+<ng-template #female>
+  <ion-item>
+    <ion-label>
+      Gender: Female
+    </ion-label>
+  </ion-item>
+</ng-template>

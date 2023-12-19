@@ -1,0 +1,26 @@
+.info{
+  flex: 1;
+  font-size: 1.5rem;
+  margin: 10px 25px 25px 25px;
+  line-height: 1.3;
+}
+
+.modal-container{
+  background-color: white;
+  padding: 20px;
+}
+
+.info ion-item{
+  margin-bottom: 15px;
+}
+
+.info ion-label{
+  font-size: 1.2rem;
+}
+
+.info ion-input{
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+}

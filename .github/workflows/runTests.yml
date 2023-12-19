@@ -1,5 +1,12 @@
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  pull_request:
+    branches: [ "master", "Deployment", "API" ]
+
+    # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    
 jobs:
   nunittests:
     runs-on: ubuntu-latest
@@ -13,11 +20,17 @@ jobs:
         run: cd api && dotnet run & echo "API_PID=$!" >> $GITHUB_ENV
         env:
           pgconn: ${{secrets.PGCONN}}
+          JWT: ${{secrets.JWT}}
+          JwtSecret: ${{secrets.JWTSECRET}}
+          PictureStorage: ${{secrets.PICTURESTORAGE}}
 
       - name: Run tests once API is running (sleep interval set to 60 seconds)
         run: cd integration_tests && sleep 60 && dotnet build && dotnet test
         env:
           pgconn: ${{secrets.PGCONN}}
+          JWT: ${{secrets.JWT}}
+          JwtSecret: ${{secrets.JWTSECRET}}
+          PictureStorage: ${{secrets.PICTURESTORAGE}}
 
       - name: Shutdown Web API once the tests are done running
         run: kill $API_PID

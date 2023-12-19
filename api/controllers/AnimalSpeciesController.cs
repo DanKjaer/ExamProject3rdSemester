@@ -1,11 +1,13 @@
-﻿using infrastructure.datamodels;
+﻿using api.filters;
+using infrastructure.datamodels;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 
 namespace api.Controllers;
 
+[RequireAuthentication]
 [ApiController]
-public class AnimalSpeciesController
+public class AnimalSpeciesController : ControllerBase
 {
 
     private readonly AnimalSpeciesService _animalSpeciesService;
@@ -31,16 +33,24 @@ public class AnimalSpeciesController
     
     [HttpPost]
     [Route("/api/animalspecies")]
-    public AnimalSpecies CreateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
+    public IActionResult CreateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
     {
-        return _animalSpeciesService.CreateSpecies(animalSpecies);
+        if (!HttpContext.GetSessionData()!.IsManager)
+        {
+            return StatusCode(StatusCodes.Status401Unauthorized);
+        }
+        return Ok(_animalSpeciesService.CreateSpecies(animalSpecies));
     }
 
     [HttpPut]
     [Route("/api/animalspecies")]
-    public AnimalSpecies UpdateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
+    public IActionResult UpdateAnimalSpecies([FromBody] AnimalSpecies animalSpecies)
     {
-        return _animalSpeciesService.UpdateSpecies(animalSpecies);
+        if (!HttpContext.GetSessionData()!.IsManager)
+        {
+            return StatusCode(StatusCodes.Status401Unauthorized);
+        }
+        return Ok(_animalSpeciesService.UpdateSpecies(animalSpecies));
     }
 
     [HttpDelete]
@@ -50,5 +60,22 @@ public class AnimalSpeciesController
         if (_animalSpeciesService.DeleteSpecies(id)) return new { message = "Animal species successfully deleted from system" };
         
         return new { message = "Failed deleting the animal species from the system" };
+    }
+
+    [HttpPost]
+    [Route("/api/sendEmail")]
+    public async Task<object> SendEmail([FromBody] SendEmailDTO emailDto)
+    {
+        AnimalSpecies animalSpecies = _animalSpeciesService.GetSpeciesById(emailDto.AnimalSpeciesId);
+        try
+        {
+            MailService.SendEmail(emailDto.ToName, animalSpecies, emailDto.ToAddress);
+            return new {message = "Email has been sent"};
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new {message = "Failed to send email, please try again or contact an administrator"};
+        }
     }
 }

@@ -1,0 +1,37 @@
+.info-list {
+  max-width: 400px;
+  height: 350px;
+  position: fixed;
+  top: 10%;
+  left: 25px;
+}
+
+.note {
+  display: block;
+  width: 500px;
+  max-height: 800px;
+  position: fixed;
+  right: 25px;
+  top: 10%;
+}
+
+.note-list{
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.content {
+  display: flex;
+}
+
+.picture {
+  position: fixed;
+  bottom: 45px;
+  left: 25px;
+}
+
+.button-container{
+  position: fixed;
+  bottom: 15px;
+  left: 40px;
+}

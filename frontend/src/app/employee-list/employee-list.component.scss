@@ -1,0 +1,29 @@
+.container{
+  display: flex;
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 auto;
+}
+
+.employee-list {
+  overflow-y: auto;
+}
+
+ion-item{
+  background-color: #fff;
+  padding: 10px;
+
+  &.ion-activated{
+    background-color: #0cd1e8;
+    border: 1px solid #cccccc;
+  }
+}
+
+ion-card.picture-card {
+  max-width: 300px;
+  max-height: 300px;
+  margin-top: 75px;
+  margin-bottom: 20px;
+}
+
+

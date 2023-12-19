@@ -1,0 +1,44 @@
+.card-container {
+  display: flex;
+  justify-content: flex-start; /* Left to right */
+  align-content: flex-start; /* Top to bottom */
+  gap: 15px; /* Adjust the gap between cards as needed */
+  margin-top: 130px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.results {
+  flex: 0 0 auto;
+}
+
+.animal-box-name{
+  text-align: center;
+}
+
+.animal-box-full {
+  margin: 4px 4px 0px 4px;
+}
+
+.animal-image-container{
+  padding: 4px;
+}
+
+.animal-image{
+  max-height: 170px;
+  max-width: 170px;
+  border-radius: 3px;
+}
+
+ion-card.animal-names {
+  flex: 0 0 calc(19% - 16px); /* Adjust the width as needed (3 cards per row) */
+  max-width: calc(30% - 16px); /* Adjust the width as needed (3 cards per row) */
+  /* Add any other styling you want for the cards here */
+  margin-bottom: 16px; /* Add margin to create space between rows */
+}
+
+.create-button-container{
+  position: fixed;
+  top: 425px;
+  left: 25px;
+}

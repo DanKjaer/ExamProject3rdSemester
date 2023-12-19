@@ -1,0 +1,103 @@
+<ion-app>
+  <div class="content">
+    <app-animal-names style="margin-top: 100px; margin-left: 50px"></app-animal-names>
+  </div>
+
+  <ion-buttons style="margin-left: 60px">
+    <ion-button id="open-create" color="dark" fill="outline" [disabled]="this.state.currentUser.userType === 2">
+      Create Animal
+    </ion-button>
+  </ion-buttons>
+
+  <div [formGroup]="createNewAnimalForm">
+    <ion-modal trigger="open-create">
+      <ng-template>
+        <ion-content class="modal-content">
+          <ion-item>
+            <ion-input type="text" placeholder="Dan" label="Name" label-placement="floating"
+                       formControlName="animalName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="number" placeholder="60" label="Weight" label-placement="floating"
+                       formControlName="animalWeight"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select placeholder="Select Gender" interface="popover" label="Gender" label-placement="floating"
+                        formControlName="animalGender">
+              <ion-select-option [value]="true">Male</ion-select-option>
+              <ion-select-option [value]="false">Female</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-input type="date" label="Birthday" label-placement="floating"
+                       formControlName="animalBirthday"></ion-input>
+          </ion-item>
+        </ion-content>
+        <ion-footer>
+          <ion-button color="dark" fill="outline" (click)="createAnimal()">Create</ion-button>
+        </ion-footer>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+
+  <app-animal-information style="margin-top: -320px; margin-right: 50px; align-self: end"></app-animal-information>
+  <app-animal-picture style="margin-left: 50px; margin-top: 500px; position: absolute"></app-animal-picture>
+
+  <ion-buttons style="margin: 50px; gap: 25px">
+    <ion-button id="open-edit" fill="outline" color="dark" [disabled]="this.state.currentUser.userType === 2"
+                style="width: 150px">Edit
+    </ion-button>
+    <ion-button id="open-email" fill="outline" color="dark" style="width: 150px">Email</ion-button>
+
+  </ion-buttons>
+
+  <div [formGroup]="updateSpeciesForm">
+    <ion-modal trigger="open-edit">
+      <ng-template>
+        <ion-content>
+          <ion-item>
+            <ion-input type="text" label="Species Name" label-placement="floating" placeholder="Species Name"
+                       formControlName="speciesName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" label="Description" label-placement="floating" placeholder="Description"
+                       formControlName="speciesDescription"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="url" label="Species Picture" label-placement="floating" placeholder="Species Picture"
+                       formControlName="speciesPicture"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-buttons>
+              <ion-button color="dark" fill="outline" (click)="updateSpecies()">Update</ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+  <div [formGroup]="emailForm">
+    <ion-modal trigger="open-email">
+      <ng-template>
+        <ion-content>
+          <ion-item>
+            <ion-input type="text" label="Name" label-placement="floating" placeholder="Jan"
+                       formControlName="toName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" label="Email" label-placement="floating" placeholder="Jan@gmail.com"
+                       formControlName="toAddress"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-buttons>
+              <ion-button color="dark" fill="outline" (click)="sendMail()">Send email</ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+
+</ion-app>

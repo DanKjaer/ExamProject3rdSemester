@@ -1,0 +1,28 @@
+<ion-app>
+  <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+
+    <!-- Image -->
+    <img src="../assets/icon/møøhnika.png" height="175" width="175" style="margin-bottom: 25px;">
+
+    <!-- Login Box -->
+    <ion-card class="login-card" style="margin-bottom: 15%">
+      <form [formGroup]="form">
+
+        <!-- Username -->
+        <ion-item>
+          <ion-input formControlName="Email" label="Email" label-placement="floating" type="username" placeholder="name@company.com"></ion-input>
+        </ion-item>
+
+        <!-- Password -->
+        <ion-item>
+          <ion-input formControlName="Password" type="password" label="Password" label-placement="floating"></ion-input>
+        </ion-item>
+
+        <div style="display: flex; align-items: center; justify-content: center; margin-top: 7px;">
+          <ion-button color="dark" fill="outline" (click)="submit()">Login</ion-button>
+        </div>
+
+      </form>
+    </ion-card>
+  </div>
+</ion-app>

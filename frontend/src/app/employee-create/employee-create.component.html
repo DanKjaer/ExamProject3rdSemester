@@ -1,0 +1,46 @@
+<div class="modal-container" [formGroup]="createNewEmployee">
+  <div class="info">
+    <!--Name field-->
+    <ion-item>
+      <ion-input type="text" formControlName="userName" label="Username"></ion-input>
+    </ion-item>
+    <!--Password field-->
+    <ion-item>
+      <ion-input type="password" formControlName="password" label="Password"></ion-input>
+    </ion-item>
+    <!--Email field-->
+    <ion-item>
+      <ion-input type="email" formControlName="userEmail" label="Email"></ion-input>
+    </ion-item>
+    <!--Phone number field-->
+    <ion-item>
+      <ion-input type="tel" formControlName="phoneNumber" label="Phone number"></ion-input>
+    </ion-item>
+  <form [formGroup]="roleForm">
+    <ion-list>
+      <ion-radio-group formControlName="userType">
+        <!--Radio button for manager-->
+        <ion-item>
+          <ion-radio value="{{UserType.manager}}">Manager</ion-radio>
+        </ion-item>
+        <!--Radio button for zookeeper-->
+        <ion-item>
+          <ion-radio value="{{UserType.dyrepasser}}">Zookeeper</ion-radio>
+        </ion-item>
+        <!--Radio button for intern-->
+        <ion-item>
+          <ion-radio value="{{UserType.elev}}">Intern</ion-radio>
+        </ion-item>
+      </ion-radio-group>
+
+      <ion-item *ngIf="roleForm.get('userType')?.value === '2'">
+        <ion-input type="date" formControlName="toBeDisabledDate" label="Date"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+
+    <!--Buttons-->
+    <ion-button shape="round" (click)="newEmployee()">Create</ion-button>
+    <ion-button shape="round" (click)="modalClose()">Cancel</ion-button>
+  </div>
+</div>

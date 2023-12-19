@@ -3,20 +3,74 @@
     <ion-menu-button id="main"></ion-menu-button>
   </ion-buttons>
 
-  <ion-title>
+  <ion-title class="toolbar-title">
 
   </ion-title>
 
-  <ion-buttons slot="end" >
-    <ion-button *ngIf="!isSearch" (click)="toggleSearch()" [@transformSearch]="'*'">
+  <ion-buttons slot="end">
+    <ion-button id="open-search">
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
-    <ion-searchbar animated="true" style="max-width: 300px; text-align: left" *ngIf="isSearch" (focusout)="toggleSearch()" [@transformSearch]="'*'"></ion-searchbar>
   </ion-buttons>
-
 </ion-toolbar>
+
+<div>
+  <ion-modal trigger="open-search" (focusout)="clearSearch()">
+    <ng-template>
+      <ion-searchbar #searchbar [formGroup]="searchBoxForm"
+                     (ionInput)="search($event)" [debounce]="250"></ion-searchbar>
+      <ion-list class="search-list">
+        <ion-item button *ngFor="let result of shownResults" (click)="pressResult(result)">
+          {{ result }}
+        </ion-item>
+      </ion-list>
+    </ng-template>
+  </ion-modal>
+</div>
+
 <ion-buttons class="center-buttons">
-  <ion-button class="home-button" href="">
+  <ion-button class="home-button" (click)="goToHome()">
     <img src="../assets/icon/møøhnika.png" height="100px" width="100px">
   </ion-button>
 </ion-buttons>
+
+<ion-menu contentId="main">
+  <div class="burger-buttons">
+    <ion-menu-toggle>
+      <ion-button fill="outline" color="dark">
+        Close
+      </ion-button>
+    </ion-menu-toggle>
+    <br/>
+    <ion-menu-toggle>
+      <ion-button fill="outline" color="dark" (click)="logOut()">
+        Log out
+        <ion-icon slot="end" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
+    <br/>
+    <ion-menu-toggle>
+      <ion-button fill="outline" color="dark" (click)="goToStaff()">
+        Staff
+        <ion-icon slot="end" name="people-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
+    <br/>
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item class="accordion-header" slot="header" color="dark">
+          Animal species
+          <ion-icon slot="end" name="paw-outline" color="dark"></ion-icon>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-menu-toggle>
+            <ion-button class="accordion-button" color="dark" fill="outline"
+                        *ngFor="let AnimalSpeciesFeed of state.animalSpeciesFeed"
+                        (click)="goToSpecies(AnimalSpeciesFeed.speciesID)">{{ AnimalSpeciesFeed.speciesName }}
+            </ion-button>
+          </ion-menu-toggle>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+</ion-menu>
