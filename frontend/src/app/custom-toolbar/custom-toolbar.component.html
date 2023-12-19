@@ -15,12 +15,12 @@
 </ion-toolbar>
 
 <div>
-  <ion-modal trigger="open-search">
+  <ion-modal trigger="open-search" (focusout)="clearSearch()">
     <ng-template>
       <ion-searchbar #searchbar [formGroup]="searchBoxForm"
-                     (ionInput)="search($event)"></ion-searchbar>
+                     (ionInput)="search($event)" [debounce]="250"></ion-searchbar>
       <ion-list class="search-list">
-        <ion-item *ngFor="let result of searchResults">
+        <ion-item button *ngFor="let result of shownResults" (click)="pressResult(result)">
           {{ result }}
         </ion-item>
       </ion-list>

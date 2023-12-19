@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
-import {IonSearchbar} from "@ionic/angular";
+import {IonSearchbar, ModalController} from "@ionic/angular";
 import {TokenService} from 'src/services/token.services';
 import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
@@ -38,12 +38,14 @@ export class CustomToolbarComponent implements OnInit {
   isSearch: boolean = false;
   searchOnGoing: boolean = false;
   searchResults: (AnimalSpeciesSearchFeed | AnimalSearchFeed)[] = [];
-
+  shownResults : string[] = []
   searchBoxForm = this.fb.group({
     searchQuery: ['', Validators.required, Validators.min(4)]
   });
 
-  constructor(public http: HttpClient, public state: State, public router: Router, private readonly token: TokenService, public fb: FormBuilder) {
+  constructor(public http: HttpClient, public state: State, public router: Router,
+              private readonly token: TokenService, public fb: FormBuilder,
+              private readonly modalController: ModalController) {
   }
 
   ngOnInit() {
@@ -65,22 +67,36 @@ export class CustomToolbarComponent implements OnInit {
     this.searchBoxForm.get('searchQuery')!.setValue('');
   }
 
+  clearSearch(){
+    this.searchResults = [];
+    this.shownResults = [];
+  }
   async search(event: any) {
     if (event && event.target) {
       const searchQuery = event.target.value;
+      this.clearSearch();
       if (searchQuery.length >= 4) {
         const response = await firstValueFrom(this.http.get<SearchFeed>("http://localhost:5000/api/search?searchterm=" + searchQuery));
-        console.log('response: ', response)
         let result: (AnimalSpeciesSearchFeed | AnimalSearchFeed)[] = [];
         if (response.AnimalSpecies) {
-          this.searchResults
-          console.log(response.AnimalSpecies)
+          response.AnimalSpecies.forEach((value)=> {
+            this.searchResults.push(value);
+          });
         }
         if (response.Animals) {
-          this.searchResults.concat(response.Animals)
-          console.log(response.Animals)
+          response.Animals.forEach((value) => {
+            this.searchResults.push(value);
+          });
         }
-        console.log('result: ', result, this.searchResults)
+        if(this.searchResults){
+          this.searchResults.forEach((value) =>{
+            if ('animalName' in value) {
+              this.shownResults.push((value as AnimalSearchFeed).animalName);
+            } else if ('speciesName' in value) {
+              this.shownResults.push((value as AnimalSpeciesSearchFeed).speciesName);
+            }
+          });
+        }
       }
     }
   }
@@ -108,5 +124,21 @@ export class CustomToolbarComponent implements OnInit {
   logOut() {
     this.token.clearToken();
     this.router.navigateByUrl("/login");
+  }
+
+  pressResult(result: string) {
+    this.searchResults.forEach((value) =>{
+      if ('animalName' in value) {
+        if(result === (value as AnimalSearchFeed).animalName){
+          this.router.navigateByUrl("/animals/" + (value as AnimalSearchFeed).animalID);
+        }
+      } else if ('speciesName' in value) {
+        if(result ===(value as AnimalSpeciesSearchFeed).speciesName){
+          this.router.navigateByUrl("/species/" + (value as AnimalSpeciesSearchFeed).speciesID);
+        }
+      }
+    });
+    this.modalController.dismiss();
+    this.clearSearch();
   }
 }
