@@ -15,7 +15,12 @@ public class MailService
         
         message.Body = new TextPart("plain")
         {
-            Text = @"Insert the mail body here!!! " + animal.SpeciesDescription
+            Text = @$"Animal Species: {animal.SpeciesName}
+
+ Description:
+ {animal.SpeciesDescription}
+
+Best Regards, Møønh Zoo"
         };
 
         using (var client = new SmtpClient())
