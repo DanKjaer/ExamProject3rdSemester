@@ -21,7 +21,7 @@ export class EmployeeCreateComponent  implements OnInit {
     })
   }
 
-  apiUrl = 'http://localhost:5000/api/users';
+  apiUrl = 'https://moonhzoo.azurewebsites.net/api/users';
 
   ngOnInit() {}
 

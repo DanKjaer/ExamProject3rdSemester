@@ -25,7 +25,7 @@ export class EmployeeUpdateComponent  implements OnInit {
     profilePicture: [null as Blob | null],
   })
 
-  apiUrl = 'http://localhost:5000/api/users';
+  apiUrl = 'https://moonhzoo.azurewebsites.net/api/users';
 
   constructor(public fb: FormBuilder, public state: State, public http: HttpClient,
               public modalController: ModalController, public toast: ToastController, public route: ActivatedRoute,

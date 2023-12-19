@@ -46,7 +46,7 @@ export class AnimalsComponent implements OnInit {
   }
 
   async getAnimal() {
-    const result = await firstValueFrom(this.http.get<Animals>('http://localhost:5000/api/animal/' + this.animalId));
+    const result = await firstValueFrom(this.http.get<Animals>('https://moonhzoo.azurewebsites.net/api/animal/' + this.animalId));
     this.state.currentAnimal = result;
     this.getSpeciesName(this.state.currentAnimal.speciesID);
     this.animalBirthday = new Date(this.state.currentAnimal.animalBirthday!);
@@ -68,7 +68,7 @@ export class AnimalsComponent implements OnInit {
   }
 
   async getSpeciesName(speciesId: number | undefined) {
-    const result = await firstValueFrom(this.http.get<AnimalSpecies>('http://localhost:5000/api/animalspecies/' + speciesId));
+    const result = await firstValueFrom(this.http.get<AnimalSpecies>('https://moonhzoo.azurewebsites.net/api/animalspecies/' + speciesId));
     this.state.currentAnimalSpecies = result;
   }
 
@@ -83,7 +83,7 @@ export class AnimalsComponent implements OnInit {
   }
 
   async getNote() {
-    const result = await firstValueFrom(this.http.get<AnimalNoteFeed[]>('http://localhost:5000/api/animalnote/' + this.state.currentAnimal.animalID));
+    const result = await firstValueFrom(this.http.get<AnimalNoteFeed[]>('https://moonhzoo.azurewebsites.net/api/animalnote/' + this.state.currentAnimal.animalID));
     this.state.animalNoteFeed = result!;
   }
 
@@ -94,14 +94,14 @@ export class AnimalsComponent implements OnInit {
   async saveNote() {
     let dto = this.createAnimalNoteForm.getRawValue();
     dto.animalID = Number(this.state.currentAnimal.animalID);
-    const observable = await this.http.post<AnimalNote>('http://localhost:5000/api/animalnote/', dto);
+    const observable = await this.http.post<AnimalNote>('https://moonhzoo.azurewebsites.net/api/animalnote/', dto);
     const result = await firstValueFrom(observable);
     this.state.animalNoteFeed.push(<AnimalNoteFeed>result);
     this.clearNoteInput();
   }
 
   async deleteNote(noteId: number) {
-    await firstValueFrom(this.http.delete('http://localhost:5000/api/animalnote/' + noteId));
+    await firstValueFrom(this.http.delete('https://moonhzoo.azurewebsites.net/api/animalnote/' + noteId));
     this.state.animalNoteFeed = this.state.animalNoteFeed.filter(note => note.noteID !== noteId);
   }
 
@@ -110,7 +110,7 @@ export class AnimalsComponent implements OnInit {
     let dto = this.updateAnimalForm.getRawValue();
     dto.animalID = Number(this.state.currentAnimal.animalID);
     dto.speciesID = Number(this.state.currentAnimal.speciesID);
-    const observable = this.http.put<Animals>('http://localhost:5000/api/animal', dto);
+    const observable = this.http.put<Animals>('https://moonhzoo.azurewebsites.net/api/animal', dto);
     const result = await firstValueFrom(observable);
     this.state.currentAnimal = result;
     await this.modal.dismiss();

@@ -13,7 +13,7 @@ import {State} from "../../state";
   styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent  implements OnInit {
-  apiUrl = 'http://localhost:5000/api/users';
+  apiUrl = 'https://moonhzoo.azurewebsites.net/api/users';
   type = UserType;
   UserPicture?: string;
   imageChangedEvent: Event | undefined;

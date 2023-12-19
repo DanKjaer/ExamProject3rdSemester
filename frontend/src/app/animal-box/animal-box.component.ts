@@ -40,7 +40,7 @@ export class AnimalBoxComponent implements OnInit {
 
   async getAnimalSpeciesFeed() {
     try {
-      const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('http://localhost:5000/api/animalspeciesfeed'));
+      const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('https://moonhzoo.azurewebsites.net/api/animalspeciesfeed'));
       this.state.animalSpeciesFeed = result!;
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -49,14 +49,14 @@ export class AnimalBoxComponent implements OnInit {
 
   async goToSpecies(animalNumber: number) {
     this.state.currentAnimalSpecies.speciesID = animalNumber;
-    const result = await firstValueFrom(this.http.get<AnimalSpecies>('http://localhost:5000/api/animalspecies/' + this.state.currentAnimalSpecies.speciesID))
+    const result = await firstValueFrom(this.http.get<AnimalSpecies>('https://moonhzoo.azurewebsites.net/api/animalspecies/' + this.state.currentAnimalSpecies.speciesID))
     this.state.currentAnimalSpecies = result;
     this.router.navigate(['/species/' + animalNumber])
   }
 
   async createSpecies() {
     let dto = this.createSpeciesForm.getRawValue();
-    const observable = this.http.post<AnimalSpecies>('http://localhost:5000/api/animalspecies', dto);
+    const observable = this.http.post<AnimalSpecies>('https://moonhzoo.azurewebsites.net/api/animalspecies', dto);
     const response = await firstValueFrom(observable);
     this.state.animalSpeciesFeed.push(response);
     await this.modal.dismiss();

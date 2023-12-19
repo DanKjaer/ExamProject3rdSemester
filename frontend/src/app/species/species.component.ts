@@ -48,7 +48,7 @@ export class SpeciesComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.speciesId = params.get('id');
     })
-    const result = await firstValueFrom(this.http.get<AnimalSpecies>('http://localhost:5000/api/animalspecies/' + this.speciesId));
+    const result = await firstValueFrom(this.http.get<AnimalSpecies>('https://moonhzoo.azurewebsites.net/api/animalspecies/' + this.speciesId));
     this.state.currentAnimalSpecies = result;
     this.initializeEdit();
   }
@@ -59,7 +59,7 @@ export class SpeciesComponent implements OnInit {
       this.route.paramMap.subscribe(params => {
         dto.speciesID = params.get('id');
       });
-      const observable = this.http.post<Animals>('http://localhost:5000/api/animal', dto);
+      const observable = this.http.post<Animals>('https://moonhzoo.azurewebsites.net/api/animal', dto);
       const response = await firstValueFrom(observable);
       this.state.animalFeed.push(<AnimalFeed>response);
       await this.modal.dismiss();
@@ -80,7 +80,7 @@ export class SpeciesComponent implements OnInit {
 
   async updateSpecies() {
     let dto = this.updateSpeciesForm.getRawValue();
-    const observable = this.http.put<AnimalSpecies>('http://localhost:5000/api/animalspecies', dto);
+    const observable = this.http.put<AnimalSpecies>('https://moonhzoo.azurewebsites.net/api/animalspecies', dto);
     const response = await firstValueFrom(observable);
     this.state.currentAnimalSpecies = response;
     await this.modal.dismiss();
@@ -91,7 +91,7 @@ export class SpeciesComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       dto.animalSpeciesId = params.get('id');
     });
-    const observable = this.http.post('http://localhost:5000/api/sendEmail', dto);
+    const observable = this.http.post('https://moonhzoo.azurewebsites.net/api/sendEmail', dto);
     const response = await firstValueFrom(observable);
     await this.modal.dismiss();
     await this.toastController.create({message: response.toString(), duration: 5000}).then(res => res.present);

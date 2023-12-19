@@ -30,7 +30,7 @@ export class LoginComponent  implements OnInit {
   ngOnInit() {}
 
   async submit() {
-    const url = 'http://localhost:5000/api/login';
+    const url = 'https://moonhzoo.azurewebsites.net/api/login';
     var response = await firstValueFrom(this.http.post<LoginResponse>(url, this.form.value));
     this.token.setToken(response.token);
     if(response.token === "Failure to Authenticate")
@@ -53,7 +53,7 @@ export class LoginComponent  implements OnInit {
   }
 
   async setCurrentUser(email: string) {
-    const observable = this.http.get<Users>("http://localhost:5000/api/users/email/" + email)
+    const observable = this.http.get<Users>("https://moonhzoo.azurewebsites.net/api/users/email/" + email)
     const response = await firstValueFrom(observable);
     this.state.currentUser = response;
   }

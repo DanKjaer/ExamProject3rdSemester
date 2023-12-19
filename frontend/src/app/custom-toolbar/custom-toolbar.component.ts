@@ -78,7 +78,7 @@ export class CustomToolbarComponent implements OnInit {
       const searchQuery = event.target.value;
       this.clearSearch();
       if (searchQuery.length >= 4) {
-        const response = await firstValueFrom(this.http.get<SearchFeed>("http://localhost:5000/api/search?searchterm=" + searchQuery));
+        const response = await firstValueFrom(this.http.get<SearchFeed>("https://moonhzoo.azurewebsites.net/api/search?searchterm=" + searchQuery));
         let result: (AnimalSpeciesSearchFeed | AnimalSearchFeed)[] = [];
         if (response.AnimalSpecies) {
           response.AnimalSpecies.forEach((value)=> {
@@ -112,7 +112,7 @@ export class CustomToolbarComponent implements OnInit {
   }
 
   async getSpecies() {
-    const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('http://localhost:5000/api/animalspeciesfeed'))
+    const result = await firstValueFrom(this.http.get<AnimalSpeciesFeed[]>('https://moonhzoo.azurewebsites.net/api/animalspeciesfeed'))
     this.state.animalSpeciesFeed = result!;
   }
 

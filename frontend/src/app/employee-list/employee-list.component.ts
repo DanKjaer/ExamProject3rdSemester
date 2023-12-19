@@ -12,7 +12,7 @@ import {catchError} from 'rxjs/operators'
 })
 export class EmployeeListComponent  implements OnInit {
   users: Users[] = [];
-  apiUrl = 'http://localhost:5000/api/users';
+  apiUrl = 'https://moonhzoo.azurewebsites.net/api/users';
   UserPicture?: string;
 
   constructor(public state: State, public http: HttpClient) { }

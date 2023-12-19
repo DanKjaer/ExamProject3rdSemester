@@ -26,7 +26,7 @@ export class AnimalNamesComponent  implements OnInit {
 
   async getAnimalFeed(){
     try{
-      const result = await firstValueFrom(this.http.get<AnimalFeed[]>('http://localhost:5000/api/animalfeed/' + this.speciesId));
+      const result = await firstValueFrom(this.http.get<AnimalFeed[]>('https://moonhzoo.azurewebsites.net/api/animalfeed/' + this.speciesId));
       this.state.animalFeed = result!;
     }catch(error){
       console.error('Error fetching data:', error)
