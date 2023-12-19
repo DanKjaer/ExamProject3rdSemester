@@ -8,12 +8,25 @@
   </ion-title>
 
   <ion-buttons slot="end">
-    <ion-button *ngIf="!isSearch" (click)="toggleSearch()" [@transformSearch]="'*'">
+    <ion-button id="open-search">
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
-    <ion-searchbar #searchbar *ngIf="isSearch" (focusout)="toggleSearch()" [@transformSearch]="'*'"></ion-searchbar>
   </ion-buttons>
 </ion-toolbar>
+
+<div>
+  <ion-modal trigger="open-search">
+    <ng-template>
+      <ion-searchbar #searchbar [formGroup]="searchBoxForm"
+                     (ionInput)="search($event)"></ion-searchbar>
+      <ion-list class="search-list">
+        <ion-item *ngFor="let result of searchResults">
+          {{ result }}
+        </ion-item>
+      </ion-list>
+    </ng-template>
+  </ion-modal>
+</div>
 
 <ion-buttons class="center-buttons">
   <ion-button class="home-button" (click)="goToHome()">

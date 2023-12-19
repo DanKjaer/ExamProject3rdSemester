@@ -1,5 +1,14 @@
 import {Injectable} from "@angular/core";
-import {AnimalFeed, AnimalNote, AnimalNoteFeed, Animals, AnimalSpecies, AnimalSpeciesFeed, Users} from "./models";
+import {
+  AnimalFeed,
+  AnimalNote,
+  AnimalNoteFeed,
+  Animals,
+  AnimalSpecies,
+  AnimalSpeciesFeed,
+  SearchFeed,
+  Users
+} from "./models";
 
 @Injectable({
   providedIn: 'root'

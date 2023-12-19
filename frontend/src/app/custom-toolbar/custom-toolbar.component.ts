@@ -1,12 +1,20 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
 import {IonSearchbar} from "@ionic/angular";
-import { TokenService } from 'src/services/token.services';
+import {TokenService} from 'src/services/token.services';
 import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
-import {AnimalSpeciesFeed} from "../../models";
+import {
+  AnimalFeed,
+  Animals,
+  AnimalSearchFeed,
+  AnimalSpeciesFeed,
+  AnimalSpeciesSearchFeed,
+  SearchFeed
+} from "../../models";
 import {Router} from "@angular/router";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-custom-toolbar',
@@ -15,21 +23,28 @@ import {Router} from "@angular/router";
   animations: [
     trigger('transformSearch', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.1)'}),
-        animate('300ms ease-in-out', style({ opacity: 1, transform: 'scale(1)' })),
+        style({opacity: 0, transform: 'scale(0.1)'}),
+        animate('300ms ease-in-out', style({opacity: 1, transform: 'scale(1)'})),
       ]),
       transition(':leave', [
-        style({ opacity: 1, transform: 'scale(1)' }),
-        animate('0ms ease-in-out', style({ opacity: 0, transform: 'scale(0.1) translateX(100%)' })),
+        style({opacity: 1, transform: 'scale(1)'}),
+        animate('0ms ease-in-out', style({opacity: 0, transform: 'scale(0.1) translateX(100%)'})),
       ]),
     ]),
   ]
 })
-export class CustomToolbarComponent  implements OnInit {
+export class CustomToolbarComponent implements OnInit {
   @ViewChild('searchbar', {static: false}) searchbar!: IonSearchbar;
   isSearch: boolean = false;
+  searchOnGoing: boolean = false;
+  searchResults: (AnimalSpeciesSearchFeed | AnimalSearchFeed)[] = [];
 
-  constructor(public http: HttpClient, public state: State, public router: Router, private readonly token: TokenService) { }
+  searchBoxForm = this.fb.group({
+    searchQuery: ['', Validators.required, Validators.min(4)]
+  });
+
+  constructor(public http: HttpClient, public state: State, public router: Router, private readonly token: TokenService, public fb: FormBuilder) {
+  }
 
   ngOnInit() {
     this.getSpecies();
@@ -37,6 +52,7 @@ export class CustomToolbarComponent  implements OnInit {
 
   toggleSearch() {
     this.isSearch = !this.isSearch;
+    this.clearSearchInput();
 
     if (this.isSearch) {
       setTimeout(() => {
@@ -45,8 +61,31 @@ export class CustomToolbarComponent  implements OnInit {
     }
   }
 
+  clearSearchInput() {
+    this.searchBoxForm.get('searchQuery')!.setValue('');
+  }
 
-  goToStaff(){
+  async search(event: any) {
+    if (event && event.target) {
+      const searchQuery = event.target.value;
+      if (searchQuery.length >= 4) {
+        const response = await firstValueFrom(this.http.get<SearchFeed>("http://localhost:5000/api/search?searchterm=" + searchQuery));
+        console.log('response: ', response)
+        let result: (AnimalSpeciesSearchFeed | AnimalSearchFeed)[] = [];
+        if (response.AnimalSpecies) {
+          this.searchResults
+          console.log(response.AnimalSpecies)
+        }
+        if (response.Animals) {
+          this.searchResults.concat(response.Animals)
+          console.log(response.Animals)
+        }
+        console.log('result: ', result, this.searchResults)
+      }
+    }
+  }
+
+  goToStaff() {
     this.router.navigate(['/staff']);
   }
 
@@ -59,7 +98,7 @@ export class CustomToolbarComponent  implements OnInit {
     this.state.animalSpeciesFeed = result!;
   }
 
-  goToSpecies(animalNumber: number){
+  goToSpecies(animalNumber: number) {
     this.state.currentAnimalSpecies.speciesID = animalNumber;
     this.router.navigate(['/species/' + animalNumber])
   }
