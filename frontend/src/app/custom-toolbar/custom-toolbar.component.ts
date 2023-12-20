@@ -77,9 +77,8 @@ export class CustomToolbarComponent implements OnInit {
     if (event && event.target) {
       const searchQuery = event.target.value;
       this.clearSearch();
-      if (searchQuery.length >= 4) {
+      if (searchQuery.length >= 3) {
         const response = await firstValueFrom(this.http.get<SearchFeed>("https://moonhzoo.azurewebsites.net/api/search?searchterm=" + searchQuery));
-        let result: (AnimalSpeciesSearchFeed | AnimalSearchFeed)[] = [];
         if (response.AnimalSpecies) {
           response.AnimalSpecies.forEach((value)=> {
             this.searchResults.push(value);
