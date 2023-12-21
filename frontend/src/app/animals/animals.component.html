@@ -67,7 +67,9 @@
 <div class="button-container">
   <ion-buttons>
     <ion-button [disabled]="this.state.currentUser.userType === 2" id="edit-modal" color="dark" fill="outline">Edit</ion-button>
+    <ion-button [disabled]="this.state.currentUser.userType === 2" color="dark" fill="outline" (click)="deleteAnimal()">Delete</ion-button>
   </ion-buttons>
+
 </div>
 
 <div [formGroup]="updateAnimalForm">

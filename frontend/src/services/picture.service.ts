@@ -20,7 +20,7 @@ export class PictureService{
   constructor(private readonly http: HttpClient, private readonly state: State) {}
 
   update(value: UserUpdate) {
-    const url = "http://localhost:5000"
+    const url = "https://moonhzoo.azurewebsites.net"
     const formData = new FormData();
     Object.entries(value).forEach(([key, value]) => {
       if (value) {
