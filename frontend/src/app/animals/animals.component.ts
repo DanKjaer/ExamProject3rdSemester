@@ -2,7 +2,7 @@ import {booleanAttribute, Component, OnInit} from '@angular/core';
 import {firstValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {State} from "../../state";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AnimalNote, AnimalNoteFeed, Animals, AnimalSpecies} from "../../models";
 import {FormBuilder, Validators} from "@angular/forms";
 import {toggle} from "ionicons/icons";
@@ -35,7 +35,8 @@ export class AnimalsComponent implements OnInit {
   animalBirthday?: Date;
   animalAge?: number;
 
-  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder, public modal: ModalController) {
+  constructor(public http: HttpClient, public state: State, public route: ActivatedRoute, public fb: FormBuilder, public modal: ModalController,
+              private readonly router: Router) {
   }
 
   ngOnInit() {
@@ -114,5 +115,12 @@ export class AnimalsComponent implements OnInit {
     const result = await firstValueFrom(observable);
     this.state.currentAnimal = result;
     await this.modal.dismiss();
+  }
+
+  async deleteAnimal() {
+    let dto = Number(this.state.currentAnimal.animalID);
+    await firstValueFrom(this.http.delete("https://moonhzoo.azurewebsites.net/api/animal/" + dto))
+    let speciesID = this.state.currentAnimal.speciesID;
+    this.router.navigateByUrl("/species/" + speciesID);
   }
 }
