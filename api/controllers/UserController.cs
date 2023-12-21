@@ -64,7 +64,7 @@ public class UserController : ControllerBase
         string? pictureUrl = null;
         if (profilePicture != null)
         {
-            pictureUrl = _userService.GetUserById(session.UserId).Picture;
+            pictureUrl = _userService.GetUserById(id).Picture;
             using var pictureTransform = new ImageTransform(profilePicture.OpenReadStream())
                 .Resize(200, 200)
                 .FixOrientation()
